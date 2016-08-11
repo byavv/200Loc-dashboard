@@ -4,7 +4,7 @@
       "loopback/common/models",
       "loopback/server/models",
       "../../common/models",
-      "./models"    
+      "./models"
     ],
     "mixins": [
       "loopback/common/mixins",
@@ -13,35 +13,8 @@
       "./mixins"
     ]
   },
-  "User": {
-    "dataSource": "db"
-  },
-  "AccessToken": {
-    "dataSource": "db",
-    "public": false
-  },
-  "ACL": {
-    "dataSource": "db",
-    "public": false
-  },
-  "RoleMapping": {
-    "dataSource": "db",
-    "public": false
-  },
-  "Role": {
-    "dataSource": "db",
-    "public": false
-  },
-  "role": {
-    "dataSource": "db",
-    "public": false
-  },
-  "user": {
-    "dataSource": "db",
-    "public": false
-  },
   "ApiConfig": {
-    "dataSource": "db1",
+    "dataSource": "db",
     "public": false
   }
 }
