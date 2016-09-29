@@ -1,6 +1,5 @@
 {
-  "name": "SuperEdit",
-  "plural": "se",
+  "name": "DriverConfig",
   "base": "PersistedModel",
   "idInjection": true,
   "options": {
@@ -9,11 +8,17 @@
   "properties": {
     "name": {
       "type": "string",
-      "required": true,
-      "default": "super"
+      "required": true
     },
     "description": {
       "type": "string"
+    },
+    "settings": {
+      "type": "object"
+    },
+    "driverId": {
+      "type": "string",
+      "index": true
     }
   },
   "validations": [],

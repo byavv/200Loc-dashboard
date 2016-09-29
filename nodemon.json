@@ -1,0 +1,29 @@
+{
+    "env": {
+        "NODE_ENV": "development",
+        "DEBUG": "gateway, plugins:*, drivers:*, explorer",
+        "ETCD_HOST": "localhost:4001"
+    },
+    "ext": "js",
+    "restartable": "rs",
+    "ignore": [
+        ".git",
+        "node_modules/**/node_modules",
+        "/build/*.*",
+        "/.idea/*.*",
+        "/test/*.*",
+        "*.spec.*",
+        "*.json",
+        "/coverage"
+    ],
+    "verbose": true,
+    "execMap": {
+        "js": "node"
+    },
+    "watch": [
+        "gateway/**/*.js",
+        "explorer/**/*.ts",
+        "explorer/**/*css",
+        "explorer/**/*scss"
+    ]
+}

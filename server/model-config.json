@@ -2,8 +2,7 @@
   "_meta": {
     "sources": [
       "loopback/common/models",
-      "loopback/server/models",
-      "../../common/models",
+      "loopback/server/models",      
       "../common/models",
       "./models"
     ],
@@ -21,9 +20,5 @@
   "DriverConfig": {
     "dataSource": "db",
     "public": true
-  },
-  "SuperEdit": {
-    "dataSource": "db",
-    "public": true
-  }
+  } 
 }

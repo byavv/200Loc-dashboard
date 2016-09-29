@@ -7,7 +7,7 @@ const boot = require('loopback-boot')
     , loopback = require('loopback');
 
 const app = loopback();
-const logger = require('../../lib/logger');
+const logger = require('./scripts/logger');
 
 
 const defaults = {
