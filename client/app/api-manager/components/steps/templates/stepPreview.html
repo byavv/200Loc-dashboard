@@ -1,5 +1,49 @@
 <div class="my-card">
-    //todo
+    <div class="form-group method-block">
+        <div class="row">
+            <div class="col-lg-6" style='font-size: 1.2em;'>
+                <div class="row">
+                    <div class="col-md-3">
+                        <span>URL:</span>
+                    </div>
+                    <div class="col-md-9">
+                        <span>~{{entry}}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="input-group">
+                    <select #methodSelect name="method" (change)='methodChange($event.target.value)' class='form-control' id="method" [(ngModel)]='selectedMethod'>
+                        <option *ngFor="let method of methods" [value]="method">{{ method }}</option>
+                    </select>
+                    <span class="input-group-btn">
+                        <button type="button" (click)="send()" class="btn btn-secondary send-button">         
+                                        SEND
+                        </button>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <tabset [justified]="true">
+        <tab heading="Headers" #headersTab>
+            <div style='padding:5px 0;'>
+                <key-value-control [(ngModel)]='headers'></key-value-control>
+            </div>
+        </tab>
+        <tab heading="Params">            
+            <div style='padding:5px 0;'>
+                <key-value-control [(ngModel)]='params'></key-value-control>
+            </div>
+        </tab>
+        <tab heading="Body"  [customClass]="dddddd" [disabled]="bodyDisabled">
+            <div style='padding:5px 0;'>
+                <div ace-editor [text]="text" [mode]="'json'" [theme]="'eclipse'" [options]="aceOptions" [readOnly]="false" [autoUpdateContent]="true"
+                    (textChanged)="onChange($event)" style="min-height:250px;">
+                </div>
+            </div>
+        </tab>
+    </tabset>
 </div>
 <button type="button" (click)="onSubmit()" class="btn btn-primary next-button">
            <i class="fa fa-arrow-right" aria-hidden="true"></i>

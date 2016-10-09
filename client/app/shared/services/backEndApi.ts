@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Http } from '@angular/http';
+import { Http, Headers, RequestOptions, Request } from '@angular/http';
 
 @Injectable()
 export class BackEnd {
@@ -53,6 +53,21 @@ export class BackEnd {
       .map(res => res.json());
   }
 
+  public testApiConfig(method, plugins, headers, params, body?) {
+    let reqHeaders = new Headers();
+    reqHeaders.append('Content-Type', 'application/json');
+
+    let reqBody = JSON.stringify({ method, plugins, headers, params, body });
+    let options = new RequestOptions({
+      headers: reqHeaders,
+      method: 'post',
+      body: reqBody,
+      url: "/api/test"
+    });
+    return this._http
+      .request(new Request(options))
+      .map(res => res.json());
+  }
 
   public deleteApiConfig(id) {
     return this._http

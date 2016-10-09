@@ -53,11 +53,16 @@ export class PluginSettings {
                         required: true,
                         label: v,
                         help: `${v} configuration`,
-                        type: "array"
+                        type: "select"
                     }
                     return fields;
                 }, {}), (key, options, template) => {
-                    template[key].options = options;
+                    template[key].options = options.map((option)=>{
+                        return {
+                            key: option.name,
+                            value: option.id
+                        }
+                    });
                     return template;
                 }).subscribe(result => {
                     this.dependenciesTemplate = result;
@@ -81,7 +86,7 @@ export class PluginSettings {
             .valueChanges
             .subscribe((value) => {
                 this.plugin.valid = this.settForm.valid && this.depsForm.valid;
-                this.plugin.value = value;              
+                this.plugin.value = value;
                 this.changed.emit(value);
             });
         this.plugin.valid = this.settForm.valid && this.depsForm.valid;

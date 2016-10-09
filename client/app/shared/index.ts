@@ -3,15 +3,17 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router'
-import { ModalModule, DropdownModule } from 'ng2-bootstrap'
+import { ModalModule, DropdownModule, TabsModule } from 'ng2-bootstrap'
 import { SHARED_SERVICES } from './services';
 import { SHARED_COMPONENTS } from './components';
 import { SHARED_DIRECTIVES } from "./directives";
+import { AceEditorDirective } from 'ng2-ace-editor';
 
 @NgModule({
   declarations: [
     ...SHARED_COMPONENTS,
-    ...SHARED_DIRECTIVES
+    ...SHARED_DIRECTIVES,
+    AceEditorDirective
   ],
   imports: [
     CommonModule,
@@ -20,16 +22,19 @@ import { SHARED_DIRECTIVES } from "./directives";
     RouterModule,
     HttpModule,
     ModalModule,
-    DropdownModule
+    DropdownModule,
+    TabsModule
   ],
   exports: [
     ...SHARED_COMPONENTS,
     ...SHARED_DIRECTIVES,
+    AceEditorDirective,
     CommonModule,
     ReactiveFormsModule,
     FormsModule,
     ModalModule,
-    DropdownModule
+    DropdownModule,
+    TabsModule
   ],
   providers: [
     ...SHARED_SERVICES

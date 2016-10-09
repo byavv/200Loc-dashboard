@@ -9,7 +9,6 @@ const boot = require('loopback-boot')
 const app = loopback();
 const logger = require('./scripts/logger');
 
-
 const defaults = {
     string: ['env', 'link', "p"],
     default: {

@@ -7,14 +7,14 @@ const path = require("path"),
 
 module.exports = function (app) {
     var router = app.loopback.Router();
-    var ApiConfig = app.models.ApiConfig;   
+    var ApiConfig = app.models.ApiConfig;
 
     router.get('/api/configs', (req, res) => {
         ApiConfig.find((err, configs) => {
             res.send(configs);
         });
     });
-    
+
     router.get('/api/plugins', (req, res, next) => {
         request({
             url: `http://${process.env.GATEWAY}/_private/plugins`,
@@ -68,5 +68,24 @@ module.exports = function (app) {
             }
         });
     });
+    /**
+     * Test entry request
+     */
+    router.post('/api/test', (req, res, next) => {
+        request({
+            url: `http://${process.env.GATEWAY}/_private/entry/test`,
+            method: 'post',
+            headers: { 'content-type': 'application/json' },
+            json: req.body
+        }, function (err, responce, body) {
+            if (err) return next(err)
+            if (responce) {
+                return res.status(responce.statusCode).send(body)
+            } else {
+                return res.sendStatus(500)
+            }
+        });
+    });
+
     app.use(router);
 };

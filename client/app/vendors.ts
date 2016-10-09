@@ -8,3 +8,7 @@ import '@angular/router';
 
 // RxJS
 import 'rxjs';
+
+import 'brace';
+import 'brace/theme/eclipse'
+import 'brace/mode/json'
