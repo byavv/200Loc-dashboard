@@ -1,63 +1,122 @@
+import {
+    Component, Input,
+    Output, OnInit, Optional, Host,
+    EventEmitter, forwardRef
+} from '@angular/core';
+import {
+    FormGroup,
+    Validators,
+    FormBuilder,
+    NG_VALIDATORS, FormControl
+} from '@angular/forms';
+import {
+    NgControl, NgModel,
+    ControlValueAccessor, NG_VALUE_ACCESSOR
+} from '@angular/forms';
+
+
 /**
- * Create form from object.
- *  eg.: 
- *  {
- *      field1: {
- *          value: "defaultValue1"
+ * Component for dynamic forms, defined in JSON
+ * 
+ * Ex.: 
+ *     "field_1": {
+ *          "default": "42",
+ *          "required": true,
+ *          "label": "Answer",
+ *          "help": "The answer to life, universe and everything",
+ *          "type": "string"
  *      },
- *      field2: {
- *          value: "defaultValue2"
- *      }
- *  }
+ *     "field_2": {
+ *          "default": true,
+ *          "required": true,
+ *          "label": "Answer",
+ *          "help": "Now that Microsoft is so big, should it be called Macrosoft?",
+ *          "type": "select",
+ *          "options": [
+ *              {
+ *                  "key": "Yes",
+ *                  "value": true
+ *              },
+ *              {
+ *                  "key": "No",
+ *                  "value": false
+ *              }
+ *          ]
+ *      } 
  */
-
-import { Component, Input, Output, OnInit, EventEmitter }  from '@angular/core';
-import { FormGroup, Validators, FormBuilder } from '@angular/forms';
-import { Plugin } from '../../shared/models';
-
 @Component({
     selector: 'dynamic-form',
-    template: require('./templates/dynamicForm.html')
+    template: require('./templates/dynamicForm.html'),
+    exportAs: 'dynForm',
+    providers: [
+        {
+            provide: NG_VALUE_ACCESSOR,
+            useExisting: forwardRef(() => DynamicForm),
+            multi: true
+        }
+    ]
 })
-export class DynamicForm {
-    fields: Array<any> = []
-    private _plugin;
-
-    @Output()
-    changed: EventEmitter<any> = new EventEmitter();
+export class DynamicForm implements ControlValueAccessor {
+    private _fields = [];
     @Input()
-    set plugin(plugin: Plugin) {
+    set fields(value: any) {
         let group = {};
-        if (plugin) {
-            this.fields.slice(0, this.fields.length);
-            let settings = plugin.settings || {};
-            Object.keys(settings).forEach((key: any) => {
-                group[key] = settings[key].required
-                    ? [settings[key].default || '', Validators.required]
-                    : [settings[key].default || ''];
-                this.fields.push({
+        if (value) {
+            this._fields.slice(0, this._fields.length);
+            Object.keys(value).forEach((key: any) => {
+                group[key] = value[key].required
+                    ? ['', Validators.required]
+                    : [''];
+                this._fields.push({
                     key: key,
-                    value: /*settings[key].value*/ plugin.value[key] || settings[key].default,
-                    label: settings[key].label,
-                    helpString: settings[key].help,
-                    type: settings[key].type ? settings[key].type : 'string',
-                    options: settings[key].options ? settings[key].options : [], // if property is array
+                    value: '',
+                    label: value[key].label,
+                    helpString: value[key].help,
+                    type: value[key].type ? value[key].type : 'string',
+                    options: value[key].options ? value[key].options : [], // if property is array
                 });
             });
 
-         //   this.form = plugin.form = this._builder.group(group);
+            this.form = this._builder.group(group);
             this.form.valueChanges
                 .subscribe(value => {
-                    plugin.settings = value;
-                    this.changed.emit(null);
+                    this.onChange.next(value);
                 });
         }
-        this._plugin = plugin;
     }
-    get plugin(): Plugin {
-        return this._plugin;
-    }
+
     form: FormGroup = this._builder.group({});
     constructor(private _builder: FormBuilder) { }
-}
 
+    get fields() {
+        return this._fields;
+    }
+    get valid() {
+        return this.form ? this.form.valid : false;
+    }
+
+    /**
+     * ControlValueAccessor members
+     */
+    onTouched = () => {
+    };
+    @Output()
+    onChange: EventEmitter<any> = new EventEmitter();
+    writeValue(value) {
+        if (value !== undefined) {
+            for (const key in value) {
+                const field = this.fields.find((field) => field.key === key);
+                if (field) {
+                    field.value = value[key];
+                }
+            }
+        }
+    }
+    registerOnChange(fn): void {
+        this.onChange.subscribe(fn);
+
+    }
+    registerOnTouched(fn): void {
+        this.onTouched = fn;
+    }
+}

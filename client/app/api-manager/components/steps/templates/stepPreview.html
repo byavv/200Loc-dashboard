@@ -31,12 +31,12 @@
                 <key-value-control [(ngModel)]='headers'></key-value-control>
             </div>
         </tab>
-        <tab heading="Params">            
+        <tab heading="Params">
             <div style='padding:5px 0;'>
                 <key-value-control [(ngModel)]='params'></key-value-control>
             </div>
         </tab>
-        <tab heading="Body"  [customClass]="dddddd" [disabled]="bodyDisabled">
+        <tab heading="Body" [disabled]="bodyDisabled">
             <div style='padding:5px 0;'>
                 <div ace-editor [text]="text" [mode]="'json'" [theme]="'eclipse'" [options]="aceOptions" [readOnly]="false" [autoUpdateContent]="true"
                     (textChanged)="onChange($event)" style="min-height:250px;">
@@ -44,6 +44,36 @@
             </div>
         </tab>
     </tabset>
+
+    <!--<div class="b-add-pipe-item" [class.addFirst]="appliedPlugins.length == 0">
+        <a href='' (click)="lgModal.show()" title="Add">
+            <i class="fa fa-share-alt" aria-hidden="true"></i>
+            <span>+</span>
+        </a>
+    </div>-->
+    <div bsModal #lgModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" (click)="lgModal.hide()" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                    <h4 class="modal-title">Server respond</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="plugin-menu-container" style='font-size:0.8em'>
+                        {{result}}
+                    </div>
+                    <div>
+                        <button type="button" class="btn btn-large btn-block btn-default" (click)="lgModal.hide()">Ok</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
 </div>
 <button type="button" (click)="onSubmit()" class="btn btn-primary next-button">
            <i class="fa fa-arrow-right" aria-hidden="true"></i>

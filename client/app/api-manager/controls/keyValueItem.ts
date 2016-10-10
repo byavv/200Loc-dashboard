@@ -7,13 +7,12 @@ import {
   FormBuilder
 } from '@angular/forms';
 
-
 @Component({
-  selector: 'headerItem',
+  selector: 'key-value-item',
   template: `
-     <div class='header-item'>
+     <div class='key-value-item'>
         <form [formGroup]='form' >     
-            <div class='header-key-value-inputs-box'>      
+            <div class='key-value-item-inputs-box'>      
               <input #keyInput class='form-control' type='text' placeholder='key' [(ngModel)]='item.key' formControlName='key'>        
               <input class='form-control' type='text' placeholder='value' [(ngModel)]='item.value' formControlName='value'>  
             </div>                        
@@ -22,13 +21,13 @@ import {
   `,
   styles: [require('./styles/header.scss')]
 })
-export class HeaderItem {
-
+export class KeyValueItem {
   @Input() item: any;
   @Output() changed: EventEmitter<any> = new EventEmitter();
   @Output() delete: EventEmitter<any> = new EventEmitter();
-  form: FormGroup;
   @ViewChild('keyInput') keyInput: ElementRef;
+
+  form: FormGroup;
   constructor(private _formBuilder: FormBuilder, private _renderer: Renderer) {
     this.form = _formBuilder.group({
       key: '',

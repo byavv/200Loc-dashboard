@@ -1,18 +1,18 @@
 import { ToggleGroup } from './toggleGroup';
-import { DynamicForm2 } from './dynamicForm2';
+import { DynamicForm } from './dynamicForm';
 import { OptionInput } from './optionInput';
 import { PluginSettings } from './pluginSettingsForm';
-import { HeaderItem } from './headerItem';
-import { HeadersList } from './headersList';
+import { KeyValueItem } from './keyValueItem';
+import { KeyValueItemsList } from './keyValueItemsList';
 
 export * from './toggleGroup';
 export * from './pluginSettingsForm';
-export * from './dynamicForm2';
-export * from './headerItem';
-export * from './headersList';
+export * from './dynamicForm';
+export * from './keyValueItem';
+export * from './keyValueItemsList';
 
 export var API_MANAGER_CONTROLS = [
     ToggleGroup, OptionInput,
-    DynamicForm2, PluginSettings,
-    HeaderItem, HeadersList
+    DynamicForm, PluginSettings,
+    KeyValueItem, KeyValueItemsList
 ];

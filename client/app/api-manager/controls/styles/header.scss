@@ -10,11 +10,11 @@
     }
 }
 
-.header-item{
+.key-value-item{
     flex: 1 0 auto;
 }
 
-.header-key-value-inputs-box{   
+.key-value-item-inputs-box{   
     display:flex;
     flex-flow: row;
     margin-bottom: 2px;
@@ -40,7 +40,7 @@
         }
     }   
 }
-.remove-header-button{
+.remove-button{
     outline: none !important;
     width: 25px;
     height: 25px;

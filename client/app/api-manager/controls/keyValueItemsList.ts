@@ -12,12 +12,12 @@ import {
     selector: 'key-value-control',
     template: `   
     <div *ngFor='let header of headers; let i = index' class='header-item-container'>         
-        <headerItem [item]='header' (changed)='onChange.emit(headers)'></headerItem>
-        <button class='btn btn-default remove-header-button' (click)='deleteItem(i)'>
+        <key-value-item [item]='header' (changed)='onChange.emit(headers)'></key-value-item>
+        <button class='btn btn-default remove-button' (click)='deleteItem(i)'>
             <i class="fa fa-times" aria-hidden="true"></i>
         </button>
     </div>
-    <div class='header-key-value-inputs-box' (click)='addItem()'>      
+    <div class='key-value-item-inputs-box' (click)='addItem()'>      
           <input type='text' class='form-control' placeholder='key'>        
           <input type='text' class='form-control' placeholder='value'>  
     </div> 
@@ -26,14 +26,15 @@ import {
     providers: [
         {
             provide: NG_VALUE_ACCESSOR,
-            useExisting: forwardRef(() => HeadersList),
+            useExisting: forwardRef(() => KeyValueItemsList),
             multi: true
         }
     ]
 })
 
-export class HeadersList implements ControlValueAccessor {
+export class KeyValueItemsList implements ControlValueAccessor {
     private _headers = [];
+    
     @Input()
     set headers(value: Array<any>) {
         this._headers = value;
@@ -48,6 +49,7 @@ export class HeadersList implements ControlValueAccessor {
         }
         this.headers.push({ key: '', value: '', focused: true });
     }
+
     deleteItem(index) {
         console.log(index)
         this.headers.splice(index, 1);
@@ -58,7 +60,6 @@ export class HeadersList implements ControlValueAccessor {
      */
     onTouched = () => {
     };
-
     @Output()
     onChange: EventEmitter<any> = new EventEmitter();
     writeValue(value) {

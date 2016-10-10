@@ -77,12 +77,12 @@
                             </show-error>
                         </div>
                     </form>
-                    <dynamic-form2 
+                    <dynamic-form 
                         [fields]="driverTemplate?.settings" 
                         #optionsForm=dynForm 
                         [(ngModel)]='currentSettings' 
                         (changed)='applyValidation()'>
-                    </dynamic-form2>
+                    </dynamic-form>
                     <div>
                         <button type="button" 
                         [disabled]='!configForm.valid || !optionsForm.valid' 

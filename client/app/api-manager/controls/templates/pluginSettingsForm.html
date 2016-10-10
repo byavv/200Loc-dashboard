@@ -1,14 +1,14 @@
 <div [formGroup]='form'>
-    <dynamic-form2 
+    <dynamic-form 
         [fields]="pluginTemplate" 
         #settingsForm='dynForm' 
         [(ngModel)]='settingsValue' 
         formControlName='settings'>
-    </dynamic-form2>
-    <dynamic-form2 
+    </dynamic-form>
+    <dynamic-form 
         [fields]="dependenciesTemplate" 
         #dependenciesForm='dynForm' 
         [(ngModel)]='dependenciesValue' 
         formControlName='dependencies'>
-    </dynamic-form2>
+    </dynamic-form>
 </div>

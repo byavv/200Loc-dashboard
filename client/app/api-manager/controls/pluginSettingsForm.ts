@@ -9,7 +9,7 @@ import {
     FormControl
 } from '@angular/forms';
 import { Observable } from 'rxjs';
-import { DynamicForm2 } from './';
+import { DynamicForm } from './';
 import { Plugin, DriverConfig } from '../../shared/models';
 import { DriverConfigApi } from '../../shared/services';
 
@@ -26,15 +26,19 @@ export class PluginSettings {
     dependenciesValue: any = {};
     driverConfigs: any = {};
 
-    @ViewChild('settingsForm') settForm: DynamicForm2;
-    @ViewChild('dependenciesForm') depsForm: DynamicForm2;
+    @ViewChild('settingsForm') settForm: DynamicForm;
+    @ViewChild('dependenciesForm') depsForm: DynamicForm;
 
     private _plugin;
     @Input()
     set plugin(pl: Plugin) {
         this._plugin = pl;
         // set template for plugin settings
-        this.pluginTemplate = pl.settingsTemplate;
+        // this.pluginTemplate = pl.settingsTemplate;
+        Observable.of(pl.settingsTemplate).subscribe((pluginTemplate) => {
+            this.pluginTemplate = pluginTemplate;
+        })
+
         // set config and find available options for required driver
         let fromDependencies = Observable
             .from([...pl.dependenciesTemplate || []])
@@ -57,7 +61,7 @@ export class PluginSettings {
                     }
                     return fields;
                 }, {}), (key, options, template) => {
-                    template[key].options = options.map((option)=>{
+                    template[key].options = options.map((option) => {
                         return {
                             key: option.name,
                             value: option.id

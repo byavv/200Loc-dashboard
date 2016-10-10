@@ -5,7 +5,7 @@ import {
     QueryList
 } from '@angular/core';
 
-import { TabDirective } from 'ng2-bootstrap'
+import { TabDirective, ModalDirective } from 'ng2-bootstrap'
 import { Router, ActivatedRoute } from "@angular/router";
 import { ShowError } from '../../directives/showError';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
@@ -24,6 +24,7 @@ export class StepPreview implements OnInit {
     next: EventEmitter<any> = new EventEmitter();
 
     @ViewChildren(TabDirective) tabs: QueryList<TabDirective>;
+    @ViewChild(ModalDirective) resultModal: ModalDirective;
 
     loading: boolean = false;
     submitted: boolean = false;
@@ -33,6 +34,7 @@ export class StepPreview implements OnInit {
     entry: string;
     methods: Array<any> = [];
     bodyDisabled: boolean = false;
+    result: any;
 
     headers = [
         { key: 'Content', value: 'application/json' },
@@ -87,10 +89,10 @@ export class StepPreview implements OnInit {
     send() {
         this.backEnd.testApiConfig(this.selectedMethod, this.master.config.plugins, this.headers, this.params, this.body)
             .subscribe((res) => {
-                console.log(res);
+                this.resultModal.show();
+                this.result = res.body;              
             }, err => {
                 console.error(err)
             })
-        console.log(this.master.config.plugins, JSON.parse(this.text))
     }
 }

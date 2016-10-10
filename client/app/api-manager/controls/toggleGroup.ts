@@ -3,7 +3,10 @@ import {
     EventEmitter, Output,
     ViewChild, Input, Optional
 } from '@angular/core';
-import { NgControl, NgModel, ControlValueAccessor } from '@angular/forms';
+import {
+    NgControl, NgModel,
+    ControlValueAccessor
+} from '@angular/forms';
 
 @Component({
     selector: 'toggleGroup[ngModel]',
