@@ -9,23 +9,25 @@ dependencies:
     - sudo pip install docker-compose       
     - docker-compose -v
     - docker -v
+  override:
+    - docker info
+    - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
+    - docker build -t aksenchyk/200loc-dashboard:build .
 
 test:
   pre:
     - git grep --color TODO | cat 
   override:
-    - npm test 
+    - docker run aksenchyk/200loc-dashboard:build npm test
 
 deployment:
   hub_latest:
     branch: master
-    commands:
-      - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
-      - docker build -t aksenchyk/200loc-dashboard:latest .
-      - docker push aksenchyk/200loc-dasgboard:latest
+    commands:    
+      - docker tag aksenchyk/200loc-dashboard:build aksenchyk/200loc-dashboard:latest   
+      - docker push aksenchyk/200loc-dashboard:latest
   hub_release:    
     tag: /.*/ 
-    commands:  
-      - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
-      - docker build -t aksenchyk/200loc-dashboard:$CIRCLE_TAG .
-      - docker push aksenchyk/200loc-dasgboard:$CIRCLE_TAG   
+    commands:      
+      - docker tag aksenchyk/200loc-dashboard:build aksenchyk/200loc-dashboard:$CIRCLE_TAG    
+      - docker push aksenchyk/200loc-dashboard:$CIRCLE_TAG   
