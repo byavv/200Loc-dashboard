@@ -5,6 +5,8 @@ import { Config } from '../../shared/models';
 @Injectable()
 export class MasterController {
     init$: ReplaySubject<any> = new ReplaySubject();
+    update$: ReplaySubject<any> = new ReplaySubject();
+
     validate$: ReplaySubject<any> = new ReplaySubject();
     error$: Subject<any> = new Subject();
 
@@ -36,6 +38,9 @@ export class MasterController {
                 observer.complete();
             }
         })
+    }
+    update(){
+        this.update$.next(this.config);
     }
 
     isValid(key): Observable<any> {

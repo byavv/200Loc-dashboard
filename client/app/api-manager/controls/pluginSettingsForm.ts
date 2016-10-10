@@ -34,14 +34,12 @@ export class PluginSettings {
     set plugin(pl: Plugin) {
         this._plugin = pl;
         // set template for plugin settings
-        // this.pluginTemplate = pl.settingsTemplate;
-        Observable.of(pl.settingsTemplate).subscribe((pluginTemplate) => {
-            this.pluginTemplate = pluginTemplate;
-        })
+        this.pluginTemplate = pl.settingsTemplate;
 
         // set config and find available options for required driver
         let fromDependencies = Observable
-            .from([...pl.dependenciesTemplate || []])
+            .from([...pl.dependenciesTemplate || []]);
+
         Observable.zip(
             // save key
             fromDependencies
@@ -50,7 +48,15 @@ export class PluginSettings {
             fromDependencies
                 .flatMap((dep) => this.driverConfigApi
                     .find({ where: { driverId: dep } })),
-            // turn required driver name as string into dynamic-form2 format
+
+            /* turn required driver name as string into dynamic-form format
+             *  Ex: 'myDriver' => 
+             *              {                          
+             *                  label: 'myDriver',
+             *                  helpString: myDriver configuration,
+             *                  type: 'select'               
+             *              } 
+             */
             fromDependencies
                 .reduce((fields, v) => {
                     fields[v] = {
@@ -60,18 +66,37 @@ export class PluginSettings {
                         type: "select"
                     }
                     return fields;
-                }, {}), (key, options, template) => {
-                    template[key].options = options.map((option) => {
-                        return {
-                            key: option.name,
-                            value: option.id
-                        }
-                    });
-                    return template;
-                }).subscribe(result => {
-                    this.dependenciesTemplate = result;
-                    this.dependenciesValue = pl.value ? pl.value.dependencies : {};
+                }, {}),
+
+            /*  Zip callback
+             *  add options to construct 'dynamicForm-ready' object
+             *  Ex: {                          
+             *         label: 'myDriver',
+             *         helpString: myDriver configuration,
+             *         type: 'select'               
+             *      }  
+             *         => 
+             *      {                          
+             *         label: 'myDriver',
+             *         helpString: myDriver configuration,
+             *         type: 'select',
+             *         options: [
+             *             key:'someKey', value:'someValue'
+             *         ]      
+             *      } 
+             */
+            (key, options, template) => {
+                template[key].options = options.map((option) => {
+                    return {
+                        key: option.name,
+                        value: option.id
+                    }
                 });
+                return template;
+            }).subscribe(result => {
+                this.dependenciesTemplate = result;
+                this.dependenciesValue = pl.value ? pl.value.dependencies : {};
+            });
         this.settingsValue = pl.value ? pl.value.settings : {};
     }
     get plugin() {
@@ -89,13 +114,11 @@ export class PluginSettings {
         this.form
             .valueChanges
             .subscribe((value) => {
-                this.plugin.valid = this.settForm.valid && this.depsForm.valid;
                 this.plugin.value = value;
-                this.changed.emit(value);
+                this.validation.emit(this.settForm.valid && this.depsForm.valid);
             });
-        this.plugin.valid = this.settForm.valid && this.depsForm.valid;
+        this.validation.emit(this.settForm.valid && this.depsForm.valid)
     }
-
     @Output()
-    changed: EventEmitter<any> = new EventEmitter();
+    validation: EventEmitter<any> = new EventEmitter();
 }

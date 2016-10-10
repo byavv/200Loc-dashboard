@@ -2,7 +2,7 @@ import {
     Component, OnInit, Output, Input,
     EventEmitter, OnDestroy, Host,
     Optional, ViewChild, ViewChildren,
-    QueryList
+    QueryList, SimpleChanges
 } from '@angular/core';
 
 import { TabDirective, ModalDirective } from 'ng2-bootstrap'
@@ -19,7 +19,7 @@ import { Observable } from 'rxjs';
     template: require("./templates/stepPreview.html"),
     styles: [require('./styles/stepPreview.scss')]
 })
-export class StepPreview implements OnInit {
+export class StepPreview {
     @Output()
     next: EventEmitter<any> = new EventEmitter();
 
@@ -37,14 +37,21 @@ export class StepPreview implements OnInit {
     result: any;
 
     headers = [
-        { key: 'Content', value: 'application/json' },
-        { key: 'test', value: 'supertest' }
+        // { key: 'content', value: 'application/json' }        
     ];
     params = [
-        { key: 'query', value: 'string' }
+        // todo: implememnt query string future
+        // { key: 'query', value: 'string' }
     ];
 
-    selectedMethod: string;
+    private _selectedMethod: string;
+    get selectedMethod() {
+        return this._selectedMethod;
+    }
+    set selectedMethod(value) {
+        this.bodyDisabled = value == 'GET';
+        this._selectedMethod = value;
+    }
 
     constructor(
         private master: MasterController,
@@ -53,12 +60,13 @@ export class StepPreview implements OnInit {
         private appController: AppController) {
 
     }
+
     ngOnInit() {
-        this.master.init$.subscribe(() => {
-            this.entry = this.master.config.entry;
-            this.methods = this.master.config.methods;
-            this.selectedMethod = this.methods[0];
-        })
+        this.master.init$.subscribe((config) => {
+            if (config.methods && config.methods.length > 0) {
+                this.selectedMethod = config.methods[0];
+            }
+        });
     }
 
     onChange(code) {
@@ -70,16 +78,11 @@ export class StepPreview implements OnInit {
     }
 
     methodChange(method: string) {
-        if (method == 'POST') {
-            this.bodyDisabled = true;
-            let tabs = this.tabs.toArray()
-            if (tabs[2].active) {
-                tabs[0].active = true;
-            }
-        } else {
-            this.bodyDisabled = false;
+        this.selectedMethod = method;
+        let tabs = this.tabs.toArray()
+        if (tabs[2].active) {
+            tabs[0].active = true;
         }
-        console.log(method)
     }
 
     onSubmit() {
@@ -90,7 +93,7 @@ export class StepPreview implements OnInit {
         this.backEnd.testApiConfig(this.selectedMethod, this.master.config.plugins, this.headers, this.params, this.body)
             .subscribe((res) => {
                 this.resultModal.show();
-                this.result = res.body;              
+                this.result = res.body;
             }, err => {
                 console.error(err)
             })

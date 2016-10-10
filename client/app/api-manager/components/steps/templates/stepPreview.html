@@ -1,20 +1,21 @@
-<div class="my-card">
+<div class="my-card">   
+    <div style="font-size:0.8em; position: absolute; top: 0;left: 5px; color: burlywood">(experimental)</div>
     <div class="form-group method-block">
-        <div class="row">
-            <div class="col-lg-6" style='font-size: 1.2em;'>
+        <div class="row">            
+            <div class="col-lg-6" style='font-size: 1.2em;'>                
                 <div class="row">
                     <div class="col-md-3">
                         <span>URL:</span>
                     </div>
                     <div class="col-md-9">
-                        <span>~{{entry}}</span>
+                        <span>~{{master.config.entry}}</span>
                     </div>
                 </div>
             </div>
             <div class="col-lg-6">
                 <div class="input-group">
                     <select #methodSelect name="method" (change)='methodChange($event.target.value)' class='form-control' id="method" [(ngModel)]='selectedMethod'>
-                        <option *ngFor="let method of methods" [value]="method">{{ method }}</option>
+                        <option *ngFor="let method of master.config.methods" [value]="method">{{ method }}</option>
                     </select>
                     <span class="input-group-btn">
                         <button type="button" (click)="send()" class="btn btn-secondary send-button">         
@@ -44,13 +45,6 @@
             </div>
         </tab>
     </tabset>
-
-    <!--<div class="b-add-pipe-item" [class.addFirst]="appliedPlugins.length == 0">
-        <a href='' (click)="lgModal.show()" title="Add">
-            <i class="fa fa-share-alt" aria-hidden="true"></i>
-            <span>+</span>
-        </a>
-    </div>-->
     <div bsModal #lgModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">

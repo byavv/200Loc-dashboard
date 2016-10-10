@@ -69,7 +69,7 @@ export class DynamicForm implements ControlValueAccessor {
                     : [''];
                 this._fields.push({
                     key: key,
-                    value: '',
+                    value: value[key].default != undefined ? value[key].default : '',
                     label: value[key].label,
                     helpString: value[key].help,
                     type: value[key].type ? value[key].type : 'string',

@@ -61,6 +61,7 @@ export class ApiMasterComponent {
     this.master
       .validate()
       .do(() => { this.loading = true; })
+      // create new or update
       .flatMap(() => this.apiConfigApi.upsert(this.master.config))
       .subscribe((result) => {
         this.router.navigate(['/']);

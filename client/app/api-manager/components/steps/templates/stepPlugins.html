@@ -10,7 +10,7 @@
                     <img src="/static/assets/images/cloud.png" alt="" style="width: 50px;">
                 </div>
                 <ul class="plugin-item-container" [hidden]="appliedPlugins.length == 0">
-                    <li *ngFor="let plugin of appliedPlugins" [ngClass]="{active: plugin.active, invalid: !plugin.valid}" (click)="selectPipeItem(plugin)">
+                    <li *ngFor="let plugin of appliedPlugins" [ngClass]="{active: plugin.active, invalid: !plugin.valid}" (click)="selectPluginInPipe(plugin)">
                         <div class="content">
                             {{plugin.order}}: {{plugin.name}}
                         </div>
@@ -45,8 +45,10 @@
                             <div class="modal-body">
                                 <div class="plugin-menu-container">
                                     <ul class="plugin-menu">
-                                        <li class="plugin-menu-item" *ngFor="let plugin of plugins" (dbclick)="addNewPlugin(selectedPlugin); lgModal.hide()" [class.active]='plugin.active'
-                                            (click)="select(plugin)">
+                                        <li class="plugin-menu-item" *ngFor="let plugin of plugins" 
+                                            (dbclick)="addNewPlugin(plugin); lgModal.hide()" 
+                                            [class.active]='plugin.active'
+                                            (click)="selectPlugin(plugin)">
                                             {{plugin.name}}
                                         </li>
                                     </ul>
@@ -62,7 +64,7 @@
         </div>
         <div class="col-md-7 col-sm-12">
             <div class="plugin-props" *ngFor="let plugin of appliedPlugins" [hidden]="!plugin.active">
-                <plugin-form [plugin]="plugin" (changed)='applyValidation()'></plugin-form>
+                <plugin-form [plugin]="plugin" (validation)='plugin.valid=$event; applyValidation(); stagePlugins();'></plugin-form>
             </div>
         </div>
     </div>
@@ -70,5 +72,5 @@
 
 <button type="button" (click)="onSubmit()" class="btn btn-primary next-button">
            <i class="fa fa-arrow-right" aria-hidden="true"></i>
-                Next
+            Test your api
 </button>

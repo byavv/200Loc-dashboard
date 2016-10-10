@@ -12,7 +12,7 @@ import { Observable } from 'rxjs';
 
 @Component({
     selector: 'step-general',
-    template: require("./templates/stepGeneral.html"),    
+    template: require("./templates/stepGeneral.html"),
     styles: [require('./styles/stepGeneral.scss'),
         `
      :host {
@@ -42,16 +42,13 @@ export class StepGeneral implements OnInit {
     ]
     constructor(
         private master: MasterController,
-        fb: FormBuilder,
-        private backEnd: BackEnd,
-        private appController: AppController) {
+        fb: FormBuilder) {
         this.form = fb.group({
             name: ["", Validators.required],
             entry: ["", Validators.required],
             description: [""],
             methods: ['GET']
         });
-
     }
 
     ngOnInit() {
@@ -63,19 +60,19 @@ export class StepGeneral implements OnInit {
             .subscribe(value => {
                 this.master.setValidity('general', this.form.valid);
             });
-            
+
         this.master.error$.subscribe(value => {
             console.log("ERROR", value)
             this.submitted = true;
             this.form.markAsTouched();
         });
-        this.master.init$.subscribe((config) => {           
-            this.loading = false;          
+        this.master.init$.subscribe((config) => {
+            this.loading = false;
             this.apiConfig = config;
         });
     }
 
-    onSubmit(form: FormGroup) {       
+    onSubmit(form: FormGroup) {
         this.submitted = true;
         if (form.valid) {
             this.next.next('plugins');
