@@ -9,27 +9,23 @@ dependencies:
     - sudo pip install docker-compose       
     - docker-compose -v
     - docker -v
-  override:
-    - docker info
-    - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
-    - docker build -t aksenchyk/fm-200loc:build .
 
 test:
   pre:
     - git grep --color TODO | cat 
   override:
-    - docker-compose -f test_compose.yml up gateway_test 
-  post:  
-    - docker-compose -f test_compose.yml stop
+    - npm test 
 
 deployment:
   hub_latest:
     branch: master
-    commands:     
-      - docker tag aksenchyk/fm-200loc:build aksenchyk/fm-200loc:latest   
-      - docker push aksenchyk/fm-200loc:latest
+    commands:
+      - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
+      - docker build -t aksenchyk/200loc-dashboard:latest .
+      - docker push aksenchyk/200loc-dasgboard:latest
   hub_release:    
     tag: /.*/ 
-    commands:     
-      - docker tag aksenchyk/fm-200loc:build aksenchyk/fm-200loc:$CIRCLE_TAG    
-      - docker push aksenchyk/fm-200loc:$CIRCLE_TAG   
+    commands:  
+      - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
+      - docker build -t aksenchyk/200loc-dashboard:$CIRCLE_TAG .
+      - docker push aksenchyk/200loc-dasgboard:$CIRCLE_TAG   

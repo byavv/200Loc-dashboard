@@ -1,17 +1,21 @@
 version: '2'
 services:
   gateway:    
-    image: aksenchyk/fm-200loc:build
+    image: aksenchyk/fm-200loc:latest
     environment:      
       - REDIS_HOST=redis
-      - HTTP_PORT=5601         
+      - MONGO_HOST=mongo 
+      - HTTP_PORT=80         
     depends_on:      
-      - redis    
-    entrypoint: ./wait-for-it.sh redis:6379 dashboard:5601 -s -- npm start
+      - redis 
+      - mongo   
+    entrypoint: ./wait-for-it.sh redis:6379 mongo:27017 dashboard:5601 -s -- npm start
   dashboard:
-    image: aksenchyk/fm-dashboard:build
+    image: aksenchyk/200loc-dashboard:latest
     environment: 
-      - REDIS_HOST=redis
-    command: npm start -- p 5601
+      - REDIS_HOST=redis      
+    entrypoint: ./wait-for-it.sh redis:6379 -s -- npm start -- p 5601 --link gateway:80  
   redis:    
     image: redis:latest 
+  mongo:
+    image: mongo:latest

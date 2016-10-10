@@ -25,7 +25,7 @@ process.env.HTTP_PORT = _.isArray(options.p) ? [...options.p].pop() : options.p;
 const redis_host = process.env.REDIS_HOST || 'localhost';
 app.set("redis_host", redis_host);
 
-const http_port = process.env.HTTP_PORT || 3001;
+const http_port = process.env.HTTP_PORT;
 
 boot(app, __dirname, (err) => {
     if (err) throw err;
