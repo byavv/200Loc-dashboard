@@ -32,7 +32,7 @@
   "files": {
     "loopback#static": {
       "paths": ["/static", "/*"],
-      "params": "$!../build"
+      "params": "$!../dist"
     }    
   },
   "final": {

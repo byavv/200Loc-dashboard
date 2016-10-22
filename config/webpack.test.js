@@ -2,8 +2,9 @@
  * @author: @AngularClass
  */
 
-const helpers = require('./helpers');
-
+const helpers = require('./helpers'),
+ path = require('path')
+ ;
 /**
  * Webpack Plugins
  */
@@ -45,9 +46,9 @@ module.exports = {
     extensions: ['', '.ts', '.js'],
 
     /**
-     * Make sure root is src
+     * Make sure root is client
      */
-    root: helpers.root('src'),
+    root: __root('../client'),
 
   },
 
@@ -73,7 +74,7 @@ module.exports = {
       {
         test: /\.ts$/,
         loader: 'tslint-loader',
-        exclude: [helpers.root('node_modules')]
+        exclude: [__root('../node_modules')]
       },
 
       /**
@@ -87,8 +88,8 @@ module.exports = {
         loader: 'source-map-loader',
         exclude: [
         // these packages have problems with their sourcemaps
-        helpers.root('node_modules/rxjs'),
-        helpers.root('node_modules/@angular')
+        __root('../node_modules/rxjs'),
+        __root('../node_modules/@angular')
       ]}
 
     ],
@@ -128,7 +129,7 @@ module.exports = {
        *
        * See: https://github.com/webpack/json-loader
        */
-      { test: /\.json$/, loader: 'json-loader', exclude: [helpers.root('src/index.html')] },
+      { test: /\.json$/, loader: 'json-loader', exclude: [__root('../client/index.html')] },
 
       /**
        * Raw loader support for *.css files
@@ -136,7 +137,7 @@ module.exports = {
        *
        * See: https://github.com/webpack/raw-loader
        */
-      { test: /\.css$/, loaders: ['to-string-loader', 'css-loader'], exclude: [helpers.root('src/index.html')] },
+      { test: /\.css$/, loaders: ['to-string-loader', 'css-loader'], exclude: [__root('../client/index.html')] },
  
       // all styles for the application will be bundled into css file
       {
@@ -151,7 +152,7 @@ module.exports = {
        *
        * See: https://github.com/webpack/raw-loader
        */
-      { test: /\.html$/, loader: 'raw-loader', exclude: [helpers.root('src/index.html')] }
+      { test: /\.html$/, loader: 'raw-loader', exclude: [__root('../client/index.html')] }
 
     ],
 
@@ -170,7 +171,7 @@ module.exports = {
        */
       {
         test: /\.(js|ts)$/, loader: 'istanbul-instrumenter-loader',
-        include: helpers.root('client/src'),
+        include: __root('../client/app'),
         exclude: [
           /\.(e2e|spec)\.ts$/,
           /node_modules/
@@ -219,7 +220,7 @@ module.exports = {
   tslint: {
     emitErrors: false,
     failOnHint: false,
-    resourcePath: 'src'
+    resourcePath: 'client'
   },
 
   /**
@@ -238,3 +239,9 @@ module.exports = {
   }
 
 };
+
+function __root() {
+  var _root = path.resolve(__dirname);
+  var args = Array.prototype.slice.call(arguments);
+  return path.join.apply(path, [_root].concat(args));
+}

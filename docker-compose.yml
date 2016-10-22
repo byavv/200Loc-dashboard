@@ -7,7 +7,9 @@ services:
       - MONGO_HOST=mongo          
     depends_on:      
       - redis 
-      - mongo   
+      - mongo 
+    ports:      
+      - "3001:3001"   
     entrypoint: ./wait-for-it.sh redis:6379 mongo:27017 dashboard:5601 -s -- npm start -- --p 80
   dashboard:
     image: aksenchyk/200loc-dashboard:build

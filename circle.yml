@@ -18,7 +18,7 @@ test:
   pre:
     - git grep --color TODO | cat 
   override:
-    - docker run aksenchyk/200loc-dashboard:build npm test
+    - npm test
 
 deployment:
   hub_latest:

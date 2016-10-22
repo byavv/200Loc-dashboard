@@ -6,7 +6,7 @@ var rootPath = path.normalize(__dirname);
 var conf = {
     dirs: {
         client: 'client',
-        build: 'build',
+        build: 'dist',
         coverage: process.env.CIRCLE_ARTIFACTS || 'coverage'
     },
     src: {

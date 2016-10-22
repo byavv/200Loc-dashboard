@@ -17,7 +17,7 @@ module.exports = {
     vendors: [__root('../client/app/vendors.ts')],
   },
   output: {
-    path: __root('../build'),
+    path: __root('../dist'),
     publicPath: '/static',
     pathinfo: false,
   },

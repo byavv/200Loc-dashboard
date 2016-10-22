@@ -29,6 +29,7 @@ process.env.LOG_LEVEL = options.log;
 gulp.task('dev', ['clean:build'], () => {
     var nodemonRef;
     var config = require("./config/webpack");
+  //  var config = require("./webpack.conf");
     webpack(config).watch(500, onWebpackCompleted(() => {
         nodemonRef
             ? nodemonRef.restart()

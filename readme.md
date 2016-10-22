@@ -1,14 +1,12 @@
 [![CircleCI][circle-image]][circle-url]
-[![codecov][codecov-image]][codecov-url]
 
-## Api gateway for [funny-market](https://github.com/byavv/funny-market) project
-## Based on [200loc-gate](https://github.com/byavv/200Loc-gate)
+## Gateway dashboard for [200loc-gate](https://github.com/byavv/fm-200loc)
 
 ## Basic Usage
 ```bash
 # clone the repo
-$ git clone https://github.com/byavv/fm-200loc.git
-$ cd fm-200loc
+$ git clone https://github.com/byavv/200Loc-dashboard.git
+$ cd 200Loc-dashboard
 
 # install 
 $ npm install
@@ -30,7 +28,6 @@ $ npm test-cov
 
 ```
 
-[circle-image]: https://circleci.com/gh/byavv/fm-200loc.svg?style=shield
-[circle-url]: https://circleci.com/gh/byavv/fm-200loc
-[codecov-url]: https://codecov.io/gh/byavv/fm-200loc
-[codecov-image]: https://codecov.io/gh/byavv/fm-200loc/branch/master/graph/badge.svg
+[circle-image]: https://circleci.com/gh/byavv/200Loc-dashboard.svg?style=shield
+[circle-url]: https://circleci.com/gh/byavv/200Loc-dashboard
+
