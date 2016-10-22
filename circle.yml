@@ -4,14 +4,6 @@ machine:
   services:
     - docker
 
-dependencies:
-  pre:
-    - sudo pip install docker-compose       
-    - docker-compose -v
-    - docker -v
-  override:
-    - docker info   
-
 test:
   pre:
     - git grep --color TODO | cat 
