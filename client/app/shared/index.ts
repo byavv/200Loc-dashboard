@@ -7,13 +7,12 @@ import { ModalModule, DropdownModule, TabsModule } from 'ng2-bootstrap'
 import { SHARED_SERVICES } from './services';
 import { SHARED_COMPONENTS } from './components';
 import { SHARED_DIRECTIVES } from "./directives";
-import { AceEditorDirective } from 'ng2-ace-editor';
+
 
 @NgModule({
   declarations: [
     ...SHARED_COMPONENTS,
-    ...SHARED_DIRECTIVES,
-    AceEditorDirective
+    ...SHARED_DIRECTIVES    
   ],
   imports: [
     CommonModule,
@@ -27,8 +26,7 @@ import { AceEditorDirective } from 'ng2-ace-editor';
   ],
   exports: [
     ...SHARED_COMPONENTS,
-    ...SHARED_DIRECTIVES,
-    AceEditorDirective,
+    ...SHARED_DIRECTIVES,    
     CommonModule,
     ReactiveFormsModule,
     FormsModule,
