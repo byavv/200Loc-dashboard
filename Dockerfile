@@ -1,4 +1,4 @@
-FROM node:6.3
+FROM node:6
 
 # Maintainer
 MAINTAINER Aksenchyk V. <aksenchyk.v@gmail.com>
