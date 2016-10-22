@@ -5,8 +5,7 @@ const webpackMerge = require('webpack-merge'),
   ;
 
 module.exports = webpackMerge(commonConfig, { 
-  devtool: 'inline-source-map',
-  debug: true,
+  devtool: 'inline-source-map',  
   entry: {
     polyfills: [
       'zone.js/dist/long-stack-trace-zone'

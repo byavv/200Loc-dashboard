@@ -23,37 +23,84 @@ module.exports = {
   },
   externals: [__root('node_modules')],
   resolve: {
-    root: [__root("node_modules")],
-    extensions: ['', '.ts', '.js', '.scss'],
-    cache: true,
-    modulesDirectories: ['node_modules'],
+    extensions: ['.ts', '.js', '.scss'],
+    modules: ['node_modules']
   },
   module: {
-    loaders: [
-      { test: /\.html$/, loader: 'html' },     
+    rules: [
+      {
+        test: /\.html$/, loader: 'html',
+        options: {
+          minimize: true,
+          removeAttributeQuotes: false,
+          caseSensitive: true,
+          customAttrSurround: [
+            [/#/, /(?:)/],
+            [/\*/, /(?:)/],
+            [/\[?\(?/, /(?:)/]
+          ],
+          customAttrAssign: [/\)?\]?=/]
+        }
+      },
       {
         test: /\.css$/,
         include: __root("../client/assets"),
         loader: ExtractTextPlugin.extract(['css', 'postcss'])
       },
-      { test: /\.css$/, include: __root('../client/app'), loader: 'raw!postcss' },
+      {
+        test: /\.css$/, include: __root('../client/app'),
+        use: [
+          'raw-loader',
+          {
+            loader: 'postcss-loader',
+            options: {
+              plugins: function () {
+                return [
+                  require('postcss-smart-import')({ /* ...options */ }),
+                  require('precss')({ /* ...options */ }),
+                  require('autoprefixer')({ /* ...options */ })
+                ];
+              }
+            }
+          }
+        ]
+      },
       {
         test: /\.scss$/,
         include: __root("../client/assets"),
         loader: ExtractTextPlugin.extract(['css', 'postcss', 'sass'])
       },
-      { test: /\.scss$/, include: __root('../client/app'), loader: 'raw!postcss!sass' },       
+      {
+        test: /\.scss$/,
+        include: __root('../client/app'),
+        use: [
+          'raw-loader',
+          {
+            loader: 'postcss-loader',
+            options: {
+              plugins: function () {
+                return [
+                  require('postcss-smart-import')({ /* ...options */ }),
+                  require('precss')({ /* ...options */ }),
+                  require('autoprefixer')({ /* ...options */ })
+                ];
+              }
+            }
+          },
+          'sass-loader'
+        ]
+      },
       {
         test: /\.ts$/,
         loaders: [
-          'awesome-typescript-loader'        
+          'awesome-typescript-loader'
         ],
         exclude: [/\.(spec|e2e)\.ts$/]
-      }     
+      }
     ]
   },
-  plugins: [    
-     new webpack.optimize.CommonsChunkPlugin({
+  plugins: [
+    new webpack.optimize.CommonsChunkPlugin({
       name: ['polyfills', 'vendors'].reverse()
     }),
     new HtmlWebpackPlugin({
@@ -67,13 +114,7 @@ module.exports = {
       { from: __root('../client/assets/images'), to: 'assets/images' },
       { from: __root('../client/assets/vendors'), to: 'assets/vendors' }
     ]),
-  ],
-  postcss: () => {
-    return [
-      autoprefixer({ browsers: ['last 2 versions'] }),
-      precss
-    ];
-  }
+  ]
 };
 
 function __root() {

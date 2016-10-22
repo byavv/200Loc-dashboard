@@ -17,10 +17,6 @@ RUN \
     npm install \   
     && npm run build
 
-RUN mkdir -p /coverage
-
-VOLUME /usr/src/app/coverage
-
 # Make server and client available
 EXPOSE 5601
 
