@@ -10,9 +10,7 @@ dependencies:
     - docker-compose -v
     - docker -v
   override:
-    - docker info
-    - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
-    - docker build -t aksenchyk/200loc-dashboard:build .
+    - docker info   
 
 test:
   pre:
@@ -23,11 +21,14 @@ test:
 deployment:
   hub_latest:
     branch: master
-    commands:    
-      - docker tag aksenchyk/200loc-dashboard:build aksenchyk/200loc-dashboard:latest   
+    commands:   
+      - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS 
+      - docker build -t aksenchyk/200loc-dashboard:latest .  
       - docker push aksenchyk/200loc-dashboard:latest
   hub_release:    
     tag: /.*/ 
-    commands:      
-      - docker tag aksenchyk/200loc-dashboard:build aksenchyk/200loc-dashboard:$CIRCLE_TAG    
-      - docker push aksenchyk/200loc-dashboard:$CIRCLE_TAG   
+    commands: 
+      - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS 
+      - docker build -t aksenchyk/200loc-dashboard:$CIRCLE_TAG .  
+      - docker push aksenchyk/200loc-dashboard:$CIRCLE_TAG    
+ 

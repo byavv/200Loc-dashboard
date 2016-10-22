@@ -7,7 +7,7 @@
     "build": "npm run clean:build && ./node_modules/.bin/gulp build --env production",
     "build:dev": "npm run clean:build && ./node_modules/.bin/gulp build --env development",
     "start": "cross-env node . --log info --env production",
-    "test": "cross-env NODE_ENV=test ./node_modules/.bin/karma start",
+    "test": "karma start",
     "test-cov": "cross-env NODE_ENV=test istanbul cover ./node_modules/mocha/bin/_mocha -- -R spec gateway/test/*.spec.js plugins/**/test/*.spec.js && cat ./coverage/lcov.info | ./node_modules/.bin/codecov",
     "dev": "cross-env DEBUG=gateway node ./server/server.js --link localhost:3001 --p 5601",
     "serve": "cross-env ./node_modules/.bin/gulp --env development",
@@ -15,7 +15,7 @@
     "clean:coverage": "rm -rf ./coverage",
     "clean:build": "rm -rf ./build/*",
     "clean:hard": "npm run clean:build && npm run clean:coverage && rm -rf node_modules",
-    "docker:build": "docker build -t aksenchyk/fm-dashboard:build ."
+    "docker:build": "docker build -t aksenchyk/200Loc-dashboard:build ."
   },
   "engines": {
     "node": ">= 6"
