@@ -1,4 +1,7 @@
-.plugin-menu-container {}
+.plugin-menu-container {
+    overflow: auto;
+    font-size: .8em;
+}
 
 .plugins-container {
     width: 80%;
