@@ -10,7 +10,7 @@ import {
 } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { DynamicForm } from './';
-import { Plugin, DriverConfig } from '../../shared/models';
+import { Plugin, DriverConfig } from '../../core/models';
 import { DriverConfigApi } from '../../shared/services';
 
 @Component({

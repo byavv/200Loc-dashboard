@@ -2,7 +2,7 @@ import { Component, OnInit, Output, Input, EventEmitter, OnDestroy, Host, ViewCh
 import { Router, ActivatedRoute } from "@angular/router";
 import { ShowError } from '../../directives';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Config, Plugin } from '../../../shared/models';
+import { Config, Plugin } from '../../../core/models';
 import { BackEnd, AppController } from '../../../shared/services';
 import { MasterController } from '../../services/masterController';
 import { Observable } from 'rxjs';

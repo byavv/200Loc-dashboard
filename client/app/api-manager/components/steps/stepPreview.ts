@@ -9,7 +9,7 @@ import { TabDirective, ModalDirective } from 'ng2-bootstrap'
 import { Router, ActivatedRoute } from "@angular/router";
 import { ShowError } from '../../directives/showError';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Config } from '../../../shared/models';
+import { Config } from '../../../core/models';
 import { BackEnd, AppController } from '../../../shared/services';
 import { MasterController } from '../../services/masterController';
 import { Observable } from 'rxjs';

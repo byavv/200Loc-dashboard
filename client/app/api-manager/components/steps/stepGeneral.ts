@@ -4,7 +4,7 @@ import { ShowError } from '../../directives/showError';
 import { ToggleGroup } from '../../controls';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
-import { Config } from '../../../shared/models';
+import { Config } from '../../../core/models';
 import { BackEnd, AppController } from '../../../shared/services';
 import { LoaderComponent } from '../../../shared/components';
 import { MasterController } from '../../services/masterController';

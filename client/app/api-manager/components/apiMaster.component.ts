@@ -3,10 +3,12 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { MASTER_STEPS_COMPONENTS } from "./steps";
 import { MasterController } from "../services/masterController";
 import { ApiConfigApi } from "../../shared/services";
-import { Config } from "../../shared/models"
+import { Config } from "../../core/models"
 import { UiTabs, UiPane, RestSize } from '../directives';
 import { Observable, Subscription } from "rxjs";
-
+import { Store } from '@ngrx/store';
+import { AppState, getMasterState } from '../../core/reducers';
+import { MasterActions } from '../../core/actions';
 
 @Component({
   selector: "api-master",
@@ -40,7 +42,9 @@ export class ApiMasterComponent {
     private router: Router,
     private route: ActivatedRoute,
     private master: MasterController,
-    private apiConfigApi: ApiConfigApi) {
+    private apiConfigApi: ApiConfigApi,
+
+    private _store: Store<AppState>) {
     this.queryRouteSub = this.route
       .queryParams
       .flatMap((params) => {
@@ -52,6 +56,20 @@ export class ApiMasterComponent {
       .subscribe((config) => {
         this.master.init(config);
       });
+  }
+  ngOnInit() {
+    this._store
+      .let(getMasterState())
+      .subscribe((value) => {
+        console.log(value)
+      })
+    this._store.dispatch({
+      type: MasterActions.SET_GENERAL,
+      payload: {
+        general:{form:'fsd'}
+      }
+    });
+
   }
   ngOnDestroy() {
     this.queryRouteSub.unsubscribe();

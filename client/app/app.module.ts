@@ -11,8 +11,14 @@ import { API_MNGR_COMPONENTS } from './api-manager';
 import { DRIVER_MNGR_COMPONENTS } from './driver-manager';
 import { PLUGINS_COMPONENTS } from './plugin-manager';
 import { AUTHENTICATION_COMPONENTS } from './authentication';
+import { APP_CORE_API_PROVIDERS } from './core'
 
 import { SharedModule } from "./shared";
+
+// Redux
+import { StoreModule, Store } from '@ngrx/store';
+import reducer from './core/reducers';
+import { AppState } from './core/reducers';
 
 import {
   LocationStrategy,
@@ -20,9 +26,7 @@ import {
 } from '@angular/common';
 
 enableProdMode();
-/**
- * `AppModule` is the main entry point into Angular2's bootstraping process
- */
+
 @NgModule({
   bootstrap: [App],
   declarations: [
@@ -36,10 +40,12 @@ enableProdMode();
     BrowserModule,
     HttpModule,
     RouterModule.forRoot(routes, { useHash: false }),
-    SharedModule
+    SharedModule,
+    StoreModule.provideStore(reducer)
   ],
   providers: [
-    { provide: LocationStrategy, useClass: HashLocationStrategy }
+    { provide: LocationStrategy, useClass: HashLocationStrategy },
+    ...APP_CORE_API_PROVIDERS
   ]
 })
 export class AppModule {

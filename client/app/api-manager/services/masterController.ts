@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subject, ReplaySubject, Observer } from 'rxjs';
-import { Config } from '../../shared/models';
+import { Config } from '../../core/models';
 
 @Injectable()
 export class MasterController {

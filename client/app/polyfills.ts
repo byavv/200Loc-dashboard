@@ -30,6 +30,10 @@ import 'core-js/es6/reflect';
 import 'core-js/es7/reflect';
 import 'zone.js/dist/zone';
 
+import '@ngrx/store';
+import '@ngrx/core';
+import '@ngrx/effects';
+
 // Typescript emit helpers polyfill
 import 'ts-helpers';
 

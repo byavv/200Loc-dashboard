@@ -2,7 +2,7 @@
 import { Injectable } from '@angular/core';
 import { StorageDriver } from '../storage/storage.driver';
 import { Subject, Observable } from 'rxjs';
-import { User } from '../../models';
+import { User } from '../../../core/models';
 
 @Injectable()
 export class LoopBackAuth {
