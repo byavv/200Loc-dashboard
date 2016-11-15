@@ -8,30 +8,38 @@ import { MasterActions } from '../actions';
 export interface EntryCreationMasterState {
     general: any;
     plugins: any;
-    position: string;
-    errors: Array<any>;
+    validity: any;
 };
 
 const initialState: EntryCreationMasterState = {
     general: {},
     plugins: [],
-    position: 'general',
-    errors: []
+    validity: {
+        general: true,
+        plugins: true
+    }
 };
 
 export function masterReducer(state = initialState, action: Action): EntryCreationMasterState {
     switch (action.type) {
-        case MasterActions.SET_GENERAL: {
-            const generalFormData = action.payload;
+        case MasterActions.SET_GENERAL_DATA: {
+            const generalData = action.payload;
             const newState = Object.assign({}, state, {
-                general: generalFormData
+                general: generalData
             })
             return newState;
         }
-        case MasterActions.SET_PLUGINS: {
+        case MasterActions.SET_PLUGINS_DATA: {
             const plugins: any[] = [...action.payload];
             const newState = Object.assign({}, state, {
                 plugins: plugins
+            })
+            return newState;
+        }
+        case MasterActions.SET_VALIDITY: {
+            const validityObject: any = action.payload;
+            const newState = Object.assign({}, state, {
+                validity: Object.assign(state.validity, validityObject)
             })
             return newState;
         }
@@ -49,4 +57,9 @@ export function getMasterValue() {
                 plugins: s.plugins
             }
         });
+}
+
+export function getValidity() {
+    return (state$: Observable<MasterState>) => state$
+        .pluck('validity');
 }

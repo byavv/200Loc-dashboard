@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { DriverConfigApi, BackEnd } from '../../shared/services';
 import { DriverConfig } from '../../core/models';
@@ -6,9 +6,9 @@ import { ModalDirective } from 'ng2-bootstrap/ng2-bootstrap';
 import { Observable } from 'rxjs';
 
 @Component({
-    template: require('./templates/driverManagerConfigList.tmpl.html')
+    templateUrl: './templates/driverManagerConfigList.tmpl.html'
 })
-export class DriverManagerConfigComponent {
+export class DriverManagerConfigComponent implements AfterViewInit {
     driverName: string;
     driverTemplate: any;
     driverConfigs: Array<any> = [];
@@ -22,7 +22,7 @@ export class DriverManagerConfigComponent {
         private moduleApi: BackEnd
     ) { }
 
-    ngOnInit() {
+    ngAfterViewInit() {
         this.driverName = this.activeRoute.snapshot.queryParams['name'];
         Observable.zip(
             // find configurations of current driver
@@ -33,15 +33,15 @@ export class DriverManagerConfigComponent {
             .subscribe(result => {
                 this.driverConfigs = result[0];
                 this.driverTemplate = result[1];
-            })
+            });
         this.modal.onHidden.subscribe(() => {
             this.currentSettings = {};
             this.currentDriver = {};
-        })
+        });
     }
     private _updateDriverConfigList() {
         return this.driverConfigApi
-            .find({ where: { driverId: this.driverName } })
+            .find({ where: { driverId: this.driverName } });
     }
 
     applyValidation() { }

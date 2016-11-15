@@ -14,8 +14,9 @@ import { MasterActions } from '../../core/actions';
   selector: "api-master",
   template: `
     <div class="row">
-        <div class="col-md-12 col-sm-12" style="position: relative;">             
-            <ui-tabs #tab rest-height default='general'>
+        <div class="col-md-12 col-sm-12" style="position: relative;">    
+            <loader [active]='loading' [async]='master.init$' [delay]='500'></loader>
+         <!--     <ui-tabs #tab rest-height default='general'>
                 <ui-pane id='general' title='config' [valid]="(master.isValid('general') | async)">
                     <step-general (next)="tab.goTo($event)"></step-general>
                 </ui-pane>
@@ -26,6 +27,23 @@ import { MasterActions } from '../../core/actions';
                     <step-preview (next)="onDone()"></step-preview>
                 </ui-pane>     
             </ui-tabs>
+
+           -->
+
+           <ui-tabs #tab rest-height default='general'>
+                <ui-pane id='general' title='config' [valid]="validation['general']">
+                    <step-general (next)="tab.goTo($event)" ></step-general>
+                </ui-pane>
+                <ui-pane id='plugins' title='pipe' [valid]="validation['plugins']">
+                    <step-plugins (next)="tab.goTo($event)" ></step-plugins>
+                </ui-pane>
+                <ui-pane id='preview' title='test' [valid]='true'>
+                    <step-preview (next)="onDone()"></step-preview>
+                </ui-pane>     
+            </ui-tabs>
+
+         
+
         </div>
     </div>
     `,
@@ -37,17 +55,37 @@ export class ApiMasterComponent {
   id: string;
   loading: boolean = true;
   queryRouteSub: Subscription;
-
+  validation: any = {}
   constructor(
     private router: Router,
-    private route: ActivatedRoute,
+    private _activatedRoute: ActivatedRoute,
     private master: MasterController,
     private apiConfigApi: ApiConfigApi,
-
     private _store: Store<AppState>) {
-    this.queryRouteSub = this.route
+
+  }
+  ngOnInit() {
+
+    this._store
+      .let(getMasterState())
+      .subscribe((value) => {
+        console.log("MASTER STATE", value)
+      })
+
+    this.master.init$.subscribe(() => {
+      this.loading = false;
+      this._store.dispatch({
+        type: MasterActions.SET_GENERAL_DATA,
+        payload: { form: 'fsd' }
+      });
+    });
+
+  }
+
+  ngAfterViewInit() {
+    this.queryRouteSub = this._activatedRoute
       .queryParams
-      .flatMap((params) => {
+      .flatMap((params): any => {
         this.id = params["id"];
         return this.id
           ? this.apiConfigApi.findById(this.id)
@@ -56,21 +94,13 @@ export class ApiMasterComponent {
       .subscribe((config) => {
         this.master.init(config);
       });
-  }
-  ngOnInit() {
-    this._store
-      .let(getMasterState())
+    this.master.validate$
       .subscribe((value) => {
-        console.log(value)
-      })
-    this._store.dispatch({
-      type: MasterActions.SET_GENERAL,
-      payload: {
-        general:{form:'fsd'}
-      }
-    });
-
+        console.log('validation changed', value)
+        this.validation = value;
+      });
   }
+
   ngOnDestroy() {
     this.queryRouteSub.unsubscribe();
   }

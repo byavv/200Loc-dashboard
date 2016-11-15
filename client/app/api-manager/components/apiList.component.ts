@@ -6,8 +6,8 @@ import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'api-list',
-  template: require('./templates/apiList.template.html'),
-  styles: [require('./styles/apiList.scss')]
+  templateUrl: './templates/apiList.template.html',
+  styleUrls: ['./styles/apiList.scss']
 })
 
 export class ApiListComponent implements OnInit, OnDestroy {
@@ -20,6 +20,8 @@ export class ApiListComponent implements OnInit, OnDestroy {
     this.sub = this.backEnd.getApiConfigs().subscribe(configs => {
       this.configs = configs;
       this.loading = false;
+    },(err)=>{
+      console.error(err);
     })
   }
 

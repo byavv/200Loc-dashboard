@@ -16,8 +16,8 @@ import { Observable } from 'rxjs';
 
 @Component({
     selector: 'step-preview',
-    template: require("./templates/stepPreview.html"),
-    styles: [require('./styles/stepPreview.scss')]
+    templateUrl: "./templates/stepPreview.html",
+    styleUrls: ['./styles/stepPreview.scss']
 })
 export class StepPreview {
     @Output()

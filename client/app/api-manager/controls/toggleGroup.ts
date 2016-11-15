@@ -10,8 +10,8 @@ import {
 
 @Component({
     selector: 'toggleGroup[ngModel]',
-    template: require('./templates/toggleGroup.html'),
-    styles: [require("./styles/toggleGroup.scss")]
+    templateUrl: './templates/toggleGroup.html',
+    styleUrls: ['./styles/toggleGroup.scss']
 })
 
 export class ToggleGroup implements ControlValueAccessor {

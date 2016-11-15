@@ -22,7 +22,7 @@ process.env.NODE_ENV = options.env;
 process.env.GATEWAY = _.isArray(options.link) ? [...options.link].pop() : options.link;
 process.env.HTTP_PORT = _.isArray(options.p) ? [...options.p].pop() : options.p;
 
-const redis_host = process.env.REDIS_HOST || 'localhost';
+const redis_host = process.env.REDIS_HOST || '127.0.0.1';
 app.set("redis_host", redis_host);
 
 const http_port = process.env.HTTP_PORT;

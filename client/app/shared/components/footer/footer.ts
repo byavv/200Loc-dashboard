@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 @Component({
     selector: 'app-footer',
-    template: require('./footer.html')
+    templateUrl: './footer.html'
 })
 export class FooterComponent implements OnInit {
     constructor() { }

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, Subject, ReplaySubject, Observer } from 'rxjs';
+import { Observable, Subject, ReplaySubject, BehaviorSubject, Observer } from 'rxjs';
 import { Config } from '../../core/models';
 
 @Injectable()
@@ -7,7 +7,10 @@ export class MasterController {
     init$: ReplaySubject<any> = new ReplaySubject();
     update$: ReplaySubject<any> = new ReplaySubject();
 
-    validate$: ReplaySubject<any> = new ReplaySubject();
+    validate$: BehaviorSubject<any> = new BehaviorSubject({
+        general: false,
+        plugins: false
+    });
     error$: Subject<any> = new Subject();
 
     config: any = {};
@@ -17,13 +20,9 @@ export class MasterController {
         plugins: true
     };
 
-    getValidity(key) {
-        return this.validation[key];
-    }
-
     setValidity(key, value) {
         this.validation[key] = value;
-        this.validate$.next(this.validation);
+       // this.validate$.next(this.validation);
     }
 
     validate(): Observable<any> {
@@ -39,12 +38,18 @@ export class MasterController {
             }
         })
     }
-    update(){
+    update() {
         this.update$.next(this.config);
     }
 
-    isValid(key): Observable<any> {
-        return this.validate$.pluck(key);
+    // isValid(key): Observable<any> {      
+    //     retun  this.validation[key]
+    //   //  return this.validate$.pluck(key);    
+    // }
+
+    isValid(key): boolean {
+        return this.validation[key] || false;
+        //  return this.validate$.pluck(key);    
     }
 
     init(conf) {

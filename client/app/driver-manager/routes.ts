@@ -3,7 +3,7 @@ import {
     DriverManagerBaseComponent,
     DriverManagerConfigComponent,
     DriverTypesComponent
-} from './';
+} from './components';
 
 export const DriverManagerRoutes: Routes = [
     {

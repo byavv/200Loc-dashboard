@@ -1,4 +1,4 @@
-import { NgModule, ApplicationRef, enableProdMode } from '@angular/core';
+import { NgModule, ApplicationRef } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { HttpModule, Http } from '@angular/http';
@@ -8,9 +8,9 @@ import { CommonModule } from '@angular/common';
 import { routes } from './app.routes';
 import { App } from './app.component';
 import { API_MNGR_COMPONENTS } from './api-manager';
-import { DRIVER_MNGR_COMPONENTS } from './driver-manager';
-import { PLUGINS_COMPONENTS } from './plugin-manager';
-import { AUTHENTICATION_COMPONENTS } from './authentication';
+import { DRIVER_MNGR_COMPONENTS } from './driver-manager/components';
+import { PLUGINS_COMPONENTS } from './plugin-manager/components';
+import { AUTHENTICATION_COMPONENTS } from './authentication/components';
 import { APP_CORE_API_PROVIDERS } from './core'
 
 import { SharedModule } from "./shared";
@@ -24,8 +24,6 @@ import {
   LocationStrategy,
   HashLocationStrategy
 } from '@angular/common';
-
-enableProdMode();
 
 @NgModule({
   bootstrap: [App],

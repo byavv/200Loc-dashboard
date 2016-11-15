@@ -1,27 +1,18 @@
-import { Component, OnInit, Output, Input, EventEmitter, OnDestroy, Host, ViewChildren, QueryList, ViewContainerRef } from '@angular/core';
+import { Component, OnInit, AfterViewInit, Output, Input, EventEmitter, OnDestroy, Host, ViewChildren, QueryList, ViewContainerRef } from '@angular/core';
 import { Router, ActivatedRoute } from "@angular/router";
 import { ShowError } from '../../directives';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Config, Plugin } from '../../../core/models';
 import { BackEnd, AppController } from '../../../shared/services';
 import { MasterController } from '../../services/masterController';
-import { Observable } from 'rxjs';
-
-import { Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 
 @Component({
     selector: 'step-plugins',
-    template: require("./templates/stepPlugins.html"),
-    styles: [require('./styles/stepPlugins.scss'),
-        `
-     :host {
-        flex:1;
-        display: flex;
-        flex-direction: column;
-    }
-    `]
+    templateUrl: "./templates/stepPlugins.html",
+    styleUrls: ['./styles/stepPlugins.scss']    
 })
-export class StepPlugins implements OnInit {
+export class StepPlugins implements AfterViewInit {
     _apiConfig;
     @Output()
     next: EventEmitter<any> = new EventEmitter();
@@ -41,7 +32,7 @@ export class StepPlugins implements OnInit {
         private appController: AppController) {
     }
 
-    ngOnInit() {
+    ngAfterViewInit() {
         this.loading = true;
         this.master.error$.subscribe(() => {
             this.showError = true;
@@ -49,7 +40,7 @@ export class StepPlugins implements OnInit {
         this.appController
             .init$
             .do((defaults) => { this.plugins = defaults.plugins || []; })
-            .flatMap(() => this.master.init$)
+           // .flatMap(() => this.master.init$)
             .subscribe((apiConfig) => {
                 this.loading = false;
 
@@ -191,7 +182,7 @@ export class StepPlugins implements OnInit {
         this.appliedPlugins.splice(index, 1);
         if (this.appliedPlugins[0])
             this.selectPluginInPipe();
-            
+
         this.stagePlugins();
         this.applyValidation();
     }

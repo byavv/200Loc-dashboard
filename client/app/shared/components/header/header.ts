@@ -3,8 +3,8 @@ import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-header',
-    template: require('./header.html'),
-    styles: [require('./header.scss')]
+    templateUrl: './header.html',
+    styleUrls: ['./header.scss']
 })
 export class HeaderComponent implements OnInit {
     isAuthenticated: boolean = false;

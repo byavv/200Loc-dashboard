@@ -4,13 +4,7 @@
   },
   "initial": {
     "compression": {},
-    "cors": {
-      "params": {
-        "origin": true,
-        "credentials": true,
-        "maxAge": 86400
-      }
-    }   
+    "cors": { }   
   },
   "session": {},
   "auth": {},
@@ -28,13 +22,7 @@
         "${restApiRoot}"
       ]
     }
-  },
-  "files": {
-    "loopback#static": {
-      "paths": ["/static", "/*"],
-      "params": "$!../dist"
-    }    
-  },
+  },  
   "final": {
     "loopback#urlNotFound": {}
   },

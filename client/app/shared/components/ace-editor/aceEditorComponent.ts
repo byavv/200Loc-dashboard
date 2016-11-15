@@ -12,8 +12,8 @@ export class AceEditorComponent {
     @Input('style') style: any = {};
     _options: any = {};
     _readOnly: boolean = false;
-    _theme: string = "monokai";
-    _mode: string = "html";
+    _theme: string = "eclipse";
+    _mode: string = "json";
     _autoUpdateContent: boolean = true;
     _editor: any;
     oldText: any;
@@ -28,8 +28,8 @@ export class AceEditorComponent {
 
     init() {
         this._editor.setOptions(this._options || {});
-        this._editor.setTheme(`ace/theme/${this._theme}`);
-        this._editor.getSession().setMode(`ace/mode/${this._mode}`);
+        this._editor.setTheme(`brace/theme/${this._theme}`);
+        this._editor.getSession().setMode(`brace/mode/${this._mode}`);
         this._editor.setReadOnly(this._readOnly);
     }
 
@@ -67,7 +67,7 @@ export class AceEditorComponent {
 
     setTheme(theme: any) {
         this._theme = theme;
-        this._editor.setTheme(`ace/theme/${theme}`);
+        this._editor.setTheme(`brace/theme/${theme}`);
     }
 
     @Input() set mode(mode: any) {
@@ -76,7 +76,7 @@ export class AceEditorComponent {
 
     setMode(mode: any) {
         this._mode = mode;
-        this._editor.getSession().setMode(`ace/mode/${mode}`);
+        this._editor.getSession().setMode(`brace/mode/${mode}`);
     }
 
     @Input() set text(text: any) {

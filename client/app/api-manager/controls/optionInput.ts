@@ -5,13 +5,13 @@ import { ShowError } from '../directives';
 
 @Component({
   selector: 'option-input',
-  template: require('./templates/optionInput.html')
+  templateUrl: './templates/optionInput.html'
 })
 export class OptionInput {
   @Input() field: any;
   @Input() form: FormGroup;
 
   get isValid() {
-    return this.form.controls[this.field.key].valid;
+    return this.form.controls[this.field.key] ? this.form.controls[this.field.key].valid : true;
   }
 }

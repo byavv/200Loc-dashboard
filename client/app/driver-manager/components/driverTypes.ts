@@ -3,8 +3,8 @@ import { Router } from '@angular/router';
 import { BackEnd } from '../../shared/services';
 
 @Component({
-    template: require('./templates/driverTypes.tmpl.html'),
-    styles: [require('./styles/driverTypes.scss')]
+    templateUrl: './templates/driverTypes.tmpl.html',
+    styleUrls: ['./styles/driverTypes.scss']
 })
 export class DriverTypesComponent implements OnInit {
     drivers: Array<any> = [];

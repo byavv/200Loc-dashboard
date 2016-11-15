@@ -1,6 +1,6 @@
 import {Component, Input, QueryList, AfterContentInit, HostBinding,
     ViewContainerRef, TemplateRef, ContentChildren, ViewRef} from '@angular/core';
-import { RestSize } from './restSize';
+
 @Component({
     selector: 'ui-pane',
     template: `

@@ -4,20 +4,28 @@ import { Action } from '@ngrx/store';
 @Injectable()
 export class MasterActions {
 
-    static SET_GENERAL = '[MASTER] SET GENERAL';
-    static SET_PLUGINS = '[MASTER] SET PLUGINS';
+    static SET_GENERAL_DATA = '[MASTER] SET ENTRY DATA';
+    static SET_PLUGINS_DATA = '[MASTER] SET PLUGINS DATA';
+    static SET_VALIDITY = '[MASTER] SET VALIDITY';
 
-    setGeneralEntryInfo(generalFormData: any): Action {
+    setGeneralInfoData(info: any): Action {
         return {
-            type: MasterActions.SET_GENERAL,
-            payload: generalFormData
+            type: MasterActions.SET_GENERAL_DATA,
+            payload: info
         };
     }
 
-    setEntryPlugins(plugins: any): Action {
+    setPluginsData(plugins: Array<any>): Action {
         return {
-            type: MasterActions.SET_PLUGINS,
+            type: MasterActions.SET_PLUGINS_DATA,
             payload: plugins
+        };
+    }
+
+    setValidity(validationObject: any): Action {
+        return {
+            type: MasterActions.SET_VALIDITY,
+            payload: validationObject
         };
     }
 }

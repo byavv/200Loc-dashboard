@@ -15,7 +15,7 @@ import { DriverConfigApi } from '../../shared/services';
 
 @Component({
     selector: 'plugin-form',
-    template: require('./templates/pluginSettingsForm.html')
+    templateUrl: './templates/pluginSettingsForm.html'
 })
 export class PluginSettings {
     form: FormGroup;

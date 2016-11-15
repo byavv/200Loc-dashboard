@@ -46,7 +46,7 @@ import {
  */
 @Component({
     selector: 'dynamic-form',
-    template: require('./templates/dynamicForm.html'),
+    templateUrl: './templates/dynamicForm.html',
     exportAs: 'dynForm',
     providers: [
         {
@@ -101,7 +101,7 @@ export class DynamicForm implements ControlValueAccessor {
     onTouched = () => {
     };
     @Output()
-    onChange: EventEmitter<any> = new EventEmitter();
+    onChange: EventEmitter<any> = new EventEmitter(true);
     writeValue(value) {
         if (value !== undefined) {
             for (const key in value) {

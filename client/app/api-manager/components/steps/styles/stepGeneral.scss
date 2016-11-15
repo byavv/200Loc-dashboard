@@ -1,8 +1,15 @@
-form{
-    > .form-group:last-child{
-        margin-bottom: 0!important;
-    }
+form {
+  > .form-group:last-child {
+    margin-bottom: 0 !important;
+  }
 }
-.my-card{
-    flex: 1;
+
+.my-card {
+  flex: 1;
+}
+
+:host {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
 }

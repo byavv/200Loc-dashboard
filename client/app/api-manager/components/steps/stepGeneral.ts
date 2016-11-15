@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, Input, EventEmitter, OnDestroy, Host, Optional } from '@angular/core';
+import { Component, OnInit, AfterViewInit, Output, Input, EventEmitter, OnDestroy, Host, Optional } from '@angular/core';
 import { Router, ActivatedRoute } from "@angular/router";
 import { ShowError } from '../../directives/showError';
 import { ToggleGroup } from '../../controls';
@@ -12,18 +12,10 @@ import { Observable } from 'rxjs';
 
 @Component({
     selector: 'step-general',
-    template: require("./templates/stepGeneral.html"),
-    styles: [require('./styles/stepGeneral.scss'),
-        `
-     :host {
-        flex:1;
-        display: flex;
-        flex-direction: column;
-    }
-    `
-    ]
+    templateUrl: "./templates/stepGeneral.html",
+    styleUrls: ['./styles/stepGeneral.scss']
 })
-export class StepGeneral implements OnInit {
+export class StepGeneral implements AfterViewInit {
     @Output()
     next: EventEmitter<any> = new EventEmitter();
     form: FormGroup;
@@ -51,7 +43,7 @@ export class StepGeneral implements OnInit {
         });
     }
 
-    ngOnInit() {
+    ngAfterViewInit() {
         this.loading = true;
         this.master.setValidity('general', this.form.valid);
         this.form
@@ -75,7 +67,7 @@ export class StepGeneral implements OnInit {
     onSubmit(form: FormGroup) {
         this.submitted = true;
         if (form.valid) {
-            this.next.next('plugins');
+            this.next.emit('plugins');
         }
     }
 }

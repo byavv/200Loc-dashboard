@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-@Component({   
-    template: require('./templates/apiManager.template.html')    
+@Component({
+    templateUrl: './templates/apiManager.template.html'
 })
-export class ApiManagementComponent {}
+export class ApiManagementComponent { }

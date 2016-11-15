@@ -1,5 +1,30 @@
 <form [formGroup]='form' class='form-horizontal' role='form'>  
     <div *ngFor='let field of fields'>
-        <option-input [field]='field' [form]='form'></option-input>
+        <!--<option-input [field]='field' [form]='form'></option-input>-->
+
+
+        <div class="form-group">
+            <div [ngSwitch]="field.type">
+                <label [attr.for]="field.key">{{ field.label | firstUp }}</label>
+                <input class="form-control" 
+                    *ngSwitchCase="'string'" 
+                    [formControlName]="field.key" 
+                    [(ngModel)]='field.value' 
+                    [id]="field.key">
+                <select class="form-control" [id]="field.key" 
+                    *ngSwitchCase="'select'" 
+                    [(ngModel)]='field.value' 
+                    [formControlName]="field.key">
+                    <option *ngFor="let opt of field.options" [value]="opt.value">{{ opt.key }}</option>
+                </select>
+                <show-error *ngIf="form.controls[field.key].dirty" 
+                    [control]="field.key" 
+                    [errors]="{'required': 'Field is required'}">
+                </show-error>
+            </div>
+        </div>
+
+
+
     </div>
 </form>
