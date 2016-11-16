@@ -7,7 +7,7 @@
             </div>
             <div class="plugins-container" style="position: relative;">
                 <div class="image-container" [hidden]="appliedPlugins.length == 0">
-                    <img src="/static/assets/images/cloud.png" alt="" style="width: 50px;">
+                    <img src="/assets/images/cloud.png" alt="" style="width: 50px;">
                 </div>
                 <ul class="plugin-item-container" [hidden]="appliedPlugins.length == 0">
                     <li *ngFor="let plugin of appliedPlugins" [ngClass]="{active: plugin.active, invalid: !plugin.valid}" (click)="selectPluginInPipe(plugin)">

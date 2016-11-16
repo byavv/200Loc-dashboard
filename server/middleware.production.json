@@ -9,7 +9,7 @@
   "files": {
     "loopback#static": {
       "paths": [
-        "/static",
+        "/",
         "/*"
       ],
       "params": "$!../dist"

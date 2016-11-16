@@ -6,6 +6,7 @@ export class DefaultsActions {
 
     static SET_PLUGINS_LIST = '[DEFAULTS] SET PLUGINS';
     static SET_DRIVERS_LIST = '[DEFAULTS] SET DRIVERS';
+    static SET_DEFAULTS = '[DEFAULTS] SET DEFAULTS';
 
     setPlugins(plugins: any): Action {
         return {
@@ -18,6 +19,13 @@ export class DefaultsActions {
         return {
             type: DefaultsActions.SET_DRIVERS_LIST,
             payload: drivers
+        };
+    }
+
+    setDefaults(defaults: any): Action {
+        return {
+            type: DefaultsActions.SET_DEFAULTS,
+            payload: defaults
         };
     }
 }

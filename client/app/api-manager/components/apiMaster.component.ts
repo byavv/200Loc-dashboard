@@ -7,43 +7,25 @@ import { Config } from "../../core/models"
 import { UiTabs, UiPane, RestSize } from '../directives';
 import { Observable, Subscription } from "rxjs";
 import { Store } from '@ngrx/store';
-import { AppState, getMasterState } from '../../core/reducers';
-import { MasterActions } from '../../core/actions';
+import { AppState, getConfigState, getMasterState, getValidationState } from '../../core/reducers';
+import { MasterActions, ConfigActions } from '../../core/actions';
 
 @Component({
   selector: "api-master",
   template: `
     <div class="row">
-        <div class="col-md-12 col-sm-12" style="position: relative;">    
-            <loader [active]='loading' [async]='master.init$' [delay]='500'></loader>
-         <!--     <ui-tabs #tab rest-height default='general'>
-                <ui-pane id='general' title='config' [valid]="(master.isValid('general') | async)">
-                    <step-general (next)="tab.goTo($event)"></step-general>
-                </ui-pane>
-                <ui-pane id='plugins' title='pipe' [valid]="(master.isValid('plugins') | async)">
-                    <step-plugins (next)="tab.goTo($event)"></step-plugins>
-                </ui-pane>
-                <ui-pane id='preview' title='test' [valid]='true'>
-                    <step-preview (next)="onDone()"></step-preview>
-                </ui-pane>     
-            </ui-tabs>
-
-           -->
-
+        <div class="col-md-12 col-sm-12" style="position: relative;"> 
            <ui-tabs #tab rest-height default='general'>
-                <ui-pane id='general' title='config' [valid]="validation['general']">
-                    <step-general (next)="tab.goTo($event)" ></step-general>
+                <ui-pane id='general' title='config' [valid]='(stepGeneral.validation | async)'>
+                    <step-general #stepGeneral (next)="tab.goTo($event)" [submitted]='submitted'> </step-general>
                 </ui-pane>
-                <ui-pane id='plugins' title='pipe' [valid]="validation['plugins']">
-                    <step-plugins (next)="tab.goTo($event)" ></step-plugins>
+                <ui-pane id='plugins' title='pipe' [valid]='(stepPlugins.validation | async)'>
+                    <step-plugins #stepPlugins (next)="tab.goTo($event)" [submitted]='submitted' ></step-plugins>
                 </ui-pane>
                 <ui-pane id='preview' title='test' [valid]='true'>
                     <step-preview (next)="onDone()"></step-preview>
                 </ui-pane>     
             </ui-tabs>
-
-         
-
         </div>
     </div>
     `,
@@ -54,32 +36,39 @@ export class ApiMasterComponent {
   @ViewChild(UiTabs) tab: UiTabs;
   id: string;
   loading: boolean = true;
+  submitted: boolean = false;
   queryRouteSub: Subscription;
-  validation: any = {}
+  validation: any = {};
+  config: Config = {};
   constructor(
     private router: Router,
     private _activatedRoute: ActivatedRoute,
-    private master: MasterController,
+    private _configActions: ConfigActions,
+    private _masterActions: MasterActions,
     private apiConfigApi: ApiConfigApi,
-    private _store: Store<AppState>) {
+    public store: Store<AppState>) {
 
   }
   ngOnInit() {
 
-    this._store
-      .let(getMasterState())
-      .subscribe((value) => {
-        console.log("MASTER STATE", value)
+    this.store
+      .let(getValidationState())
+      .subscribe((validation) => {       
+        this.validation = validation;
       })
-
-    this.master.init$.subscribe(() => {
-      this.loading = false;
-      this._store.dispatch({
-        type: MasterActions.SET_GENERAL_DATA,
-        payload: { form: 'fsd' }
+    /*  this.store
+        .let(getConfigState())
+        .subscribe((config) => {
+          console.log("MASTER CONFIG", config)
+          this.config = config;
+        });
+  */
+    this.store
+      .let(getMasterState())
+      .select(state => state.config)
+      .subscribe((config) => {
+        this.config = config;
       });
-    });
-
   }
 
   ngAfterViewInit() {
@@ -92,13 +81,10 @@ export class ApiMasterComponent {
           : Observable.of(new Config());
       })
       .subscribe((config) => {
-        this.master.init(config);
+        this.store.dispatch(this._configActions.setConfig(config));
+        this.store.dispatch(this._masterActions.setConfig(config));
       });
-    this.master.validate$
-      .subscribe((value) => {
-        console.log('validation changed', value)
-        this.validation = value;
-      });
+
   }
 
   ngOnDestroy() {
@@ -106,16 +92,30 @@ export class ApiMasterComponent {
   }
 
   onDone() {
-    this.master
-      .validate()
-      .do(() => { this.loading = true; })
-      // create new or update
-      .flatMap(() => this.apiConfigApi.upsert(this.master.config))
+    this.submitted = true;
+    console.log("CONFIG TO SAVWE", this.config)
+    for (let KEY in this.validation) {
+      if (!this.validation[KEY]) {
+        this.tab.goTo(KEY);
+        return;
+      }
+    }
+    this.apiConfigApi.upsert(this.config)
       .subscribe((result) => {
         this.router.navigate(['/']);
       }, (err) => {
-        if (err)
-          this.tab.goTo(err);
+        // notify
       });
+    /* this.master
+       .validate()
+       .do(() => { this.loading = true; })
+       // create new or update
+       .flatMap(() => this.apiConfigApi.upsert(this.master.config))
+       .subscribe((result) => {
+         this.router.navigate(['/']);
+       }, (err) => {
+         if (err)
+           this.tab.goTo(err);
+       });*/
   }
 }

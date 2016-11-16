@@ -58,7 +58,8 @@ export class ToggleGroup implements ControlValueAccessor {
     onTouched = () => {
     };
     writeValue(value) {
-        this.selectedOptions = value;
+        if (value)
+            this.selectedOptions = value;
     }
     registerOnChange(fn): void {
         this.onChange = fn;

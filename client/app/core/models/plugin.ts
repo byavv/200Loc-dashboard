@@ -11,7 +11,7 @@ export class Plugin {
     active: boolean = false;
     value: any;
     valid: boolean = false;
-
+   
     constructor(instance?: Plugin, order?: number, value?: any) {
         Object.assign(this, instance);
         this.order = order;

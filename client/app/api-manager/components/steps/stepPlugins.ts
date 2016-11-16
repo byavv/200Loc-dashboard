@@ -3,58 +3,68 @@ import { Router, ActivatedRoute } from "@angular/router";
 import { ShowError } from '../../directives';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Config, Plugin } from '../../../core/models';
-import { BackEnd, AppController } from '../../../shared/services';
-import { MasterController } from '../../services/masterController';
 import { Observable, Subject } from 'rxjs';
+
+import { Store } from '@ngrx/store';
+import { AppState, getConfigState, getPlugins, getMasterConfigPlugins } from '../../../core/reducers';
+import { MasterActions, ValidationActions } from '../../../core/actions';
 
 @Component({
     selector: 'step-plugins',
     templateUrl: "./templates/stepPlugins.html",
-    styleUrls: ['./styles/stepPlugins.scss']    
+    styleUrls: ['./styles/stepPlugins.scss']
 })
 export class StepPlugins implements AfterViewInit {
     _apiConfig;
     @Output()
     next: EventEmitter<any> = new EventEmitter();
+    @Output()
+    validation: EventEmitter<any> = new EventEmitter();
+
     activePlugin: Plugin;
     appliedPlugins: Array<Plugin> = [];
     // all plugins installed
     plugins: Array<Plugin> = [];
     loading: boolean;
+    @Input()
     submitted: boolean = false;
     selectedPlugin: Plugin;
     showError: boolean = false;
 
     constructor(
-        private master: MasterController,
-        fb: FormBuilder,
-        private backEnd: BackEnd,
-        private appController: AppController) {
+        private _masterActions: MasterActions,
+        private _validationActions: ValidationActions,
+        private _store: Store<AppState>) {
     }
 
     ngAfterViewInit() {
         this.loading = true;
-        this.master.error$.subscribe(() => {
-            this.showError = true;
-        });
-        this.appController
-            .init$
-            .do((defaults) => { this.plugins = defaults.plugins || []; })
-           // .flatMap(() => this.master.init$)
-            .subscribe((apiConfig) => {
+        this._store.let(getConfigState())
+            .subscribe((configPlugins) => {
+                const plugins = [...configPlugins.plugins]
+                console.log("PLUGINS", plugins)
                 this.loading = false;
-
-                for (let plugin of apiConfig.plugins) {
-                    this.insertPlugin(plugin.name, {// value
-                        settings: plugin.settings,
-                        dependencies: plugin.dependencies
-                    })
+                if (configPlugins) {
+                    this.appliedPlugins = [];
+                    for (let plugin of plugins) {
+                        if (plugin.value)
+                            this.insertPlugin(plugin.name, {// value
+                                settings: plugin.value.settings,
+                                dependencies: plugin.value.dependencies
+                            })
+                    }
+                    this.stagePlugins();
+                    this.applyValidation();
+                    this.selectPluginInPipe();
                 }
-
-                this.stagePlugins();
-                this.applyValidation();
-                this.selectPluginInPipe();
             });
+
+        // get default app available plugins 
+        this._store.let(getPlugins())
+            .subscribe((plugins) => {
+                this.plugins = plugins || [];
+            });
+
     }
     /**
      * Add new or configured plugin into list
@@ -64,6 +74,7 @@ export class StepPlugins implements AfterViewInit {
         this.selectPluginInPipe(this.appliedPlugins[this.appliedPlugins.length - 1]);
         this.stagePlugins();
         this.applyValidation();
+        //this._store.dispatch(this._masterActions.setPluginsData(this.appliedPlugins));
     }
     insertPlugin(pluginName, pluginValue = {}) {
         const plugin = this.plugins.find(plugin => plugin.name === pluginName);
@@ -102,27 +113,31 @@ export class StepPlugins implements AfterViewInit {
     }
 
     applyValidation() {
-        this._valid
-            ? this.master.setValidity('plugins', true)
-            : this.master.setValidity('plugins', false);
+        this._store.dispatch(this._validationActions.setValidity({ plugins: this._valid }));
+        this.validation.emit(this._valid)
     }
 
     stagePlugins() {
-        const plugins = this.appliedPlugins.map(p => {
+       /* const plugins = this.appliedPlugins.map(p => {
             return {
                 name: p.name,
                 description: p.description,
                 settings: p.value.settings,
                 dependencies: p.value.dependencies
             }
-        });
-        this.master.config.plugins = plugins;
+        });*/
+        this._store.dispatch(this._masterActions.setPluginsData(this.appliedPlugins));
+
+
+
+        /*
+        
+          this._store.dispatch(this._masterActions.setGeneralInfoData(value));
+                this._store.dispatch(this._validationActions.setValidity({ general: this.form.valid }));
+                this.validation.emit(this.form.valid);
+        
+         */
     }
-
-
-
-
-
 
     /*
      * --------------------------
@@ -218,7 +233,7 @@ export class StepPlugins implements AfterViewInit {
     onSubmit() {
         this.submitted = true;
         this.showError = true;
-        this.master.setValidity('plugins', this.appliedPlugins.length > 0);
+        this._store.dispatch(this._validationActions.setValidity({ plugins: this.appliedPlugins.length > 0 }))
         if (this._valid) {
             this.stagePlugins();
             this.next.next('preview');

@@ -6,26 +6,24 @@ export class MasterActions {
 
     static SET_GENERAL_DATA = '[MASTER] SET ENTRY DATA';
     static SET_PLUGINS_DATA = '[MASTER] SET PLUGINS DATA';
-    static SET_VALIDITY = '[MASTER] SET VALIDITY';
+    static SET_CONFIG = '[MASTER] SET CONFIG';
 
+    setConfig(config: any): Action {
+        return {
+            type: MasterActions.SET_CONFIG,
+            payload: config
+        };
+    }
     setGeneralInfoData(info: any): Action {
         return {
             type: MasterActions.SET_GENERAL_DATA,
             payload: info
         };
     }
-
     setPluginsData(plugins: Array<any>): Action {
         return {
             type: MasterActions.SET_PLUGINS_DATA,
             payload: plugins
         };
-    }
-
-    setValidity(validationObject: any): Action {
-        return {
-            type: MasterActions.SET_VALIDITY,
-            payload: validationObject
-        };
-    }
+    }    
 }

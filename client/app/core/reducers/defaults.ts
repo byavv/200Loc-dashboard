@@ -1,11 +1,11 @@
 import '@ngrx/core/add/operator/select';
 import { Observable } from 'rxjs/Observable';
 import { Action } from '@ngrx/store';
-import { MasterState } from '../models';
+import { MasterState, Plugin } from '../models';
 import { DefaultsActions } from '../actions';
 
 export interface DefaultAppState {
-    plugins: Array<any>;
+    plugins: Array<Plugin>;
     drivers: Array<any>;
     loaded: boolean;
 };
@@ -32,6 +32,11 @@ export function defaultsReducer(state = initialState, action: Action): DefaultAp
             })
             return newState;
         }
+        case DefaultsActions.SET_DEFAULTS: {
+            const defaults: any = action.payload;
+            const newState = Object.assign({}, state, defaults)
+            return newState;
+        }
         default: {
             return state;
         }
@@ -39,11 +44,11 @@ export function defaultsReducer(state = initialState, action: Action): DefaultAp
 }
 
 export function getPlugins() {
-    return (state$: Observable<MasterState>) => state$
+    return (state$: Observable<DefaultAppState>) => state$
         .select((state) => state.plugins);
 }
 
 export function getDrivers() {
-    return (state$: Observable<MasterState>) => state$
+    return (state$: Observable<DefaultAppState>) => state$
         .pluck('validity');
 }

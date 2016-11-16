@@ -96,6 +96,12 @@ export class PluginSettings {
             }).subscribe(result => {
                 this.dependenciesTemplate = result;
                 this.dependenciesValue = pl.value ? pl.value.dependencies : {};
+                this.form
+                    .valueChanges
+                    .subscribe((value) => {
+                        this.plugin.value = value;
+                        this.validation.emit(this.settForm.valid && this.depsForm.valid);
+                    });
             });
         this.settingsValue = pl.value ? pl.value.settings : {};
     }
@@ -103,7 +109,8 @@ export class PluginSettings {
         return this._plugin;
     }
 
-    constructor(private _builder: FormBuilder, private driverConfigApi: DriverConfigApi) {
+    constructor(private _builder: FormBuilder,
+        private driverConfigApi: DriverConfigApi) {
         this.form = this._builder.group({
             settings: [],
             dependencies: []
@@ -111,12 +118,6 @@ export class PluginSettings {
     }
 
     ngAfterViewInit() {
-        this.form
-            .valueChanges
-            .subscribe((value) => {
-                this.plugin.value = value;
-                this.validation.emit(this.settForm.valid && this.depsForm.valid);
-            });
         this.validation.emit(this.settForm.valid && this.depsForm.valid)
     }
     @Output()

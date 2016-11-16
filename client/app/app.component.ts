@@ -18,9 +18,9 @@ export class App {
         } else {
             LoopBackConfig.setBaseURL('http://localhost:5601');
         }
-        this.appController.init$.subscribe(() => {
+        //this.appController.init$.subscribe(() => {
             this.loading = false;
-        })
+      // })
         this.appController.start();
     }
 }

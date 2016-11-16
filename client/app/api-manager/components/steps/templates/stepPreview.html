@@ -1,5 +1,4 @@
-<div class="my-card">   
-    <div style="font-size:0.8em; position: absolute; top: 0;left: 5px; color: burlywood">(experimental)</div>
+<div class="my-card">      
     <div class="form-group method-block">
         <div class="row">            
             <div class="col-lg-6" style='font-size: 1.2em;'>                
@@ -8,14 +7,14 @@
                         <span>URL:</span>
                     </div>
                     <div class="col-md-9">
-                        <span>~{{master.config.entry}}</span>
+                        <span>~{{config.entry}}</span>
                     </div>
                 </div>
             </div>
             <div class="col-lg-6">
                 <div class="input-group">
                     <select #methodSelect name="method" (change)='methodChange($event.target.value)' class='form-control' id="method" [(ngModel)]='selectedMethod'>
-                        <option *ngFor="let method of master.config.methods" [value]="method">{{ method }}</option>
+                        <option *ngFor="let method of config.methods" [value]="method">{{ method }}</option>
                     </select>
                     <span class="input-group-btn">
                         <button type="button" (click)="send()" class="btn btn-secondary send-button">         
@@ -69,6 +68,7 @@
 
 
 </div>
+<div>TEST ONLY</div>
 <button type="button" (click)="onSubmit()" class="btn btn-primary next-button">
            <i class="fa fa-arrow-right" aria-hidden="true"></i>
                 Done

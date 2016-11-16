@@ -14,6 +14,10 @@ import { BackEnd, AppController } from '../../../shared/services';
 import { MasterController } from '../../services/masterController';
 import { Observable } from 'rxjs';
 
+import { Store } from '@ngrx/store';
+import { AppState, getMasterState, getPlugins, getMasterConfigPlugins } from '../../../core/reducers';
+import { MasterActions, ValidationActions } from '../../../core/actions';
+
 @Component({
     selector: 'step-preview',
     templateUrl: "./templates/stepPreview.html",
@@ -45,6 +49,7 @@ export class StepPreview {
     ];
 
     private _selectedMethod: string;
+    config: Config = {};
     get selectedMethod() {
         return this._selectedMethod;
     }
@@ -54,19 +59,21 @@ export class StepPreview {
     }
 
     constructor(
-        private master: MasterController,
-        fb: FormBuilder,
+        private _masterActions: MasterActions,
+        private _validationActions: ValidationActions,
         private backEnd: BackEnd,
-        private appController: AppController) {
+        private _store: Store<AppState>
+    ) {
 
     }
 
     ngOnInit() {
-        this.master.init$.subscribe((config) => {
-            if (config.methods && config.methods.length > 0) {
-                this.selectedMethod = config.methods[0];
-            }
-        });
+        this._store.let(getMasterState())
+            .subscribe((config: Config) => {
+                this.config = config;
+                if (config.methods)
+                    this.selectedMethod = config.methods[0];
+            });
     }
 
     onChange(code) {
@@ -79,7 +86,7 @@ export class StepPreview {
 
     methodChange(method: string) {
         this.selectedMethod = method;
-        let tabs = this.tabs.toArray()
+        let tabs = this.tabs.toArray();
         if (tabs[2].active) {
             tabs[0].active = true;
         }
@@ -90,7 +97,7 @@ export class StepPreview {
     }
 
     send() {
-        this.backEnd.testApiConfig(this.selectedMethod, this.master.config.plugins, this.headers, this.params, this.body)
+        this.backEnd.testApiConfig(this.selectedMethod, this.config.plugins, this.headers, this.params, this.body)
             .subscribe((res) => {
                 this.resultModal.show();
                 this.result = res.body;
