@@ -43,12 +43,12 @@ export function defaultsReducer(state = initialState, action: Action): DefaultAp
     }
 }
 
-export function getPlugins() {
+export function getAvailablePlugins() {
     return (state$: Observable<DefaultAppState>) => state$
         .select((state) => state.plugins);
 }
 
-export function getDrivers() {
+export function getAvailableDrivers() {
     return (state$: Observable<DefaultAppState>) => state$
         .pluck('validity');
 }

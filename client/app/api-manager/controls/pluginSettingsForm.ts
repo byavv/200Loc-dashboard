@@ -99,6 +99,7 @@ export class PluginSettings {
                 this.form
                     .valueChanges
                     .subscribe((value) => {
+                        console.log("PLUGINVALUE", value)
                         this.plugin.value = value;
                         this.validation.emit(this.settForm.valid && this.depsForm.valid);
                     });

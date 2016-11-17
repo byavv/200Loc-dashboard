@@ -38,7 +38,7 @@ module.exports = function (app) {
     /**
      * Get all installed drivers
      */
-    router.get('/api/drivers', (req, res) => {
+    router.get('/api/drivers', (req, res, next) => {
         request({
             url: `http://${process.env.GATEWAY}/_private/drivers`,
             method: 'GET'

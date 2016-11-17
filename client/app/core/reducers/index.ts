@@ -28,6 +28,9 @@ export default combineReducers({
     config: configReducer
 });
 
+/**
+ * Get current master configuration as form value and 
+ */
 export function getMasterState() {
     return (state$: Observable<AppState>) => {
         return state$
@@ -47,7 +50,10 @@ export function getValidationState() {
             .select(s => s.validation)
     };
 }
-
+/**
+ * Get state of current entry config being edited in master (may be newly created of taken from the backend)
+ * This config goes as initial value for entry configuration master
+ */
 export function getConfigState() {
     return (state$: Observable<AppState>) => {
         return state$
@@ -55,21 +61,22 @@ export function getConfigState() {
     };
 }
 
-
+/**
+ * Get all available plugins installed in system
+ */
 export function getPlugins() {
-    return compose(defaults.getPlugins(), getDefaultsState());
+    return compose(defaults.getAvailablePlugins(), getDefaultsState());
 }
-
+/**
+ * Get all available drivers installed in system
+ */
 export function getDrivers() {
-    return compose(defaults.getDrivers(), getDefaultsState());
+    return compose(defaults.getAvailableDrivers(), getDefaultsState());
 }
 
-export function getMasterConfig() {
-    return compose(master.getConfig(), getMasterState());
-}
 
 export function getMasterConfigPlugins() {
-    return compose(master.getConfigPlugins(), getMasterState());
+    return compose(master.getMasterPlugins(), getMasterState());
 
 }
 

@@ -63,9 +63,7 @@ export class StepPreview {
         private _validationActions: ValidationActions,
         private backEnd: BackEnd,
         private _store: Store<AppState>
-    ) {
-
-    }
+    ) {}
 
     ngOnInit() {
         this._store.let(getMasterState())
@@ -103,6 +101,6 @@ export class StepPreview {
                 this.result = res.body;
             }, err => {
                 console.error(err)
-            })
+            });
     }
 }

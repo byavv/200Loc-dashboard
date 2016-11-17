@@ -38,6 +38,8 @@ export class ApiMasterComponent {
   loading: boolean = true;
   submitted: boolean = false;
   queryRouteSub: Subscription;
+  masterStateSub_n: Subscription;
+  validationSub_n: Subscription;
   validation: any = {};
   config: Config = {};
   constructor(
@@ -51,25 +53,18 @@ export class ApiMasterComponent {
   }
   ngOnInit() {
 
-    this.store
+    this.validationSub_n = this.store
       .let(getValidationState())
-      .subscribe((validation) => {       
+      .subscribe((validation) => {
         this.validation = validation;
       })
-    /*  this.store
-        .let(getConfigState())
-        .subscribe((config) => {
-          console.log("MASTER CONFIG", config)
-          this.config = config;
-        });
-  */
-    this.store
+    this.masterStateSub_n = this.store
       .let(getMasterState())
-      .select(state => state.config)
       .subscribe((config) => {
         this.config = config;
       });
   }
+
 
   ngAfterViewInit() {
     this.queryRouteSub = this._activatedRoute
@@ -88,7 +83,9 @@ export class ApiMasterComponent {
   }
 
   ngOnDestroy() {
-    this.queryRouteSub.unsubscribe();
+    if (this.queryRouteSub) this.queryRouteSub.unsubscribe();
+    if (this.masterStateSub_n) this.masterStateSub_n.unsubscribe();
+    if (this.validationSub_n) this.validationSub_n.unsubscribe()
   }
 
   onDone() {
@@ -106,16 +103,5 @@ export class ApiMasterComponent {
       }, (err) => {
         // notify
       });
-    /* this.master
-       .validate()
-       .do(() => { this.loading = true; })
-       // create new or update
-       .flatMap(() => this.apiConfigApi.upsert(this.master.config))
-       .subscribe((result) => {
-         this.router.navigate(['/']);
-       }, (err) => {
-         if (err)
-           this.tab.goTo(err);
-       });*/
   }
 }

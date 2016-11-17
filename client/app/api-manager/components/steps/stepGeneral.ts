@@ -8,7 +8,7 @@ import { Config } from '../../../core/models';
 import { BackEnd, AppController } from '../../../shared/services';
 import { LoaderComponent } from '../../../shared/components';
 import { MasterController } from '../../services/masterController';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 
 import { Store } from '@ngrx/store';
 import { AppState, getConfigState } from '../../../core/reducers';
@@ -31,6 +31,7 @@ export class StepGeneral implements AfterViewInit {
     };
 
     loading: boolean = false;
+    configStateSub_n: Subscription;
     @Input()
     submitted: boolean = false;
 
@@ -40,6 +41,7 @@ export class StepGeneral implements AfterViewInit {
         { name: 'PUT', description: 'PUT' },
         { name: 'DELETE', description: 'DELETE' }
     ]
+
     constructor(
         private _store: Store<AppState>,
         private _masterActions: MasterActions,
@@ -70,12 +72,17 @@ export class StepGeneral implements AfterViewInit {
                 this.validation.emit(this.form.valid);
             });
 
-        this._store
+        this.configStateSub_n = this._store
             .let(getConfigState())
             .subscribe((config) => {
                 this.loading = false;
                 this.apiConfig = config;
             })
+    }
+    ngOnDestroy() {
+        if (this.configStateSub_n) {
+            this.configStateSub_n.unsubscribe();
+        }
     }
 
     onSubmit(form: FormGroup) {

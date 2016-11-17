@@ -5,13 +5,11 @@ import { Action } from '@ngrx/store';
 import { MasterState, Config } from '../models';
 import { MasterActions } from '../actions';
 
-export interface EntryCreationMasterState {
-    config: Config;
+export interface EntryCreationMasterState extends Config {
     loaded: boolean;
 };
 
 const initialState: EntryCreationMasterState = {
-    config: {},
     loaded: false
 };
 
@@ -19,26 +17,18 @@ export function masterReducer(state = initialState, action: Action): EntryCreati
     switch (action.type) {
         case MasterActions.SET_CONFIG: {
             const data = action.payload;
-            const newState = Object.assign({}, {
-                config: new Config(data),
+            const newState = Object.assign({}, new Config(data), {
                 loaded: true
             })
             return newState;
         }
         case MasterActions.SET_GENERAL_DATA: {
             const generalData = action.payload;
-            const newConfig = Object.assign({}, state.config, generalData)
-            const newState = Object.assign({}, state, {
-                config: newConfig
-            });
-            return newState;
+            return Object.assign({}, state, generalData);
         }
         case MasterActions.SET_PLUGINS_DATA: {
             const plugins: any[] = [...action.payload];
-            const newConfig = Object.assign({}, state.config, { plugins: plugins })
-            const newState = Object.assign({}, state, {
-                config: newConfig
-            });
+            const newState = Object.assign({}, state, { plugins: plugins });
             return newState;
         }
         default: {
@@ -47,14 +37,8 @@ export function masterReducer(state = initialState, action: Action): EntryCreati
     }
 }
 
-export function getConfig() {
+export function getMasterPlugins() {
     return (state$: Observable<EntryCreationMasterState>) => state$
-        .select(state => state.config);
-}
-
-export function getConfigPlugins() {
-    return (state$: Observable<EntryCreationMasterState>) => state$
-        .select(state => state.config)
-        .select(config => config.plugins);
+        .select(state => state.plugins)
 }
 

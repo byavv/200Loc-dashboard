@@ -64,7 +64,7 @@
         </div>
         <div class="col-md-7 col-sm-12">
             <div class="plugin-props" *ngFor="let plugin of appliedPlugins" [hidden]="!plugin.active">
-                <plugin-form [plugin]="plugin" (validation)='plugin.valid=$event; applyValidation(); stagePlugins();'></plugin-form>
+                <plugin-form [plugin]="plugin" (validation)='pluginValidationChanged()'></plugin-form>
             </div>
         </div>
     </div>

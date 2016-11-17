@@ -3,7 +3,7 @@ import { Router, ActivatedRoute } from "@angular/router";
 import { ShowError } from '../../directives';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Config, Plugin } from '../../../core/models';
-import { Observable, Subject } from 'rxjs';
+import { Observable, Subject, Subscription } from 'rxjs';
 
 import { Store } from '@ngrx/store';
 import { AppState, getConfigState, getPlugins, getMasterConfigPlugins } from '../../../core/reducers';
@@ -30,7 +30,8 @@ export class StepPlugins implements AfterViewInit {
     submitted: boolean = false;
     selectedPlugin: Plugin;
     showError: boolean = false;
-
+    configStateSub_n: Subscription;
+    pluginsSub_n: Subscription;
     constructor(
         private _masterActions: MasterActions,
         private _validationActions: ValidationActions,
@@ -39,19 +40,19 @@ export class StepPlugins implements AfterViewInit {
 
     ngAfterViewInit() {
         this.loading = true;
-        this._store.let(getConfigState())
-            .subscribe((configPlugins) => {
-                const plugins = [...configPlugins.plugins]
+        this.configStateSub_n = this._store.let(getConfigState())
+            .subscribe((config) => {
+                const plugins = [...config.plugins];
                 console.log("PLUGINS", plugins)
                 this.loading = false;
-                if (configPlugins) {
+                if (plugins) {
                     this.appliedPlugins = [];
                     for (let plugin of plugins) {
                         if (plugin.value)
                             this.insertPlugin(plugin.name, {// value
                                 settings: plugin.value.settings,
                                 dependencies: plugin.value.dependencies
-                            })
+                            });
                     }
                     this.stagePlugins();
                     this.applyValidation();
@@ -60,11 +61,19 @@ export class StepPlugins implements AfterViewInit {
             });
 
         // get default app available plugins 
-        this._store.let(getPlugins())
+        this.pluginsSub_n = this._store.let(getPlugins())
             .subscribe((plugins) => {
                 this.plugins = plugins || [];
             });
 
+    }
+    ngOnDestroy() {
+        if (this.configStateSub_n) {
+            this.configStateSub_n.unsubscribe();
+        }
+        if (this.pluginsSub_n) {
+            this.pluginsSub_n.unsubscribe();
+        }
     }
     /**
      * Add new or configured plugin into list
@@ -74,7 +83,6 @@ export class StepPlugins implements AfterViewInit {
         this.selectPluginInPipe(this.appliedPlugins[this.appliedPlugins.length - 1]);
         this.stagePlugins();
         this.applyValidation();
-        //this._store.dispatch(this._masterActions.setPluginsData(this.appliedPlugins));
     }
     insertPlugin(pluginName, pluginValue = {}) {
         const plugin = this.plugins.find(plugin => plugin.name === pluginName);
@@ -114,29 +122,11 @@ export class StepPlugins implements AfterViewInit {
 
     applyValidation() {
         this._store.dispatch(this._validationActions.setValidity({ plugins: this._valid }));
-        this.validation.emit(this._valid)
+        this.validation.emit(this._valid);
     }
 
     stagePlugins() {
-       /* const plugins = this.appliedPlugins.map(p => {
-            return {
-                name: p.name,
-                description: p.description,
-                settings: p.value.settings,
-                dependencies: p.value.dependencies
-            }
-        });*/
         this._store.dispatch(this._masterActions.setPluginsData(this.appliedPlugins));
-
-
-
-        /*
-        
-          this._store.dispatch(this._masterActions.setGeneralInfoData(value));
-                this._store.dispatch(this._validationActions.setValidity({ general: this.form.valid }));
-                this.validation.emit(this.form.valid);
-        
-         */
     }
 
     /*
@@ -214,6 +204,11 @@ export class StepPlugins implements AfterViewInit {
             .reduce((prev: Plugin, current: Plugin) => {
                 return prev.order > current.order ? current : prev;
             }));
+    }
+    pluginValidationChanged() {
+        this.applyValidation();
+        this.stagePlugins();
+        //  plugin.valid=$event; 
     }
     /**
      * Plugin selection in modal window
