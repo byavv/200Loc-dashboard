@@ -6,7 +6,7 @@ import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
 import { routes } from './app.routes';
-import { App } from './app.component';
+import { AppComponent } from './app.component';
 import { API_MNGR_COMPONENTS } from './api-manager';
 import { DRIVER_MNGR_COMPONENTS } from './driver-manager/components';
 import { PLUGINS_COMPONENTS } from './plugin-manager/components';
@@ -26,9 +26,9 @@ import {
 } from '@angular/common';
 
 @NgModule({
-  bootstrap: [App],
+  bootstrap: [AppComponent],
   declarations: [
-    App,
+    AppComponent,
     ...API_MNGR_COMPONENTS,
     ...DRIVER_MNGR_COMPONENTS,
     ...PLUGINS_COMPONENTS,

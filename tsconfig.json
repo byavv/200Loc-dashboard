@@ -7,18 +7,20 @@
     "experimentalDecorators": true,
     "allowSyntheticDefaultImports": true,
     "sourceMap": true,
+    "noEmit": true,
     "noEmitHelpers": true,
     "strictNullChecks": false,
-    "baseUrl": "./explorer/client/app",
-    "paths": [],
     "lib": [
       "dom",
       "es6"
     ],
+    "typeRoots": [
+      "node_modules/@types"
+    ],
     "types": [
       "hammerjs",
       "jasmine",
-      "node",   
+      "node",
       "source-map",
       "uglify-js",
       "webpack"
@@ -26,7 +28,7 @@
   },
   "exclude": [
     "node_modules",
-    "explorer/build"
+    "dist"
   ],
   "awesomeTypescriptLoaderOptions": {
     "forkChecker": true,

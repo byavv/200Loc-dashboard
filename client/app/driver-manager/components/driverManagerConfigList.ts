@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { DriverConfigApi, BackEnd } from '../../shared/services';
 import { DriverConfig } from '../../core/models';
-import { ModalDirective } from 'ng2-bootstrap/ng2-bootstrap';
+import { ModalDirective } from 'ng2-bootstrap';
 import { Observable } from 'rxjs';
 
 @Component({

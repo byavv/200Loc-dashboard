@@ -4,7 +4,7 @@
   },
   "initial": {
     "compression": {},
-    "cors": { }   
+    "cors": {}
   },
   "session": {},
   "auth": {},
@@ -22,11 +22,25 @@
         "${restApiRoot}"
       ]
     }
-  },  
+  },
+  "files": {
+    "loopback#static": {
+      "paths": [
+        "/",
+        "/*"
+      ],
+      "params": "$!../dist"
+    }
+  },
   "final": {
     "loopback#urlNotFound": {}
   },
   "final:after": {
-    "loopback#errorHandler": {}
+    "strong-error-handler": {
+      "params": {
+        "debug": false,
+        "log": true
+      }
+    }
   }
 }

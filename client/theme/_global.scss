@@ -1,13 +1,9 @@
 //@import url(https://fonts.googleapis.com/css?family=Open+Sans);
+
+@import "../../node_modules/bootstrap/scss/bootstrap";
+
 * {
     margin: 0;
-}
-
-@font-face {
-    font-family: 'Roboto';    
-    src: url('/static/assets/vendors/fonts/roboto.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
 }
 
 @media screen and (min-width: 1400px) {
@@ -100,6 +96,7 @@ html {
 
 .app-header {
     background: #fff;
+    flex-direction: row;
 }
 
 .app-footer {

@@ -205,11 +205,7 @@ export class StepPlugins implements AfterViewInit {
                 return prev.order > current.order ? current : prev;
             }));
     }
-    pluginValidationChanged() {
-        this.applyValidation();
-        this.stagePlugins();
-        //  plugin.valid=$event; 
-    }
+
     /**
      * Plugin selection in modal window
      * 
@@ -223,6 +219,16 @@ export class StepPlugins implements AfterViewInit {
         })
         this.selectedPlugin = plugin;
         this.selectedPlugin.active = true;
+    }
+    pluginValueChanged(plugin, value) {
+        const ind = this.appliedPlugins.indexOf(plugin);
+        this.appliedPlugins[ind].value = value;
+    }
+    pluginValidationChanged(plugin, isValid) {
+        const ind = this.appliedPlugins.indexOf(plugin);
+        this.appliedPlugins[ind].valid = isValid;
+        this.applyValidation();
+        this.stagePlugins();       
     }
 
     onSubmit() {

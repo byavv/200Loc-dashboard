@@ -40,7 +40,7 @@ export class StepGeneral implements AfterViewInit {
         { name: 'POST', description: 'POST' },
         { name: 'PUT', description: 'PUT' },
         { name: 'DELETE', description: 'DELETE' }
-    ]
+    ];
 
     constructor(
         private _store: Store<AppState>,
@@ -77,7 +77,7 @@ export class StepGeneral implements AfterViewInit {
             .subscribe((config) => {
                 this.loading = false;
                 this.apiConfig = config;
-            })
+            });
     }
     ngOnDestroy() {
         if (this.configStateSub_n) {

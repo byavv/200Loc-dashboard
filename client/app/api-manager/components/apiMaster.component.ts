@@ -90,14 +90,24 @@ export class ApiMasterComponent {
 
   onDone() {
     this.submitted = true;
-    console.log("CONFIG TO SAVWE", this.config)
+    
     for (let KEY in this.validation) {
       if (!this.validation[KEY]) {
         this.tab.goTo(KEY);
         return;
       }
     }
-    this.apiConfigApi.upsert(this.config)
+    let plugins: Array<any> = [...this.config.plugins];
+    plugins = plugins.map((plugin) => {
+      return {
+        name: plugin.name,
+        order: plugin.order,
+        settings: plugin.value.settings,
+        dependencies: plugin.value.dependencies
+      }
+    });
+    console.log("CONFIG TO SAVE", Object.assign(this.config, { plugins: plugins }));
+    this.apiConfigApi.upsert(Object.assign(this.config, { plugins: plugins }))
       .subscribe((result) => {
         this.router.navigate(['/']);
       }, (err) => {

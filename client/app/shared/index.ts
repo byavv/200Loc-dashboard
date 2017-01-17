@@ -20,9 +20,9 @@ import { SHARED_DIRECTIVES } from "./directives";
     FormsModule,
     RouterModule,
     HttpModule,
-    ModalModule,
-    DropdownModule,
-    TabsModule
+    ModalModule.forRoot(),
+    DropdownModule.forRoot(),
+    TabsModule.forRoot()
   ],
   exports: [
     ...SHARED_COMPONENTS,

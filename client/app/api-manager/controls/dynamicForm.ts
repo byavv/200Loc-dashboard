@@ -58,10 +58,14 @@ import {
 })
 export class DynamicForm implements ControlValueAccessor {
     private _fields = [];
+    formValue: any = {};
+
     @Input()
     set fields(value: any) {
+      
         let group = {};
         if (value) {
+            console.log("SET FIELDS", value)
             this._fields.slice(0, this._fields.length);
             Object.keys(value).forEach((key: any) => {
                 group[key] = value[key].required
@@ -102,16 +106,11 @@ export class DynamicForm implements ControlValueAccessor {
     };
     @Output()
     onChange: EventEmitter<any> = new EventEmitter(true);
-    writeValue(value) {
-        if (value !== undefined) {
-            for (const key in value) {
-                const field = this.fields.find((field) => field.key === key);
-                if (field) {
-                    field.value = value[key];
-                }
-            }
+    writeValue(value) {       
+        if (!!value) {
+            this.formValue = value;
         }
-    }
+    }    
     registerOnChange(fn): void {
         this.onChange.subscribe(fn);
 

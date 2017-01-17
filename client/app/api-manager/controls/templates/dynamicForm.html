@@ -3,7 +3,7 @@
         <!--<option-input [field]='field' [form]='form'></option-input>-->
 
 
-        <div class="form-group">
+        <!--<div class="form-group">
             <div [ngSwitch]="field.type">
                 <label [attr.for]="field.key">{{ field.label | firstUp }}</label>
                 <input class="form-control" 
@@ -22,8 +22,29 @@
                     [errors]="{'required': 'Field is required'}">
                 </show-error>
             </div>
-        </div>
+        </div>-->
 
+
+        <div class="form-group">
+            <div [ngSwitch]="field.type">
+                <label [attr.for]="field.key">{{ field.label | firstUp }}</label>
+                <input class="form-control" 
+                    *ngSwitchCase="'string'" 
+                    [formControlName]="field.key" 
+                    [(ngModel)]='formValue[field.key]' 
+                    [id]="field.key">
+                <select class="form-control" [id]="field.key" 
+                    *ngSwitchCase="'select'" 
+                    [(ngModel)]='formValue[field.key]' 
+                    [formControlName]="field.key">
+                    <option *ngFor="let opt of field.options" [value]="opt.value">{{ opt.key }}</option>
+                </select>
+                <show-error *ngIf="form.controls[field.key].dirty" 
+                    [control]="field.key" 
+                    [errors]="{'required': 'Field is required'}">
+                </show-error>
+            </div>
+        </div>
 
 
     </div>

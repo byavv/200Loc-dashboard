@@ -1,7 +1,7 @@
 <div class="my-card">
     <div class="row">
         <div class="col-md-5 col-sm-12" [ngClass]="appliedPlugins.length == 0 ? 'col-md-12': 'col-md-4 col-sm-12'">
-            <div style="width: 100%;" class="alert alert-warning alert-sm pull-right no-margin ng-scope" *ngIf="showError && appliedPlugins.length == 0"
+            <div style="width: 100%;" class="alert alert-warning alert-sm float-sm-right no-margin ng-scope" *ngIf="showError && appliedPlugins.length == 0"
                 id="app-alert">
                 <button type="button" class="ml-lg close" (click)="showError = false;" data-dismiss="alert" aria-hidden="true">×</button>                Entry should have at least <span class="fw-semi-bold">one</span> pipe middleware plugin
             </div>
@@ -64,7 +64,7 @@
         </div>
         <div class="col-md-7 col-sm-12">
             <div class="plugin-props" *ngFor="let plugin of appliedPlugins" [hidden]="!plugin.active">
-                <plugin-form [plugin]="plugin" (validation)='pluginValidationChanged()'></plugin-form>
+                <plugin-form [plugin]="plugin" (onChange)='pluginValueChanged(plugin, $event)' (validation)='pluginValidationChanged(plugin, $event)'></plugin-form>
             </div>
         </div>
     </div>
