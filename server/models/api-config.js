@@ -2,12 +2,13 @@
 "use strict"
 const async = require('async')
     , debug = require('debug')('gateway, explorer')
-    , redis = require('redis')
+    , redis = require('redis');
+
 
 module.exports = function (ApiConfig) {
     let app;
     let publisher;
-    
+
     ApiConfig.on('attached', function (a) {
         app = a;
         publisher = redis.createClient({

@@ -20,6 +20,10 @@ import { StoreModule, Store } from '@ngrx/store';
 import reducer from './core/reducers';
 import { AppState } from './core/reducers';
 
+import 'brace';
+import 'brace/theme/eclipse'
+import 'brace/mode/json'
+
 import {
   LocationStrategy,
   HashLocationStrategy

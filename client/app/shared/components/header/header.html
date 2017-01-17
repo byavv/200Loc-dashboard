@@ -1,14 +1,14 @@
 <header>
     <nav class="navbar navbar-light app-header">
         <a [routerLink]="['/']" class="navbar-brand">200Loc-Dashboard</a>
-        <div dropdown class="nav navbar-nav float-sm-right" style='margin-left: auto;'>          
-            <a href="" dropdownToggle class="nav-link" role="button" aria-expanded="false">
+        <span dropdown  class="nav navbar-nav float-sm-right" style='margin-left: auto;'>          
+            <a href dropdownToggle id="menu-dropdown" class="nav-link" aria-expanded="false">
                 <i class="fa fa-cog" aria-hidden="true"></i>
             </a>
-            <ul dropdownMenu class="dropdown-menu dropdown-menu-right" aria-labelledby="simple-dropdown">
+            <ul dropdownMenu class="dropdown-menu dropdown-menu-right" aria-labelledby="menu-dropdown">
                 <li> <a class="dropdown-item" [routerLink]="['/']"><i class="icon-home icon-1x"></i>Gateway entries</a></li>
                 <li><a class="dropdown-item" [routerLink]="['/drivers']"><i class="icon-home icon-1x"></i>Drivers manager</a></li>
             </ul>           
-        </div>
+        </span>
      </nav>
 </header>

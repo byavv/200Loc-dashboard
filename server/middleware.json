@@ -4,7 +4,8 @@
   },
   "initial": {
     "compression": {},
-    "cors": {}
+    "cors": {},
+    "loopback-context#per-request": {}
   },
   "session": {},
   "auth": {},

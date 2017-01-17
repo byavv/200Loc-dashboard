@@ -90,7 +90,7 @@ export class ApiMasterComponent {
 
   onDone() {
     this.submitted = true;
-    
+
     for (let KEY in this.validation) {
       if (!this.validation[KEY]) {
         this.tab.goTo(KEY);
@@ -102,8 +102,10 @@ export class ApiMasterComponent {
       return {
         name: plugin.name,
         order: plugin.order,
-        settings: plugin.value.settings,
-        dependencies: plugin.value.dependencies
+        //  settings: plugin.value.settings,
+        //  dependencies: plugin.value.dependencies
+        settings: plugin.settings,
+        dependencies: plugin.dependencies
       }
     });
     console.log("CONFIG TO SAVE", Object.assign(this.config, { plugins: plugins }));

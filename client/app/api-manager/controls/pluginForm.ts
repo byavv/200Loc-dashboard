@@ -97,13 +97,13 @@ export class PluginForm {
 
                 this.dependenciesTemplate = result;
 
-                // set dynamic form template for plugin's dependencies
-                this.dependenciesValue = this._plugin.value ? Object.assign({}, this._plugin.value.dependencies) : {};
+                // set dynamic form template for plugin's dependencies           
+                this.dependenciesValue = this._plugin.dependencies || [];
                 console.log("DEPENDENCIES VALUE", this.dependenciesValue)
 
             });
-        // set dynamic form template for regular settings
-        this.settingsValue = this._plugin.value ? this._plugin.value.settings : {};
+        // set dynamic form template for regular settings     
+        this.settingsValue = this._plugin.settings || {};
     }
     get plugin() {
         return this._plugin;
@@ -122,7 +122,6 @@ export class PluginForm {
         this.form
             .valueChanges
             .subscribe((value) => {
-                // this.plugin.value = value;
                 this.onChange.emit(value)
                 this._applyValidation();
             });

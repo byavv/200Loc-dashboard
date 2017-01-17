@@ -9,12 +9,15 @@ export class Plugin {
 
     order: number;
     active: boolean = false;
-    value: any;
+    // value: any;
     valid: boolean = false;
-   
-    constructor(instance?: Plugin, order?: number, value?: any) {
+
+    dependencies: Array<any> = [];
+    settings: Array<any> = [];
+
+    constructor(instance?: Plugin/*, order?: number*//*, value?: any*/) {
         Object.assign(this, instance);
-        this.order = order;
-        this.value = value;
+     //   this.order = order;
+        //this.value = value;
     }
 }

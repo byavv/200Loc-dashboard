@@ -40,20 +40,21 @@ export class StepPlugins implements AfterViewInit {
 
     ngAfterViewInit() {
         this.loading = true;
+        // get entry applyed plugins
         this.configStateSub_n = this._store.let(getConfigState())
             .subscribe((config) => {
                 const plugins = [...config.plugins];
-                console.log("PLUGINS", plugins)
+                console.log("PLUGINS", config.plugins)
                 this.loading = false;
-                if (plugins) {
+                if (plugins && Array.isArray(plugins)) {
                     this.appliedPlugins = [];
-                    for (let plugin of plugins) {
-                        if (plugin.value)
-                            this.insertPlugin(plugin.name, {// value
-                                settings: plugin.value.settings,
-                                dependencies: plugin.value.dependencies
+                    plugins.forEach(plugin => {
+                        if (plugin)
+                            this.insertPlugin(plugin.name, {
+                                settings: plugin.settings,
+                                dependencies: plugin.dependencies
                             });
-                    }
+                    })
                     this.stagePlugins();
                     this.applyValidation();
                     this.selectPluginInPipe();
@@ -87,7 +88,7 @@ export class StepPlugins implements AfterViewInit {
     insertPlugin(pluginName, pluginValue = {}) {
         const plugin = this.plugins.find(plugin => plugin.name === pluginName);
         var plCp = Object.assign({}, plugin);
-        let pluginInst = new Plugin(plCp, this._lastOrder + 1, pluginValue);
+        let pluginInst = new Plugin(Object.assign({}, plCp, { order: this._lastOrder + 1 }, pluginValue));
         this.appliedPlugins.push(pluginInst);
     }
 
@@ -222,13 +223,14 @@ export class StepPlugins implements AfterViewInit {
     }
     pluginValueChanged(plugin, value) {
         const ind = this.appliedPlugins.indexOf(plugin);
-        this.appliedPlugins[ind].value = value;
+        this.appliedPlugins[ind].dependencies = value.dependencies;
+        this.appliedPlugins[ind].settings = value.settings;
     }
     pluginValidationChanged(plugin, isValid) {
         const ind = this.appliedPlugins.indexOf(plugin);
         this.appliedPlugins[ind].valid = isValid;
         this.applyValidation();
-        this.stagePlugins();       
+        this.stagePlugins();
     }
 
     onSubmit() {
