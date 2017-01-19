@@ -34,3 +34,5 @@ testem.log
 Thumbs.db
 
 *deprecated*
+*compiled*
+*dist*

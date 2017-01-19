@@ -12,12 +12,13 @@ $ cd 200Loc-dashboard
 $ npm install
 
 # build for development/production
-$ gulp build
 $ npm run build 
 
 # run development/production
-$ npm run dev  
-$ npm start    
+Start in two separated consoles 
+
+$ npm run watch
+$ npm run start    
 
 # serve mode
 $ gulp

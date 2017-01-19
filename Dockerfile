@@ -15,7 +15,7 @@ COPY . /usr/src/app
 # Install dependencies and build client
 RUN \ 
     npm install \   
-    && npm run build
+    && npm run build:prod
 
 # Make server and client available
 EXPOSE 5601

@@ -2,7 +2,7 @@
     "env": {
         "NODE_ENV": "development",
         "DEBUG": "gateway, plugins:*, drivers:*, explorer",
-        "ETCD_HOST": "localhost:4001"
+        "REDIS_HOST": "127.0.0.1"
     },
     "ext": "js",
     "restartable": "rs",
@@ -21,9 +21,9 @@
         "js": "node"
     },
     "watch": [
-        "gateway/**/*.js",
-        "explorer/**/*.ts",
-        "explorer/**/*css",
-        "explorer/**/*scss"
+        "dist/**/*.js",
+        "dist/**/*.html",
+        "dist/**/*.css",
+        "server/**/*.js"
     ]
 }
