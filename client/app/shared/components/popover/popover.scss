@@ -1,0 +1,119 @@
+.popover {
+  border-color: transparent;
+  box-shadow: 0 2px 9px #a8b8c4;
+  max-width: none;
+  padding: 0;
+  border-radius: 3px;
+  visibility: visible;
+
+  &:after,
+  &:before {
+    display: none;
+  }
+
+  &-title {
+    display: none;
+  }
+
+  &-content {
+    color: #727e88;
+    background: #fff;
+    position: relative;
+    border-radius: 3px;
+    padding: 0!important;
+  }
+
+  &-arrow {
+    border-color: transparent !important;
+    position: absolute;
+    width: 20px;
+    height: 20px;
+
+    &:after {
+      content: "";
+      border-width: 0;
+      border-color: transparent !important;
+      width: 20px;
+      height: 20px;
+      position: absolute;
+      background: #fff;
+      border-radius: -4px 3px 4px 0;
+      transform: rotate(45deg);
+      box-shadow: 0 0 9px #a8b8c4;
+    }
+  }
+
+  &.left {
+    margin-right: 5px;
+
+    .popover-arrow {
+      top: 50%;
+      right: -5px !important;
+    }
+  }
+
+  &.right {
+    margin-left: 5px;
+
+    .popover-arrow {
+      top: 50%;
+      left: -5px !important;
+    }
+  }
+
+  &.top {
+    margin-bottom: 5px;
+
+    .popover-arrow {
+      left: 50%;
+      bottom: -5px !important;
+    }
+  }
+
+  &.bottom {
+    margin-top: 5px;
+
+    .popover-arrow {
+      left: 50%;
+      top: -5px !important;
+    }
+  }
+}
+
+.popover .virtual-area {
+  height: 11px;
+  width: 100%;
+  position: absolute;
+}
+
+.popover.top .virtual-area {
+  bottom: -11px;
+}
+
+.popover.bottom .virtual-area {
+  top: -11px;
+}
+
+.popover.left .virtual-area {
+  right: -11px;
+}
+
+.popover.right .virtual-area {
+  left: -11px;
+}
+
+.popover.right .popover-arrow {
+  top: 50%;
+  transform: translate(0%, -50%);
+  left: -5px !important;
+}
+
+.popover.left .popover-arrow {
+  top: 50%;
+  transform: translate(0%, -50%);
+  right: -5px !important;
+}
+
+.popover-content {
+  width: 100%;
+}

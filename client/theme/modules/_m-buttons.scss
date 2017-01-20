@@ -1,0 +1,158 @@
+button {
+  outline: none!important;
+}
+
+.button {
+  @extend .btn;
+  text-transform: uppercase;
+  font-size: 1.4rem;
+  font-weight: 600;
+  border-width: 1px;
+  border-radius: 0;
+  padding: .5em 1.5em;
+  background: transparent;
+  position: relative;
+}
+
+.button--primary {
+  color: #fff;
+  background-color: $blue;
+  color: white;
+  border-color: $blue;
+  border-radius: 3px;
+
+  &:not(:disabled):hover {
+    color: $white;
+    background: #138df1;
+    border-color: #138df1;
+  }
+
+  &[disabled] {
+    background: #5eadee;
+    border-color: #5eadee;
+  }
+}
+
+// Module: Button
+// Modifier: Secondary
+.button--secondary {
+  color: $blue;
+  border-color: #0275d2;
+  border-radius: 3px;
+
+  &[disabled] {
+    border-color: #0275d2;
+    color: #007ee5;
+    background-color: #fff;
+  }
+
+  &:not(:disabled):hover {
+    background: #138df1;
+    border-color: #138df1;
+    color: #fff;
+  }
+}
+
+.button--icon {
+  border: 0;
+  color: #a6b0b7;
+  font-size: 1.8rem;
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  outline: none;
+
+  &::after {
+    content: none;
+  }
+
+  &:hover {
+    opacity: 1;
+  }
+}
+
+// Module: Button
+// Modifier: Light
+.button--light {
+  color: #a8b8c4;
+  border-color: #a6b0b7;
+  border-radius: 3px;
+  background: #fff;
+
+  &:not(:disabled):hover {
+    color: #92a1ac;
+    border-color: #a8b8c4;
+  }
+}
+// Module: Button
+// Modifier: Small
+.button--sm {
+  font-size: 1.3rem;
+  padding: .61em 1.75em;
+}
+
+// Module: Button
+// Modifier: Large
+.button--lg {
+  font-weight: 600;
+  padding: .895em 1.75em;
+}
+
+// Module: Button
+// Modifier: Icon
+.button--iconed {
+  padding-left: 40px;
+
+  .button {
+    &__icon {
+      position: absolute;
+      top: 50%;
+      left: 15px;
+      vertical-align: middle;
+      font-size: 2rem;
+      line-height: 100%;
+      transform: translate(0, -50%);
+    }
+  }
+}
+
+.button--special {
+  @extend .button--icon;
+  @extend .button--light;
+
+  padding-top: .57em;
+  padding-bottom: .57em;
+
+  text-transform: none;
+}
+
+// Module: Button
+// Modifier: Close
+.button--close {
+  font-size: 3.5rem;
+  padding: 0;
+  color: $light-grey;
+  line-height: 100%;
+  border: 0;
+}
+
+.button--more {
+  position: absolute;
+  top: 0;
+  right: 0;
+  transition: .15s ease-out;
+  background: transparent;
+  border: 0;
+  padding: 0 10px !important;
+  color: darken($light-grey, 10%);
+  vertical-align: middle;
+
+  &:hover {
+    color: $blue;
+  }
+}
+@media screen and (max-width: $grid-md) {
+  .button--lg {
+    font-weight: 600;
+  }
+}

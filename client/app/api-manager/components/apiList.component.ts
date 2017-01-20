@@ -9,7 +9,6 @@ import { Subscription } from 'rxjs';
   templateUrl: './templates/apiList.template.html',
   styleUrls: ['./styles/apiList.scss']
 })
-
 export class ApiListComponent implements OnInit, OnDestroy {
   configs: Array<any> = [];
   sub: Subscription;
@@ -20,7 +19,7 @@ export class ApiListComponent implements OnInit, OnDestroy {
     this.sub = this.backEnd.getApiConfigs().subscribe(configs => {
       this.configs = configs;
       this.loading = false;
-    },(err)=>{
+    }, (err) => {
       console.error(err);
     })
   }
@@ -38,5 +37,9 @@ export class ApiListComponent implements OnInit, OnDestroy {
   }
   editApi(config) {
     this.router.navigate(['/master'], { queryParams: { id: config.id } })
+  }
+
+  toggleActive(config) {
+    console.log(config)
   }
 }

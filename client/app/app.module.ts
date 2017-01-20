@@ -14,6 +14,7 @@ import { AUTHENTICATION_COMPONENTS } from './authentication/components';
 import { APP_CORE_API_PROVIDERS } from './core'
 
 import { SharedModule } from "./shared";
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 // Redux
 import { StoreModule, Store } from '@ngrx/store';
@@ -43,6 +44,7 @@ import {
     HttpModule,
     RouterModule.forRoot(routes, { useHash: false }),
     SharedModule,
+    NgbModule.forRoot(), 
     StoreModule.provideStore(reducer)
   ],
   providers: [

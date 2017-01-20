@@ -13,20 +13,18 @@ import { MasterActions, ConfigActions } from '../../core/actions';
 @Component({
   selector: "api-master",
   template: `
-    <div class="row">
-        <div class="col-md-12 col-sm-12" style="position: relative;"> 
-           <ui-tabs #tab rest-height default='general'>
-                <ui-pane id='general' title='config' [valid]='(stepGeneral.validation | async)'>
-                    <step-general #stepGeneral (next)="tab.goTo($event)" [submitted]='submitted'> </step-general>
-                </ui-pane>
-                <ui-pane id='plugins' title='pipe' [valid]='(stepPlugins.validation | async)'>
-                    <step-plugins #stepPlugins (next)="tab.goTo($event)" [submitted]='submitted' ></step-plugins>
-                </ui-pane>
-                <ui-pane id='preview' title='test' [valid]='true'>
-                    <step-preview (next)="onDone()"></step-preview>
-                </ui-pane>     
-            </ui-tabs>
-        </div>
+    <div class="l-master">       
+       <ui-tabs #tab rest-height default='general'>
+          <ui-pane id='general' title='config' [valid]='(stepGeneral.validation | async)'>
+              <step-general #stepGeneral (next)="tab.goTo($event)" [submitted]='submitted'> </step-general>
+          </ui-pane>
+          <ui-pane id='plugins' title='pipe' [valid]='(stepPlugins.validation | async)'>
+              <step-plugins #stepPlugins (next)="tab.goTo($event)" [submitted]='submitted' ></step-plugins>
+          </ui-pane>
+          <ui-pane id='preview' title='test' [valid]='true'>
+              <step-preview (next)="onDone()"></step-preview>
+          </ui-pane>     
+       </ui-tabs>     
     </div>
     `,
   viewProviders: [MasterController]
@@ -101,9 +99,7 @@ export class ApiMasterComponent {
     plugins = plugins.map((plugin) => {
       return {
         name: plugin.name,
-        order: plugin.order,
-        //  settings: plugin.value.settings,
-        //  dependencies: plugin.value.dependencies
+        order: plugin.order,      
         settings: plugin.settings,
         dependencies: plugin.dependencies
       }

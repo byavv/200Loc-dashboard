@@ -5,7 +5,6 @@
 }
 
 .plugin-menu-container {
-  overflow: auto;
   font-size: .8em;
 }
 
@@ -18,19 +17,25 @@
   list-style: none;
   padding: 0;
 
-  > li {
-    margin: 2px;
-    padding: 8px;
-    color: #455A64!important;
-    background: #f2f2f2;
-    border: 1px solid #cfd8dc;
-    font-size: 14px;
-    font-weight: 300;
-    cursor: pointer;
+  &-item {
+    display: block;
     width: 100%;
+    padding: 8px 5px;
+    clear: both;
+    font-weight: 400;
+    color: #373a3c;
+    text-align: inherit;
+    background: 0 0;
+    border: 0;
+    font-size: 16px;
+    cursor: pointer;
 
     &.active {
-      background: #E5E5E5;
+      background: #E5E5E5!important;
+    }
+
+    &:hover {
+      background: rgba(229, 229, 229, 0.3);
     }
   }
 }

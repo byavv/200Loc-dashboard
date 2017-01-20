@@ -22,7 +22,7 @@ import {
           <input type='text' class='form-control' placeholder='value'>  
     </div> 
   `,
-    styles: [require('./styles/header.scss')],
+    styleUrls: ['./styles/header.scss'],
     providers: [
         {
             provide: NG_VALUE_ACCESSOR,

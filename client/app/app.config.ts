@@ -21,14 +21,14 @@
 **/
 export class LoopBackConfig {
   private static path: string = '';
-  private static version: string | number = 'api';
+  private static version: string |  number = 'api';
   private static authPrefix: string = '';
   private static debug: boolean = true;
 
   public static setApiVersion(version: string = 'api'): void {
     LoopBackConfig.version = version;
   }
-  
+
   public static getApiVersion(): string | number {
     return LoopBackConfig.version;
   }
@@ -36,7 +36,7 @@ export class LoopBackConfig {
   public static setBaseURL(url: string = '/'): void {
     LoopBackConfig.path = url;
   }
-  
+
   public static getPath(): string {
     return LoopBackConfig.path;
   }

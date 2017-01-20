@@ -2,7 +2,7 @@
     <!--<loader [active]='loading' [async]='master.init$' [delay]='500'></loader>-->
     <div class="row">
         <div class="col-md-10 col-lg-8 col-sm-12">
-            <form [formGroup]="form" #configForm="ngForm" class="form-horizontal">
+            <form [formGroup]="form" class="form-horizontal">
                 <div class="form-group">
                     <label for="name">Name*</label>
                     <input id="name" class="form-control" [(ngModel)]='apiConfig.name' placeholder="Name..." formControlName="name">
@@ -26,6 +26,6 @@
         </div>
     </div>
 </div>
-<button type="button" (click)="onSubmit(configForm)" class="btn btn-primary next-button">
+<button type="button" (click)="onSubmit()" class="btn btn-primary next-button">
     <i class="fa fa-arrow-right" aria-hidden="true"></i>  Next configure request pipe
 </button>

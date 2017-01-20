@@ -1,10 +1,12 @@
-import {Component, Input, QueryList, AfterContentInit, HostBinding,
-    ViewContainerRef, TemplateRef, ContentChildren, ViewRef} from '@angular/core';
+import {
+    Component, Input, QueryList, AfterContentInit, HostBinding,
+    ViewContainerRef, TemplateRef, ContentChildren, ViewRef
+} from '@angular/core';
 
 @Component({
     selector: 'ui-pane',
     template: `
-        <div class='pane-content' >           
+        <div class='pane-content'>           
             <ng-content></ng-content>                    
         </div>
     `,
@@ -20,6 +22,9 @@ import {Component, Input, QueryList, AfterContentInit, HostBinding,
             display: flex;
             flex: 1;
             flex-direction: column;
+        }
+        :host.hidden {
+            display: none;
         }
     `
     ],
@@ -45,31 +50,29 @@ export class UiPane {
 @Component({
     selector: 'ui-tabs',
     template: ` 
-       <div class="row">
-          <div class="col-sm-12 col-md-2 padding-shrink-right">           
-             <ul class="my-steps">
-                 <li *ngFor="let pane of panes" class='{{ pane.id }}' 
-                     (click)="goTo(pane.id)"
-                     role="presentation" 
-                     [ngClass] = "{ invalid: !pane.valid, active: pane.active, visited: pane.visited }">
-                     <i class='fa'></i>
-                     <span>{{ pane.title }}</span> 
-                 </li>
-             </ul>            
-          </div>
-          <div class="col-sm-12 col-md-10 padding-shrink-left flexy" rest-height>                
-               <ng-content></ng-content>                        
-          </div>
-     </div>
-    `,
-    styles: [
-        require('./styles/tabs.scss'),
-        `
-        :host >>> .hidden {
-            display: none;
-        }
-        `
-    ]
+        <div class='l-container'>
+            <div class="row">
+               <div class="col-sm-12 col-md-2 padding-shrink-right">           
+                  <ul class="my-steps">
+                      <li *ngFor="let pane of panes" class='{{ pane.id }}' 
+                          (click)="goTo(pane.id)"
+                          role="presentation" 
+                          [ngClass] = "{ invalid: !pane.valid, active: pane.active, visited: pane.visited }">
+                          <i class='fa'></i>
+                          <span>{{ pane.title }}</span> 
+                      </li>
+                  </ul>            
+               </div>
+               <div class="col-sm-12 col-md-10 padding-shrink-left flexy" rest-height>                
+                    <ng-content></ng-content>                        
+               </div>
+            </div>
+      </div>
+       
+    `,   
+    styleUrls: [
+        './styles/tabs.scss'
+    ]  
 })
 export class UiTabs {
     @ContentChildren(UiPane) panes: QueryList<UiPane>;

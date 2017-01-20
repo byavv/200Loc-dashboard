@@ -11,7 +11,7 @@ import '../theme/styles.scss';
 })
 export class AppComponent {
     loading = true;
-    constructor(private appController: AppController,
+    constructor(public appController: AppController,
         public viewContainerRef: ViewContainerRef) {
         if ('production' === ENV) {
             LoopBackConfig.setBaseURL('');

@@ -10,7 +10,7 @@ import { Observable, Subscription } from 'rxjs';
     <div class='loader-container' *ngIf='active'>
         <div *ngIf='spinner' class='spinner'></div>
     </div>`,
-    styles: [require('./component.scss')]
+    styleUrls: ['./component.scss']
 })
 export class LoaderComponent implements OnInit, OnDestroy {
     private _subscription: Subscription

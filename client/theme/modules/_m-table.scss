@@ -1,0 +1,98 @@
+.m__table {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  padding: 0;
+}
+
+.m__table-row {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  padding: .7em 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+
+  &:nth-child(2n+3) {
+    background: #efefef;
+  }
+
+  &:first-child {
+    background: #efefef;
+  }
+}
+
+.m__table-cell {
+  box-sizing: border-box;
+  -webkit-box-flex: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
+  width: 100%;
+  padding: 0 .5em; 
+  list-style: none;
+}
+
+.m__table-cell > h1,
+.m__table-cell > h2,
+.m__table-cell > h3,
+.m__table-cell > h4,
+.m__table-cell > h5,
+.m__table-cell > h6 {
+  margin: 0;
+}
+/* Table column sizing
+================================== */
+.m__table--2cols .m__table-cell {
+  width: 50%;
+}
+
+.m__table--3cols .m__table-cell {
+  width: 33.33%;
+}
+
+.m__table--4cols .m__table-cell {
+  width: 25%;
+}
+
+.m__table--5cols .m__table-cell {
+  width: 20%;
+}
+
+.m__table--6cols .m__table-cell {
+  width: 16.6%;
+}
+
+/* Responsive
+==================================== */
+@media all and (max-width: $grid-md) {
+  .m__table-row {
+    flex-direction: column;
+  }
+
+  .m__table {
+    display: block;
+
+    .m__table-cell {
+      width: 100%;
+      border-bottom: none;
+    }
+
+    .m__table-cell--foot {
+      margin-bottom: 1em;
+    }
+  }
+}
+
+// Non-Flex modernizer fallback
+.no-flexbox .m__table {
+  display: block;
+
+  .m__table-cell {
+    width: 100%;
+  }
+
+  .m__table-cell--foot {
+    margin-bottom: 1em;
+  }
+}

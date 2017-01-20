@@ -8,7 +8,6 @@ import { SHARED_SERVICES } from './services';
 import { SHARED_COMPONENTS } from './components';
 import { SHARED_DIRECTIVES } from "./directives";
 
-
 @NgModule({
   declarations: [
     ...SHARED_COMPONENTS,
@@ -22,7 +21,7 @@ import { SHARED_DIRECTIVES } from "./directives";
     HttpModule,
     ModalModule.forRoot(),
     DropdownModule.forRoot(),
-    TabsModule.forRoot()
+    TabsModule.forRoot()   
   ],
   exports: [
     ...SHARED_COMPONENTS,
@@ -32,7 +31,7 @@ import { SHARED_DIRECTIVES } from "./directives";
     FormsModule,
     ModalModule,
     DropdownModule,
-    TabsModule
+    TabsModule  
   ],
   providers: [
     ...SHARED_SERVICES

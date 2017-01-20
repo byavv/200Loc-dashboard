@@ -19,7 +19,7 @@ import {
         </form>
      </div>     
   `,
-  styles: [require('./styles/header.scss')]
+  styleUrls: ['./styles/header.scss']
 })
 export class KeyValueItem {
   @Input() item: any;

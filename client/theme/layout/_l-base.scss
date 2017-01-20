@@ -1,0 +1,29 @@
+.l-container {
+  @extend .container-fluid;
+  padding: 0 !important;
+  @media screen and (max-width: $grid-md) {
+    padding: 0;
+  }
+  @media screen and (min-width: $grid-md) and (max-width: $grid-lg) {
+    padding: 15 !important;
+    max-width: 50rem;
+    margin: 0 auto;
+  }
+  @media screen and (min-width: $grid-lg) {
+    padding: 15 !important;
+    max-width: 60rem;
+    margin: 0 auto;
+  }
+}
+
+.l-header {
+  &__menu {
+    @extend .button--icon;
+    margin-right: 20px;
+
+    > span {
+      transform: translateY(5px);
+      display: inline-block;
+    }
+  }
+}

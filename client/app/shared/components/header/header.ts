@@ -10,28 +10,35 @@ export class HeaderComponent implements OnInit {
     isAuthenticated: boolean = false;
     shouldRedirect: boolean;
     username: string;
+    active: boolean = false;
 
-    constructor( private router: Router) { }
+    constructor(private router: Router) { 
+        this.closeSidebarHandler = this.closeSidebarHandler.bind(this);
+    }
 
     ngOnInit() {
-       /* this.username = this.identity.user.name || "Guest";
-        this.isAuthenticated = this.identity.user.isAuthenticated();
-        this.identity.identity$
-            .subscribe((user) => {
-                this.isAuthenticated = user.isAuthenticated();
-                this.username = user.name;
-            });*/
+        /* this.username = this.identity.user.name || "Guest";
+         this.isAuthenticated = this.identity.user.isAuthenticated();
+         this.identity.identity$
+             .subscribe((user) => {
+                 this.isAuthenticated = user.isAuthenticated();
+                 this.username = user.name;
+             });*/
     }
     signOut() {
-      /* this.auth.signOut().subscribe(
-            (res) => {
-                this.identity.update();
-                this.storage.removeItem("authorizationData")
-            },
-            (err) => {
-                this.identity.update();
-                this.storage.removeItem("authorizationData");
-            }
-        );*/
+        /* this.auth.signOut().subscribe(
+              (res) => {
+                  this.identity.update();
+                  this.storage.removeItem("authorizationData")
+              },
+              (err) => {
+                  this.identity.update();
+                  this.storage.removeItem("authorizationData");
+              }
+          );*/
+    }
+  
+    closeSidebarHandler() {
+        this.active = false;
     }
 }

@@ -1,13 +1,9 @@
 <div class="page-wrap">
     <loader [active]='loading' [async]='appController.init$'></loader>
     <app-header></app-header>
-    <div [hidden]='loading' class='container-fluid'>
-        <div class='row content-area'>            
-            <div class="col-sm-12">
-                <router-outlet>
-                </router-outlet>
-            </div>
-        </div>
+    <div [hidden]='loading' class='l-container'>
+        <router-outlet>
+        </router-outlet>
     </div>
 </div>
 <app-footer></app-footer>

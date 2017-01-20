@@ -85,9 +85,9 @@ export class StepGeneral implements AfterViewInit {
         }
     }
 
-    onSubmit(form: FormGroup) {
+    onSubmit() {
         this.submitted = true;
-        if (form.valid) {
+        if (this.form.valid) {
             this.next.emit('plugins');
         }
     }
