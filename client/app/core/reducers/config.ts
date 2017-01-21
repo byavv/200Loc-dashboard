@@ -2,7 +2,7 @@
 import '@ngrx/core/add/operator/select';
 import { Observable } from 'rxjs/Observable';
 import { Action } from '@ngrx/store';
-import { MasterState, Config } from '../models';
+import { Config } from '../models';
 import { ConfigActions } from '../actions';
 
 export interface ConfigState extends Config { };

@@ -1,7 +1,7 @@
-import { AuthGuard } from './authGuard';
+import { IsAuthenticatedGuard } from './authenticated.guard';
 
-export * from './authGuard'
+export * from './authenticated.guard'
 
 export var GUARDS = [
-    AuthGuard
+    IsAuthenticatedGuard
 ];

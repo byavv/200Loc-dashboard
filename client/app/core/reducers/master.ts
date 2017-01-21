@@ -2,7 +2,7 @@
 import '@ngrx/core/add/operator/select';
 import { Observable } from 'rxjs/Observable';
 import { Action } from '@ngrx/store';
-import { MasterState, Config } from '../models';
+import { Master, Config } from '../models';
 import { MasterActions } from '../actions';
 
 export interface EntryCreationMasterState extends Config {

@@ -1,55 +1,15 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Http, Headers, RequestOptions, Request } from '@angular/http';
-import { LoopBackConfig } from "../../app.config"
+import { CoreConfig } from "../../core";
 @Injectable()
-export class BackEnd {
+export class CustomBackEndApi {
 
   constructor(private _http: Http) { }
 
   public getPlugins(): Observable<any> {
     return this._http
-      .get(LoopBackConfig.getPath() + "/" + LoopBackConfig.getApiVersion() + "/plugins")
-      .map(res => res.json());
-  }
-  public getApiConfigs(): Observable<any> {
-    return this._http
-      .get(LoopBackConfig.getPath() + "/" + LoopBackConfig.getApiVersion() + "/configs")
-      .map(res => res.json());
-  }
-
-  public getAvailableDrivers(): Observable<any> {
-    return this._http
-      .get(LoopBackConfig.getPath() + "/" + LoopBackConfig.getApiVersion() + "/drivers")
-      .map(res => res.json());
-  }
-  public getDriverConfigurations(name): Observable<any> {
-    return this._http
-      .get(LoopBackConfig.getPath() + "/" + LoopBackConfig.getApiVersion() + `/drivers/${name}`)
-      .map(res => res.json());
-  }
-
-  public getDriverTemplateByName(name): Observable<any> {
-    return this._http
-      .get(LoopBackConfig.getPath() + "/" + LoopBackConfig.getApiVersion() + `/driver/config/${name}`)
-      .map(res => res.json());
-  }
-
-  public getConfig(id): Observable<any> {
-    return this._http
-      .get(LoopBackConfig.getPath() + "/" + LoopBackConfig.getApiVersion() + `/config/${id}`)
-      .map(res => res.json());
-  }
-
-  public createOrUpdate(data: any, id?: string) {
-    return this._http
-      .post(LoopBackConfig.getPath() + "/" + LoopBackConfig.getApiVersion() + `/config/${id}`, JSON.stringify(data))
-      .map(res => res.json());
-  }
-
-  public createOrUpdateDriver(driver: any) {
-    return this._http
-      .post(LoopBackConfig.getPath() + "/" + LoopBackConfig.getApiVersion() + `/driver/${driver.id ? driver.id : ''}`, JSON.stringify(driver))
+      .get(CoreConfig.getPath() + "/" + CoreConfig.getApiVersion() + "/plugins")
       .map(res => res.json());
   }
 
@@ -62,21 +22,22 @@ export class BackEnd {
       headers: reqHeaders,
       method: 'post',
       body: reqBody,
-      url: LoopBackConfig.getPath() + "/" + LoopBackConfig.getApiVersion() + "/test"
+      url: CoreConfig.getPath() + "/" + CoreConfig.getApiVersion() + "/test"
     });
     return this._http
       .request(new Request(options))
       .map(res => res.json());
   }
 
-  public deleteApiConfig(id) {
+  public getAvailableDrivers(): Observable<any> {
     return this._http
-      .delete(LoopBackConfig.getPath() + "/" + LoopBackConfig.getApiVersion() + `/config/${id}`)
+      .get(CoreConfig.getPath() + "/" + CoreConfig.getApiVersion() + "/drivers")
       .map(res => res.json());
   }
-  public getDriverConfig(id) {
+
+  public getDriverTemplateByName(name): Observable<any> {
     return this._http
-      .get(LoopBackConfig.getPath() + "/" + LoopBackConfig.getApiVersion() + `/driver/${id}`)
+      .get(CoreConfig.getPath() + "/" + CoreConfig.getApiVersion() + `/driver/config/${name}`)
       .map(res => res.json());
   }
 }

@@ -1,5 +1,5 @@
 import { User } from './User';
-import { MasterState } from './MasterState';
+import { Master } from './MasterState';
 import { Plugin } from './Plugin';
 import { ApiConfig } from './ApiConfig';
 import { DriverConfig } from './DriverConfig';
@@ -12,7 +12,7 @@ export * from './MasterState';
 
 export var APP_MODELS: Array<any> = [
     User,
-    MasterState,
+    Master,
     Plugin,
     DriverConfig,
     ApiConfig

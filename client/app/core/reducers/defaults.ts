@@ -1,7 +1,7 @@
 import '@ngrx/core/add/operator/select';
 import { Observable } from 'rxjs/Observable';
 import { Action } from '@ngrx/store';
-import { MasterState, Plugin } from '../models';
+import { Plugin } from '../models';
 import { DefaultsActions } from '../actions';
 
 export interface DefaultAppState {

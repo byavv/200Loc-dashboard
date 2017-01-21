@@ -9,11 +9,11 @@ module.exports = function (app) {
     var router = app.loopback.Router();
     var ApiConfig = app.models.ApiConfig;
 
-    router.get('/api/configs', (req, res) => {
-        ApiConfig.find((err, configs) => {
-            res.send(configs);
-        });
-    });
+    // router.get('/api/configs', (req, res) => {
+    //     ApiConfig.find((err, configs) => {
+    //         res.send(configs);
+    //     });
+    // });
 
     router.get('/api/plugins', (req, res, next) => {
         request({
@@ -29,12 +29,12 @@ module.exports = function (app) {
         });
     });
 
-    router.delete('/api/config/:id', (req, res) => {
-        ApiConfig.destroyById(req.params.id, (err, result) => {
-            if (err) return res.sendStatus(500);
-            return res.send(result);
-        });
-    });
+    // router.delete('/api/config/:id', (req, res) => {
+    //     ApiConfig.destroyById(req.params.id, (err, result) => {
+    //         if (err) return res.sendStatus(500);
+    //         return res.send(result);
+    //     });
+    // });
     /**
      * Get all installed drivers
      */
@@ -50,7 +50,7 @@ module.exports = function (app) {
                 return res.sendStatus(500)
             }
         });
-    });
+    }); 
     /**
      * Get driver template by it's name'
      */

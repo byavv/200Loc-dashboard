@@ -1,0 +1,10 @@
+.l-login {
+  &__container {
+    background: $white;
+    padding: 10px;
+    min-height: 400px;
+    @media screen and (max-width: $grid-md) {
+      min-height: 100%!important;
+    }
+  }
+}

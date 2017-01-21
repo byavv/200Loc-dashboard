@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { LoopBackAuth } from '../../shared/services/core/auth.service';
+import { LoopBackAuth } from '../services/auth.service';
 import { Observable, Observer } from 'rxjs';
 //import { ProfileApi } from '../../shared/services/custom/Profile';
 

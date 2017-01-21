@@ -1,7 +1,9 @@
-import { APP_ACTIONS } from "./actions";
-import { GUARDS } from "./guards";
+export * from './guards';
+export * from './actions';
+export * from './models';
+export * from './services';
+export * from './reducers';
 
-export const APP_CORE_API_PROVIDERS = [
-    ...APP_ACTIONS,
-    ...GUARDS
-];
+export * from './core.config';
+
+export * from './core.module';

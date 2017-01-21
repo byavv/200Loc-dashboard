@@ -1,8 +1,8 @@
-export class MasterState {
+export class Master {
     general?: any;
     plugins?: any;
     
-    constructor(data?: MasterState) {
+    constructor(data?: Master) {
         Object.assign(this, data);
     }    
 } 

@@ -1,26 +1,42 @@
 import { Component, OnInit, ViewContainerRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { AppController } from './shared/services'
-import { LoopBackConfig } from './app.config';
+import { CoreConfig, LoopBackAuth } from './core';
 
 import '../theme/styles.scss';
 
 @Component({
     selector: 'app',
-    templateUrl: './app.component.tmpl.html'
+    template: `
+    
+    <div class="page-wrap">
+        <loader [active]='loading' [async]='appController.init$'></loader>
+        <app-header></app-header>
+        <div [hidden]='loading' class='l-container'>
+            <router-outlet>
+            </router-outlet>
+        </div>
+    </div>
+    <app-footer></app-footer>
+    
+    `
 })
 export class AppComponent {
     loading = true;
-    constructor(public appController: AppController,
+    constructor(
+        public appController: AppController,
+        public authService: LoopBackAuth,
         public viewContainerRef: ViewContainerRef) {
         if ('production' === ENV) {
-            LoopBackConfig.setBaseURL('');
+            CoreConfig.setBaseURL('');
         } else {
-            LoopBackConfig.setBaseURL('http://localhost:5601');
+            CoreConfig.setBaseURL('http://localhost:5601');
         }
-        //this.appController.init$.subscribe(() => {
-            this.loading = false;
-      // })
+        this.appController.init$
+            .subscribe(() => {
+                this.loading = false;
+            })
         this.appController.start();
+        this.authService.populate();
     }
 }

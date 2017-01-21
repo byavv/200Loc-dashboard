@@ -1,15 +1,16 @@
-import { Injectable, NgZone } from '@angular/core';
+import { Injectable, NgZone, isDevMode } from '@angular/core';
 import { Http, Response } from '@angular/http';
 import { ReplaySubject, Observable } from "rxjs";
 
-import { BackEnd } from "./backEndApi";
+import { CustomBackEndApi } from "./backEndApi";
 import { Store } from '@ngrx/store';
 import { AppState } from '../../core/reducers';
 import { DefaultsActions } from '../../core/actions';
 
 @Injectable()
-export class AppController { 
-    constructor(private _backEnd: BackEnd,
+export class AppController {
+    init$: ReplaySubject<any> = new ReplaySubject();
+    constructor(private _backEnd: CustomBackEndApi,
         private _store: Store<AppState>,
         private _defaultsActions: DefaultsActions,
         private _ngZone: NgZone) { }
@@ -17,10 +18,11 @@ export class AppController {
     start() {
         this._ngZone.runOutsideAngular(() => {
             this._loadAppDefaults((defaults) => {
-                this._ngZone.run(() => {                   
-                    this._store.dispatch(this._defaultsActions.setDefaults(defaults))
+                this._ngZone.run(() => {
+                    this._store.dispatch(this._defaultsActions.setDefaults(defaults));
+                    this.init$.next(true);
                 });
-                console.log("APPLICATION STARTED");
+                console.log(`APPLICATION STARTED IN ${isDevMode ? 'DEV' : 'PROD'} MODE`);
             })
         });
     }

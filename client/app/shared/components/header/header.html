@@ -1,49 +1,13 @@
 <header>
     <nav class="navbar navbar-light app-header">
-        <button class='l-header__menu' (click)='active = !active'><span class="icon-android-menu"></span></button>
-
-
-
-
-
-
-
-
-
-
-
+        <button class='l-header__toggle' #openMenuBtn (click)="active = true"><span class="icon-android-menu"></span></button>
         <a [routerLink]="['/']" class="navbar-brand">200Loc-Dashboard</a>
-        <span dropdown class="nav navbar-nav float-sm-right" style='margin-left: auto;'>
-<a href dropdownToggle id="menu-dropdown" class="nav-link" aria-expanded="false">
-    <i class="fa fa-cog" aria-hidden="true"></i>
-</a>
-<ul dropdownMenu class="dropdown-menu dropdown-menu-right" aria-labelledby="menu-dropdown">
-    <li> <a class="dropdown-item" [routerLink]="['/']"><i class="icon-home icon-1x"></i>Gateway entries</a></li>
-    <li><a class="dropdown-item" [routerLink]="['/drivers']"><i class="icon-home icon-1x"></i>Drivers manager</a></li>
-</ul>
-</span>
-</nav>
+    </nav>
 </header>
 
-<span class="l-header__sidebar" [class.active]="active" [offClick]='closeSidebarHandler'>
-  <!--<aside #aside class="l-header__aside">
-    <div class="l-header__user">
-      <span class="l-header__letter is-online hidden-md-up">G</span>
-<div class="l-header__user-wrapper">
-    <a [routerLink]="['profile']" (click)="setActive(false)" class="l-header__name">{{ profile?.fullName() }}</a>
-    <span class="l-header__career">{{ profile?.mainCategory() }}</span>
+<div class="l-header__sidebar" [class.active]="active" [offClick]='closeSidebarHandler' [ignore]='openMenuBtn'>
+    <ul class="l-header__menu">
+        <li><a class="l-header__menu-item" [routerLink]="['/entries']" routerLinkActive="active"><i class="icon-home icon-1x"></i>Api table</a></li>
+        <li><a class="l-header__menu-item" [routerLink]="['/drivers']" routerLinkActive="active"><i class="icon-home icon-1x"></i>Drivers manager</a></li>
+    </ul>
 </div>
-</div>
-<nav class="l-header__actions">
-    <a [routerLink]="['dashboard/settings']" (click)="setActive(false)" class="l-header__action l-header__action--settings">
-        <span class="l-header__icon"></span> Settings
-    </a>
-    <a [routerLink]="['home']" (click)="setActive(false)" class="l-header__action l-header__action--help">
-        <span class="l-header__icon"></span> Help
-    </a>
-    <a [routerLink]="['welcome/auth/logout']" (click)="setActive(false)" class="l-header__action l-header__action--sign-out">
-        <span class="l-header__icon"></span> Sign Out
-    </a>
-</nav>
-</aside>-->
-</span>

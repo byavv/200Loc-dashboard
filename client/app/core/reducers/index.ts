@@ -12,20 +12,22 @@ import { defaultsReducer, DefaultAppState } from './defaults';
 import { EntryValidityState, masterValidityReducer } from './masterValidation';
 import { ConfigState, configReducer } from './config';
 
-import { MasterState } from '../models';
+import { UserAuthenticationState, authenticationReducer, getAuthenticated } from './authentication.reducer';
 
 export interface AppState {
     master: EntryCreationMasterState;
     defaults: DefaultAppState;
     validation: ValidityState;
-    config: ConfigState
+    config: ConfigState,
+    authentication: UserAuthenticationState
 }
 
 export default combineReducers({
     master: masterReducer,
     defaults: defaultsReducer,
     validation: masterValidityReducer,
-    config: configReducer
+    config: configReducer,
+    authentication: authenticationReducer
 });
 
 /**
@@ -48,6 +50,13 @@ export function getValidationState() {
     return (state$: Observable<AppState>) => {
         return state$
             .select(s => s.validation)
+    };
+}
+
+export function getAuthenticationState() {
+    return (state$: Observable<AppState>) => {
+        return state$
+            .select(s => s.authentication)
     };
 }
 /**
@@ -80,3 +89,13 @@ export function getMasterConfigPlugins() {
 
 }
 
+
+
+/**
+ * Get observable of user's authentication state
+ * 
+ * @returns Observable<boolean> 
+ */
+export function isUserLoggedIn() {
+    return compose(getAuthenticated(), getAuthenticationState())
+}

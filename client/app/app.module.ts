@@ -5,21 +5,18 @@ import { HttpModule, Http } from '@angular/http';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
-import { routes } from './app.routes';
 import { AppComponent } from './app.component';
-import { API_MNGR_COMPONENTS } from './api-manager';
-import { DRIVER_MNGR_COMPONENTS } from './driver-manager/components';
-import { PLUGINS_COMPONENTS } from './plugin-manager/components';
+
 import { AUTHENTICATION_COMPONENTS } from './authentication/components';
-import { APP_CORE_API_PROVIDERS } from './core'
+import { CoreModule } from './core';
+import { AppRoutingModule } from './app.routing.module';
 
 import { SharedModule } from "./shared";
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 // Redux
-import { StoreModule, Store } from '@ngrx/store';
+import { StoreModule } from '@ngrx/store';
 import reducer from './core/reducers';
-import { AppState } from './core/reducers';
 
 import 'brace';
 import 'brace/theme/eclipse'
@@ -33,23 +30,20 @@ import {
 @NgModule({
   bootstrap: [AppComponent],
   declarations: [
-    AppComponent,
-    ...API_MNGR_COMPONENTS,
-    ...DRIVER_MNGR_COMPONENTS,
-    ...PLUGINS_COMPONENTS,
+    AppComponent, 
     ...AUTHENTICATION_COMPONENTS
   ],
   imports: [
     BrowserModule,
-    HttpModule,
-    RouterModule.forRoot(routes, { useHash: false }),
+    HttpModule,   
     SharedModule,
-    NgbModule.forRoot(), 
-    StoreModule.provideStore(reducer)
+    NgbModule.forRoot(),
+    StoreModule.provideStore(reducer),
+    CoreModule.forRoot(),
+    AppRoutingModule
   ],
   providers: [
-    { provide: LocationStrategy, useClass: HashLocationStrategy },
-    ...APP_CORE_API_PROVIDERS
+    { provide: LocationStrategy, useClass: HashLocationStrategy }
   ]
 })
 export class AppModule {

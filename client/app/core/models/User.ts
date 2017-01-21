@@ -1,8 +1,13 @@
-export class User {
+export interface IUser {
     accessToken?: any;
     username?: string;
-    
-    constructor(data?: User) {
+}
+
+export class User implements IUser {
+    accessToken?: any;
+    username?: string;
+
+    constructor(data?: IUser) {
         Object.assign(this, data);
     }
     isAuthenticated() {
