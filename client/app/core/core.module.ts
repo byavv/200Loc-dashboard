@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
-
-
-
+import { HttpModule } from '@angular/http';
+import { RouterModule } from '@angular/router';
 
 /**
  * Cyza specific router guards
@@ -9,11 +8,7 @@ import { CommonModule } from '@angular/common';
 import { GUARDS } from "./guards";
 import { APP_ACTIONS } from "./actions";
 
-import { HttpModule } from '@angular/http';
-
 import { NgModule, ModuleWithProviders } from '@angular/core';
-import { RouterModule } from '@angular/router';
-
 import { CORE_SERVICES } from './services';
 
 @NgModule({

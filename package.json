@@ -34,7 +34,7 @@
     "protractor": "protractor",
     "protractor:delay": "sleep 3 && npm run protractor",
     "protractor:live": "protractor --elementExplorer",
-    "rimraf": "rimraf",   
+    "rimraf": "rimraf",
     "start": "npm run server:prod",
     "dev": "nodemon ./server/server.js --link localhost:3001 --p 5601",
     "server:prod": "node ./server/server.js --link localhost:3001 --p 5601",

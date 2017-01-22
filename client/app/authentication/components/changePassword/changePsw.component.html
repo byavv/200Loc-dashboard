@@ -1,0 +1,48 @@
+<div class="l-change__container">
+    <h3 class="l-login__title--page">SignUp</h3>
+    <div class="row">
+        <div class="col-xs-offset-2 col-xs-8 col-md-4 col-md-offset-4">
+            <div class="login-form-container">
+                <div *ngIf="!!error">
+                    {{error}}
+                </div>
+                <form [formGroup]="changeForm" (ngSubmit)="onSubmit(changeForm.value)" novalidate>
+                    <div class="form-group">
+                        <label for="username">Username</label>
+                        <input type="text" class="form-control" id="username" placeholder="Username Name" formControlName="username" required>
+                        <show-error *ngIf="submitted" [options]="{'required': 'Username is required'}"
+                            [control]="changeForm.get('username')">
+                        </show-error>
+                    </div>
+                    <div class="form-group">
+                        <label for="oldpassword">Old Password</label>
+                        <input type="password" class="form-control" id="oldpassword" placeholder="Old password" formControlName="oldpassword" required>
+                        <show-error *ngIf="submitted" [options]="{'required': 'Field is required'}"
+                            [control]="changeForm.get('oldpassword')">
+                        </show-error>
+                    </div>
+                    <div class="form-group">
+                        <label for="newpassword">New Password</label>
+                        <input type="password" class="form-control" id="newpassword" placeholder="New password" formControlName="newpassword" required>
+                        <show-error *ngIf="submitted" [options]="{'required': 'Field is required'}"
+                            [control]="changeForm.get('newpassword')">
+                        </show-error>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="confirmpassword">Confirm New Password</label>
+                        <input type="password" class="form-control" id="confirmpassword" placeholder="Confirm password" formControlName="confirmnewpassword"
+                            validateEqual='newpassword' required>                        
+                        <show-error *ngIf="submitted" [options]="{'validateEqual':'Password is not equal', 'required': 'Field is required'}"
+                            [control]="changeForm.get('confirmnewpassword')">
+                        </show-error>
+                    </div>
+
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary" [disabled]='submitted && !changeForm.valid'>Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

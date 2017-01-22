@@ -5,7 +5,7 @@
     padding: 0;
   }
   @media screen and (min-width: $grid-md) and (max-width: $grid-lg) {
-    padding: 15 !important;
+    padding: 15px !important;
     max-width: 50rem;
     margin: 0 auto;
   }
@@ -13,5 +13,13 @@
     padding: 15 !important;
     max-width: 60rem;
     margin: 0 auto;
+  }
+}
+
+body.blurred *.authH {
+  filter: blur(3px);
+
+  > * {
+    filter: blur(3px);
   }
 }

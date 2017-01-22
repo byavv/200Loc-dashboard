@@ -8,6 +8,7 @@ const path = require("path"),
 module.exports = function (app) {
     var router = app.loopback.Router();
     var ApiConfig = app.models.ApiConfig;
+    var User = app.models.user;
 
     // router.get('/api/configs', (req, res) => {
     //     ApiConfig.find((err, configs) => {
@@ -50,7 +51,7 @@ module.exports = function (app) {
                 return res.sendStatus(500)
             }
         });
-    }); 
+    });
     /**
      * Get driver template by it's name'
      */
@@ -80,12 +81,42 @@ module.exports = function (app) {
         }, function (err, responce, body) {
             if (err) return next(err)
             if (responce) {
-                return res.status(responce.statusCode).send(body)
+                return res.status(responce.statusCode).send(body);
             } else {
-                return res.sendStatus(500)
+                return res.sendStatus(400);
             }
         });
     });
+
+    // router.post('/login', function (req, res, next) {
+    //     User.login({
+    //         email: req.body.username,
+    //         username: req.body.username,
+    //         password: req.body.password
+    //     }, 'user', function (err, token) {
+    //         if (err) return next(err);
+    //         return res.status(200).send(token)
+    //     });
+    // });
+
+    // router.post('/signup', function (req, res, next) {
+    //     User.create({
+    //         email: req.body.username,
+    //         username: req.body.username,
+    //         password: req.body.password
+    //     }, function (err, userInstance) {
+    //         if (err) return next(err);
+    //         return res.status(200).send(userInstance);
+    //     });
+    // });
+
+    // router.get('/logout', function (req, res, next) {
+    //     if (!req.accessToken) return res.sendStatus(401);
+    //     User.logout(req.accessToken.id, function (err) {
+    //         if (err) return next(err);
+    //         return res.sendStatus(200);
+    //     });
+    // });
 
     app.use(router);
 };

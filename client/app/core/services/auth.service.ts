@@ -18,6 +18,7 @@ export class LoopBackAuth {
   }
 
   public populate() {
+    console.log(this._user)
     if (this._user.accessToken) {
       this._store.dispatch(this._userActions.login(this._user));
     }
@@ -26,20 +27,18 @@ export class LoopBackAuth {
   get user() {
     return this._user;
   }
-
-  public save() {
-    this._persist("accessToken", this._user.accessToken);
-  };
-
+ 
   public clearStorage() {
     StorageDriver.remove(this.prefix + 'accessToken');
+    StorageDriver.remove(this.prefix + 'username');
   };
 
-  protected persistUser(userData: User) {
+  public persist(userData: IUser) {
     if (typeof userData === 'object') {
       Object.keys(userData).forEach((key) => {
-        this._persist(`${this.prefix}${key}`, userData[key]);
-      })
+        this._persist(key, userData[key]);
+      });
+      this._user = new User(userData);
     }
   }
 

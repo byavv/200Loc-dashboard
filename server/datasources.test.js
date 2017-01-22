@@ -1,6 +1,11 @@
 module.exports = {
   db: {
     connector: 'memory',
-    name: 'db'    
+    name: 'db'
+  },
+  auth: {
+    connector: 'memory',
+    name: 'auth',
+    file: null
   }
 };

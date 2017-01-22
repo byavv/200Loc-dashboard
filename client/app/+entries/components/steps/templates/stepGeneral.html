@@ -6,12 +6,12 @@
                 <div class="form-group">
                     <label for="name">Name*</label>
                     <input id="name" class="form-control" [(ngModel)]='apiConfig.name' placeholder="Name..." formControlName="name">
-                    <show-error *ngIf="submitted" control="name" [errors]="{'required': 'Name field is required'}"></show-error>
+                    <show-error *ngIf="submitted" control="name" [options]="{'required': 'Name field is required'}"></show-error>
                 </div>
                 <div class="form-group">
                     <label for="entry">Entry*</label>
                     <input id="entry" class="form-control" [(ngModel)]="apiConfig.entry" formControlName="entry" placeholder="/...">
-                    <show-error *ngIf="submitted" control="entry" [errors]="{'required': 'Entry field is required'}"></show-error>
+                    <show-error *ngIf="submitted" control="entry" [options]="{'required': 'Entry field is required'}"></show-error>
                 </div>
                 <div class="form-group">
                     <label for="description">Description</label>

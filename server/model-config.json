@@ -2,7 +2,7 @@
   "_meta": {
     "sources": [
       "loopback/common/models",
-      "loopback/server/models",      
+      "loopback/server/models",
       "../common/models",
       "./models"
     ],
@@ -13,6 +13,18 @@
       "./mixins"
     ]
   },
+  "User": {
+    "dataSource": "auth",
+    "public": false
+  },
+  "AccessToken": {
+    "dataSource": "auth",
+    "public": false
+  },
+  "ACL": {
+    "dataSource": "auth",
+    "public": false
+  },
   "ApiConfig": {
     "dataSource": "db",
     "public": true
@@ -20,5 +32,9 @@
   "DriverConfig": {
     "dataSource": "db",
     "public": true
-  } 
+  },
+  "user": {
+    "dataSource": "auth",
+    "public": true
+  }
 }

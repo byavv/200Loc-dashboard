@@ -16,7 +16,7 @@
                 </select>
                 <show-error *ngIf="form.controls[field.key].dirty" 
                     [control]="field.key" 
-                    [errors]="{'required': 'Field is required'}">
+                    [options]="{'required': 'Field is required'}">
                 </show-error>
             </div>
         </div>

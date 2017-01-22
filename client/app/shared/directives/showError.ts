@@ -1,59 +1,68 @@
 import {
-    FormGroupDirective,
-    FormGroup,
-    FormControlName,
-    FormControl, NgForm
+    FormControl
 } from '@angular/forms';
+import { Subscription } from 'rxjs/Subscription';
 
-import { Component, Directive, Host, Optional, Input, OnInit } from '@angular/core';
+import {
+    Component,
+    Host,
+    Input,
+    OnInit,
+    OnDestroy,
+    ElementRef
+} from '@angular/core';
 
 @Component({
     selector: 'show-error',
-    template: `
-        <span class='error-span' *ngIf="errorMessage !== null">{{ errorMessage }}</span>
+    template: `        
+     <small> {{ error }} </small>
     `,
     styles: [
-        `
-        .error-span {
-            margin-top: 0rem;
-            display: inline-block;
-            font-size: 0.9rem;
+        `       
+        :host-context(.ng-invalid) small {
+            display: block;
+            font-size: 12px;         
+            color: #f2374d;
+            position: static;
         }
+        :host-context(.ng-valid) small {
+            display: none;          
+        }
+
         `
     ]
 })
-export class ShowError {
-    form: FormGroup;
-    controlToWatch: any;
-    // name of binded form control
-    @Input()
-    control: string;
-    // {'required' : 'field is required', 'customError': 'field value has wrong format'}
-    @Input()
+export class ShowValidationError implements OnInit, OnDestroy {
+    @Input('options')
     errors: { [code: string]: string; } = {};
-    constructor(
-        @Host() @Optional() formDir: FormGroupDirective,
-        @Host() @Optional() ngForm: NgForm,
-        @Host() @Optional() formGroup: FormGroup
-    ) {
-       // if (ngForm) {
-      //      this.form = ngForm;
-      //  }
-        if (formDir) {
-            this.form = formDir.form;
+    @Input('control') control: FormControl;
+
+    error: string;
+    subscription: Subscription;
+
+    ngOnInit() {
+        if (this.control) {
+            this.validate();
+            this.subscription = this.control
+                .valueChanges
+                .subscribe(this.validate.bind(this));
         }
-        if (!this.form) throw new Error('Show-error should be binded to form control');
     }
 
-    get errorMessage(): string {
-        this.controlToWatch = this.form.get(this.control);
-        if (this.controlToWatch) {
+    private validate() {      
+        if (this.control.errors) {
             for (var error in this.errors) {
-                if (this.controlToWatch.hasError(error)) {
-                    return this.errors[error]
+                if (!!this.control.errors[error]) {
+                    this.error = this.errors[error];
                 }
             }
+        } else {
+            this.error = '';
         }
-        return null;
+    }
+    ngOnDestroy() {
+        if (this.subscription) {
+            this.subscription.unsubscribe();
+        }
     }
 }

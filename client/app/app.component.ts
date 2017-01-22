@@ -11,13 +11,13 @@ import '../theme/styles.scss';
     
     <div class="page-wrap">
         <loader [active]='loading' [async]='appController.init$'></loader>
-        <app-header></app-header>
+        <app-header class='authH'></app-header>
         <div [hidden]='loading' class='l-container'>
             <router-outlet>
             </router-outlet>
-        </div>
+        </div>       
     </div>
-    <app-footer></app-footer>
+    <app-footer class='authH'></app-footer>  
     
     `
 })

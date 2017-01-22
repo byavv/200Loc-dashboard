@@ -53,8 +53,7 @@ export abstract class BaseLoopBackApi {
 
     if (this.auth.user && this.auth.user.accessToken) {
       headers.append(
-        'Authorization',
-        CoreConfig.getAuthPrefix() + this.auth.user.accessToken
+        'Authorization', this.auth.user.accessToken
       );
     }
 
@@ -92,6 +91,6 @@ export abstract class BaseLoopBackApi {
     });
     return this.http.request(request)
       .map((res: any) => (res.text() != "" ? res.json() : {}))
-      .catch(this.errorHandler.handleError);
+      .catch(this.errorHandler.handleError.bind(this.errorHandler));
   }
 }
