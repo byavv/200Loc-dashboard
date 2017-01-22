@@ -23,6 +23,24 @@
 
       transition: transform .25s cubic-bezier(0.4,0.0,0.2,1),visibility 0s linear 0s;
     }
+
+    &-menu {
+      @extend .list-group;
+
+      &--item {
+        @extend .list-group-item;
+        padding: .5rem 1.5rem .5rem 3.5rem;
+
+        [class^="icon-"] {
+          font-size: 1.2em;
+          margin: 0 10px;
+          color: $grey;
+          position: absolute;
+          left: 5px;
+          font-size: 1.5rem;
+        }
+      }
+    }
   }
 
   &__toggle {
@@ -36,20 +54,37 @@
   }
 
   &__menu {
-    @extend .list-group;
+    cursor: pointer;
+    display: inline-block;
+    padding: 0;
+    margin: 0;
+    -webkit-flex: 1.5;
+    flex: 1.5;
+    padding-bottom: 12px;
+    padding-top: 16px;
+    padding-left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 100%;
+    width: 60px !important;
 
-    &-item {
-      @extend .list-group-item;
-      padding: .5rem 1.5rem .5rem 3.5rem;
+    &-toggle {
+      @extend .button--icon;
+      font-size: 1.4rem;
 
-      [class^="icon-"] {
-        font-size: 1.2em;
-        margin: 0 10px;
-        color: $grey;
+      &:after {
+        margin-top: .2rem;
+        margin-left: 3px;
+        content: 'v';
         position: absolute;
-        left: 5px;
-        font-size: 1.5rem;
+        display: inline-block;
+        font-family: "loc" !important;
+        color: #a6b0b7;
+        border: none;
+        font-size: 1rem;
       }
     }
+
   }
 }

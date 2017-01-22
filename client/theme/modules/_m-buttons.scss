@@ -55,7 +55,7 @@ button {
 
 .button--icon {
   border: 0;
-  color: #a6b0b7;
+  color: $light-grey;
   font-size: 1.8rem;
   margin: 0;
   padding: 0;
@@ -114,16 +114,6 @@ button {
       transform: translate(0, -50%);
     }
   }
-}
-
-.button--special {
-  @extend .button--icon;
-  @extend .button--light;
-
-  padding-top: .57em;
-  padding-bottom: .57em;
-
-  text-transform: none;
 }
 
 // Module: Button

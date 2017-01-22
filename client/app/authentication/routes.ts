@@ -1,17 +1,16 @@
 import { Routes } from '@angular/router';
-import { LoginComponent, SignUpComponent, ChangePasswordComponent } from './components';
+import { LoginComponent, ChangePasswordComponent } from './components';
+import { IsNotAuthenticatedGuard, IsAuthenticatedGuard } from '../core';
 
 export const AuthenticationRoutes: Routes = [
   {
     path: 'auth',
-    component: LoginComponent
-  },
-  {
-    path: 'auth/s',
-    component: SignUpComponent
+    component: LoginComponent,
+    canActivate: [IsNotAuthenticatedGuard]  
   },
   {
     path: 'auth/change',
-    component: ChangePasswordComponent
+    component: ChangePasswordComponent,
+    canActivate: [IsAuthenticatedGuard],
   }
 ];

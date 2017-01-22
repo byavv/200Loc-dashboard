@@ -8,6 +8,7 @@ import { SHARED_SERVICES } from './services';
 import { SHARED_COMPONENTS } from './components';
 import { SHARED_DIRECTIVES } from "./directives";
 import { APP_PIPES_PIPES } from "./pipes";
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { APP_PIPES_PIPES } from "./pipes";
     HttpModule,
     ModalModule.forRoot(),
     DropdownModule.forRoot(),
-    TabsModule.forRoot()
+    TabsModule.forRoot(),
+    NgbModule
   ],
   exports: [
     ...SHARED_COMPONENTS,
@@ -34,7 +36,8 @@ import { APP_PIPES_PIPES } from "./pipes";
     ModalModule,
     DropdownModule,
     TabsModule,
-    ...APP_PIPES_PIPES
+    ...APP_PIPES_PIPES,
+    NgbModule
   ],
   providers: [
     ...SHARED_SERVICES

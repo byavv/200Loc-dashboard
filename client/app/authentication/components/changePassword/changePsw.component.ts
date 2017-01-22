@@ -9,7 +9,9 @@ import { Location } from '@angular/common';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { getDOM, DomAdapter } from '@angular/platform-browser/src/dom/dom_adapter';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { UserApi, LoopBackAuth } from '../../../core';
+
+import { UserApi, LoopBackAuth, UserActions, AppState, getAuthenticationState } from '../../../core';
+import { Store } from '@ngrx/store';
 
 @Component({
     selector: 'change-psw',
@@ -20,6 +22,7 @@ export class ChangePasswordComponent {
     changeForm: FormGroup;
     error: string;
     submitted: boolean = false;
+    username: string;
     constructor(
         private element: ElementRef,
         private router: Router,
@@ -27,7 +30,8 @@ export class ChangePasswordComponent {
         private modalService: NgbModal,
         private _renderer: Renderer,
         builder: FormBuilder,
-
+        private _store: Store<AppState>,
+        private _userActions: UserActions,
         private userApi: UserApi,
         private authService: LoopBackAuth,
         private route: ActivatedRoute) {
@@ -38,6 +42,15 @@ export class ChangePasswordComponent {
             confirmnewpassword: ['']
         });
     }
+
+    ngOnInit() {
+        this._store.let(getAuthenticationState())
+            .subscribe((state) => {
+                this.username = state.user ? state.user.username : ''
+            })
+    }
+
+
 
     onSubmit(value) {
         console.log(value);

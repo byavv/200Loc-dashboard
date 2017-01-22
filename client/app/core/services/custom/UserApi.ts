@@ -653,7 +653,7 @@ export class UserApi extends BaseLoopBackApi {
         let postBody: any = {
             data: credentials
         };
-        let urlParams: any = {};      
+        let urlParams: any = {};
         let result = this.request(method, url, routeParams, urlParams, postBody);
         return result;
     }
@@ -679,7 +679,6 @@ export class UserApi extends BaseLoopBackApi {
      */
     public signup(data: any = undefined) {
         let method: string = "POST";
-        // let url: string = CoreConfig.getPath() + "/signup";
         let url: string = CoreConfig.getPath() + "/" + CoreConfig.getApiVersion() +
             "/users/signup";
         let routeParams: any = {};
@@ -707,11 +706,12 @@ export class UserApi extends BaseLoopBackApi {
      */
     public logout() {
         let method: string = "POST";
-        let url: string = CoreConfig.getPath() + "/signout";
+        let url: string = CoreConfig.getPath() + "/" + CoreConfig.getApiVersion() +
+            "/users/logout";
         let routeParams: any = {};
-        let postBody: any = { accessToken: this.auth.user.accessToken };
-        this.auth.clearStorage();
-        let result = this.request(method, url, routeParams,/* urlParams*/{}, postBody);
+        let postBody: any = {};
+        let urlParams: any = {};
+        let result = this.request(method, url, routeParams, urlParams, postBody);
         return result;
     }
 }

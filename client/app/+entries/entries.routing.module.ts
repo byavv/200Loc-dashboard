@@ -8,6 +8,7 @@ export const routes: Routes = [
   {
     path: '',
     component: ApiManagementComponent,
+    canActivate: [IsAuthenticatedGuard],
     children: [
       {
         path: 'master',

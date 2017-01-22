@@ -10,8 +10,7 @@ export const routes: Routes = [
     { path: '', redirectTo: 'entries', pathMatch: 'full' },
     { path: 'entries', loadChildren: './+entries/entries.module#EntriesModule' },
     { path: 'drivers', loadChildren: './+drivers/drivers.module#DriversModule' },   
-    ...AuthenticationRoutes,
-   // ...DriverManagerRoutes
+    ...AuthenticationRoutes 
 ];
 
 @NgModule({

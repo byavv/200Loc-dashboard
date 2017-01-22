@@ -79,7 +79,7 @@ export class LoginComponent {
 
   ngAfterViewInit() {
     const modalRef = this.modalService
-      .open(this.content, { windowClass: 'oh-modal' });
+      .open(this.content, { windowClass: 'oh-modal', backdrop: 'static' });
 
     modalRef.result.then((result) => {
       this._location.back();

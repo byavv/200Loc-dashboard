@@ -2,12 +2,33 @@
     <nav class="navbar navbar-light app-header">
         <button class='l-header__toggle' #openMenuBtn (click)="active = true"><span class="icon-android-menu"></span></button>
         <a [routerLink]="['/']" class="navbar-brand">200Loc-Dashboard</a>
+
+
+        <ul class="nav navbar-nav  l-header__menu" *ngIf="!isAuthenticated" style='margin-left: auto;'>
+            <li class="nav-item">
+                <a [routerLink]="['/auth/signin']" class="nav-link">Sign in</a>
+            </li>
+        </ul>
+
+
+        <div ngbDropdown class="l-header__menu" *ngIf="isAuthenticated" style='margin-left: auto;' #myDrop="ngbDropdown">
+            <button class="l-header__menu-toggle" id="1dropdownMenu1" ngbDropdownToggle><i class="icon-user"></i></button>
+            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="1dropdownMenu1">              
+                <a href="" (click)="signOut()" class="dropdown-item">
+                    <span>Log off</span>
+                </a>
+                 <a [routerLink]="['/auth/change']" class="dropdown-item">
+                    <span>Options</span>
+                </a>
+            </div>
+        </div>
+
     </nav>
 </header>
 
 <div class="l-header__sidebar" [class.active]="active" [offClick]='closeSidebarHandler' [ignore]='openMenuBtn'>
-    <ul class="l-header__menu">
-        <li><a class="l-header__menu-item" [routerLink]="['/entries']" routerLinkActive="active"><i class="icon-home icon-1x"></i>Api table</a></li>
-        <li><a class="l-header__menu-item" [routerLink]="['/drivers']" routerLinkActive="active"><i class="icon-home icon-1x"></i>Drivers manager</a></li>
+    <ul class="l-header__sidebar-menu">
+        <li><a class="l-header__sidebar-menu--item" [routerLink]="['/entries']" routerLinkActive="active"><i class="icon-home icon-1x"></i>Api table</a></li>
+        <li><a class="l-header__sidebar-menu--item" [routerLink]="['/drivers']" routerLinkActive="active"><i class="icon-home icon-1x"></i>Drivers manager</a></li>
     </ul>
 </div>

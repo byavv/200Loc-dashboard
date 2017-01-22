@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { LoopBackAuth, UserApi, UserActions, AppState, getAuthenticationState } from '../../../core'
+import { Store } from '@ngrx/store';
 
 @Component({
     selector: 'app-header',
-    templateUrl: './header.html',
-    styleUrls: ['./header.scss']
+    templateUrl: './header.html'    
 })
 export class HeaderComponent implements OnInit {
     isAuthenticated: boolean = false;
@@ -12,32 +13,31 @@ export class HeaderComponent implements OnInit {
     username: string;
     active: boolean = false;
 
-    constructor(private router: Router) { 
+    constructor(
+        private router: Router,
+        private userApi: UserApi,
+        private _userActions: UserActions,
+        private _store: Store<AppState>,
+        private _authService: LoopBackAuth) {
         this.closeSidebarHandler = this.closeSidebarHandler.bind(this);
     }
 
     ngOnInit() {
-        /* this.username = this.identity.user.name || "Guest";
-         this.isAuthenticated = this.identity.user.isAuthenticated();
-         this.identity.identity$
-             .subscribe((user) => {
-                 this.isAuthenticated = user.isAuthenticated();
-                 this.username = user.name;
-             });*/
+        this._store.let(getAuthenticationState()).subscribe(state => {
+            this.isAuthenticated = state.authenticated;
+            this.username = state.user ? state.user.username : "";
+        });
     }
     signOut() {
-        /* this.auth.signOut().subscribe(
-              (res) => {
-                  this.identity.update();
-                  this.storage.removeItem("authorizationData")
-              },
-              (err) => {
-                  this.identity.update();
-                  this.storage.removeItem("authorizationData");
-              }
-          );*/
+        this.userApi.logout()
+            .finally(() => {
+                this._store.dispatch(this._userActions.logout());
+                this._authService.clearStorage();
+                this.router.navigate(['auth'])
+            })
+            .subscribe(() => { })
     }
-  
+
     closeSidebarHandler() {
         this.active = false;
     }

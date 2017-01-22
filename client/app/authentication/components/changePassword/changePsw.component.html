@@ -9,35 +9,30 @@
                 <form [formGroup]="changeForm" (ngSubmit)="onSubmit(changeForm.value)" novalidate>
                     <div class="form-group">
                         <label for="username">Username</label>
-                        <input type="text" class="form-control" id="username" placeholder="Username Name" formControlName="username" required>
-                        <show-error *ngIf="submitted" [options]="{'required': 'Username is required'}"
-                            [control]="changeForm.get('username')">
+                        <input type="text" class="form-control" id="username" [ngModel]='username' placeholder="Username Name" formControlName="username"
+                            required>
+                        <show-error *ngIf="submitted" [options]="{'required': 'Username is required'}" [control]="changeForm.get('username')">
                         </show-error>
                     </div>
                     <div class="form-group">
                         <label for="oldpassword">Old Password</label>
                         <input type="password" class="form-control" id="oldpassword" placeholder="Old password" formControlName="oldpassword" required>
-                        <show-error *ngIf="submitted" [options]="{'required': 'Field is required'}"
-                            [control]="changeForm.get('oldpassword')">
+                        <show-error *ngIf="submitted" [options]="{'required': 'Field is required'}" [control]="changeForm.get('oldpassword')">
                         </show-error>
                     </div>
                     <div class="form-group">
                         <label for="newpassword">New Password</label>
                         <input type="password" class="form-control" id="newpassword" placeholder="New password" formControlName="newpassword" required>
-                        <show-error *ngIf="submitted" [options]="{'required': 'Field is required'}"
-                            [control]="changeForm.get('newpassword')">
+                        <show-error *ngIf="submitted" [options]="{'required': 'Field is required'}" [control]="changeForm.get('newpassword')">
                         </show-error>
                     </div>
-
                     <div class="form-group">
                         <label for="confirmpassword">Confirm New Password</label>
                         <input type="password" class="form-control" id="confirmpassword" placeholder="Confirm password" formControlName="confirmnewpassword"
-                            validateEqual='newpassword' required>                        
-                        <show-error *ngIf="submitted" [options]="{'validateEqual':'Password is not equal', 'required': 'Field is required'}"
-                            [control]="changeForm.get('confirmnewpassword')">
+                            validateEqual='newpassword' required>
+                        <show-error *ngIf="submitted" [options]="{'validateEqual':'Password is not equal', 'required': 'Field is required'}" [control]="changeForm.get('confirmnewpassword')">
                         </show-error>
                     </div>
-
                     <div class="form-group">
                         <button type="submit" class="btn btn-primary" [disabled]='submitted && !changeForm.valid'>Submit</button>
                     </div>

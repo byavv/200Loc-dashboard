@@ -101,3 +101,9 @@
 .icon-help-circled:before {
   content: "\75";
 }
+.icon-arrow-down-b:before {
+  content: "\76";
+}
+.icon-user:before {
+  content: "\77";
+}

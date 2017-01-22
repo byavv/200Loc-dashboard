@@ -12,6 +12,7 @@ export const routes: Routes = [
   {
     path: '',
     component: DriverManagerBaseComponent,
+    canActivate: [IsAuthenticatedGuard],
     children: [
       {
         path: 'config',
