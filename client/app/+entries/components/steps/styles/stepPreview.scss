@@ -1,37 +1,44 @@
-:host, .my-card {
-    flex:1;
-    display: flex;
-    flex-direction: column;
+.my-card,
+:host {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
 }
 
 :host /deep/ .nav-item {
-    border:none!important;
-    > *{
-          border:none!important;        
+  border: none!important;
+
+  > * {
+    border: none!important;
+  }
+
+  &.active {
+    border-bottom: 2px solid #d26911!important;
+
+    > * {
+      color: rgba(69, 90, 100, 1)!important;
     }
-    &.active{
-        border-bottom:2px solid #d26911!important;
-        > *{
-            color: rgba(69, 90, 100, 1)!important;
-        }
+  }
+
+  &:not(.active) {
+    border: none!important;
+
+    &:hover {
+      color: rgba(69, 90, 100, 1)!important;
     }
-    &:not(.active){
-        border:none!important;        
-        &:hover{
-            color: rgba(69, 90, 100, 1)!important;
-        }
-        > *{
-            color: rgba(69, 90, 100, 0.7)!important;
-        }
+
+    > * {
+      color: rgba(69, 90, 100, 0.7)!important;
     }
+  }
 }
 
-.method-block{
-    margin-top: 5px;
+.method-block {
+  margin-top: 5px;
 }
 
-.send-button{
-    background: #d26911;
-    color:white;
-    outline: none;
+.send-button {
+  background: #d26911;
+  color: white;
+  outline: none;
 }

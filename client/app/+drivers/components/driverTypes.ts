@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { CustomBackEndApi } from '../../shared/services';
+import { AppState, getDrivers } from '../../core'
+import { Store } from '@ngrx/store';
+import { Subscription } from 'rxjs/Subscription';
 
 @Component({
     templateUrl: './templates/driverTypes.tmpl.html',
@@ -8,15 +10,19 @@ import { CustomBackEndApi } from '../../shared/services';
 })
 export class DriverTypesComponent implements OnInit {
     drivers: Array<any> = [];
+    storeSub_n: Subscription;
 
     constructor(
         private router: Router,
-        private backEnd: CustomBackEndApi) { }
+        private _store: Store<AppState>) { }
 
     ngOnInit() {
-        this.backEnd.getAvailableDrivers()
+        this.storeSub_n = this._store.let(getDrivers())
             .subscribe((drivers) => {
-                this.drivers = drivers;
-            })
+                this.drivers = drivers || [];
+            });     
+    }
+    ngOnDestroy(){
+        if(this.storeSub_n)this.storeSub_n.unsubscribe();
     }
 }

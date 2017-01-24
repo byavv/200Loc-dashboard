@@ -8,7 +8,7 @@ import * as validation from './masterValidation';
 import * as config from './config';
 
 import { masterReducer, EntryCreationMasterState } from './master';
-import { defaultsReducer, DefaultAppState } from './defaults';
+import { defaultsReducer, DefaultAppState, isLoaded } from './defaults';
 import { EntryValidityState, masterValidityReducer } from './masterValidation';
 import { ConfigState, configReducer } from './config';
 
@@ -86,7 +86,11 @@ export function getDrivers() {
 
 export function getMasterConfigPlugins() {
     return compose(master.getMasterPlugins(), getMasterState());
+}
 
+
+export function getLoaded() {
+    return compose(defaults.isLoaded(), getDefaultsState());
 }
 
 

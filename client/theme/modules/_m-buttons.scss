@@ -3,50 +3,48 @@ button {
 }
 
 .button {
-  @extend .btn;   
+  @extend .btn;
   border-width: 1px;
   border-radius: 0;
   padding: .5em 1.5em;
   background: transparent;
   position: relative;
-}
 
-.button--primary {
-  color: #fff;
-  background-color: $blue;
-  color: white;
-  border-color: $blue;
-  border-radius: 3px;
-
-  &:not(:disabled):hover {
-    color: $white;
-    background: #138df1;
-    border-color: #138df1;
-  }
-
-  &[disabled] {
-    background: #5eadee;
-    border-color: #5eadee;
-  }
-}
-
-// Module: Button
-// Modifier: Secondary
-.button--secondary {
-  color: $blue;
-  border-color: #0275d2;
-  border-radius: 3px;
-
-  &[disabled] {
-    border-color: #0275d2;
-    color: #007ee5;
-    background-color: #fff;
-  }
-
-  &:not(:disabled):hover {
-    background: #138df1;
-    border-color: #138df1;
+  &--primary {
     color: #fff;
+    background-color: $blue;
+    color: white;
+    border-color: $blue;
+    border-radius: 3px;
+
+    &:not(:disabled):hover {
+      color: $white;
+      background: #138df1;
+      border-color: #138df1;
+    }
+
+    &[disabled] {
+      background: #5eadee;
+      border-color: #5eadee;
+    }
+  }
+
+  &--secondary {
+    color: $blue;
+    border-color: #0275d2;
+    border-radius: 3px;
+
+    &[disabled] {
+      border-color: #0275d2;
+      color: #007ee5;
+      background-color: #fff;
+    }
+
+    &:not(:disabled):hover {
+      background: #138df1;
+      border-color: #138df1;
+      color: #fff;
+    }
   }
 }
 

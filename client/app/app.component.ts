@@ -1,7 +1,8 @@
 import { Component, OnInit, ViewContainerRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { AppController } from './shared/services'
-import { CoreConfig, LoopBackAuth } from './core';
+import { CoreConfig, LoopBackAuth, AppState, getAuthenticationState, DefaultsActions, getLoaded } from './core';
+import { Store } from '@ngrx/store'
 
 import '../theme/styles.scss';
 
@@ -10,11 +11,11 @@ import '../theme/styles.scss';
     template: `
     
     <div class="l-page__wrap">
-        <loader [active]='loading' [async]='appController.init$'></loader>
+        <loader [trigger]='getLoaded()'></loader>
         <header class="l-page__header">
             <loc-header class='authH'></loc-header>
         </header>        
-        <div [hidden]='loading' class='l-container'>
+        <div class='l-container'>
             <router-outlet>
             </router-outlet>
         </div>       
@@ -27,21 +28,23 @@ import '../theme/styles.scss';
     `
 })
 export class AppComponent {
-    loading = true;
     constructor(
         public appController: AppController,
         public authService: LoopBackAuth,
+        private _store: Store<AppState>,
+        public defaultsAction: DefaultsActions,
         public viewContainerRef: ViewContainerRef) {
         if ('production' === ENV) {
             CoreConfig.setBaseURL('');
         } else {
             CoreConfig.setBaseURL('http://localhost:5601');
         }
-        this.appController.init$
-            .subscribe(() => {
-                this.loading = false;
-            })
+     //   this.authService.populate();
         this.appController.start();
-        this.authService.populate();
+    }
+    getLoaded() {
+        return this._store
+            .let(getLoaded())
+            .map(value => !value);
     }
 }

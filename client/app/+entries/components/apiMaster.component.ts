@@ -27,10 +27,10 @@ import { MasterActions, ConfigActions } from '../../core/actions';
       </section>
       <template ngbModalContainer></template>
     </div>
-    ` 
+    `
 })
-
 export class ApiMasterComponent {
+
   @ViewChild(UiTabs) tab: UiTabs;
   id: string;
   loading: boolean = true;
@@ -46,11 +46,9 @@ export class ApiMasterComponent {
     private _configActions: ConfigActions,
     private _masterActions: MasterActions,
     private apiConfigApi: ApiConfigApi,
-    public store: Store<AppState>) {
+    public store: Store<AppState>) { }
 
-  }
   ngOnInit() {
-
     this.validationSub_n = this.store
       .let(getValidationState())
       .subscribe((validation) => {
@@ -62,7 +60,6 @@ export class ApiMasterComponent {
         this.config = config;
       });
   }
-
 
   ngAfterViewInit() {
     this.queryRouteSub = this._activatedRoute
@@ -77,7 +74,6 @@ export class ApiMasterComponent {
         this.store.dispatch(this._configActions.setConfig(config));
         this.store.dispatch(this._masterActions.setConfig(config));
       });
-
   }
 
   ngOnDestroy() {
@@ -99,7 +95,7 @@ export class ApiMasterComponent {
     plugins = plugins.map((plugin) => {
       return {
         name: plugin.name,
-        order: plugin.order,      
+        order: plugin.order,
         settings: plugin.settings,
         dependencies: plugin.dependencies
       }

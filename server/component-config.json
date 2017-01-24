@@ -2,8 +2,8 @@
   "loopback-component-explorer": {
     "mountPath": "/explorer",
     "apiInfo": {
-      "title": "My App",
-      "description": "Description of my app APIs.",
+      "title": "Loc dashboard",
+      "description": "Loc dashboard plugin & driver management api",
       "termsOfServiceUrl": "http://api.mycompany.io/terms/",
       "contact": "apiteam@mycompany.io",
       "license": "Apache 2.0",

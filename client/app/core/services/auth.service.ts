@@ -22,9 +22,10 @@ export class LoopBackAuth {
           this._user = new User(state.user);
       })
   }
-
+  /**
+   * Try to set users logged in state in the application from data got from a storage
+   */
   public populate() {
-    console.log(this._user)
     if (this._user.accessToken) {
       this._store.dispatch(this._userActions.login(this._user));
     }

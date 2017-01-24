@@ -7,6 +7,7 @@ export class DefaultsActions {
     static SET_PLUGINS_LIST = '[DEFAULTS] SET PLUGINS';
     static SET_DRIVERS_LIST = '[DEFAULTS] SET DRIVERS';
     static SET_DEFAULTS = '[DEFAULTS] SET DEFAULTS';
+    static SET_LOADING = '[DEFAULTS] SET LOADING';
 
     setPlugins(plugins: any): Action {
         return {
@@ -28,4 +29,13 @@ export class DefaultsActions {
             payload: defaults
         };
     }
+
+    setLoading(): Action {
+        return {
+            type: DefaultsActions.SET_LOADING,
+            payload: true
+        };
+    }
+
+
 }

@@ -20,7 +20,7 @@ import {
     styles: [
         `       
         :host-context(.ng-invalid) small {
-            display: block;
+            display: block!important;
             font-size: 12px;         
             color: #f2374d;
             position: static;
@@ -49,7 +49,7 @@ export class ShowValidationError implements OnInit, OnDestroy {
         }
     }
 
-    private validate() {      
+    private validate() {
         if (this.control.errors) {
             for (var error in this.errors) {
                 if (!!this.control.errors[error]) {

@@ -10,36 +10,36 @@ module.exports = function (app) {
     var ApiConfig = app.models.ApiConfig;
     var User = app.models.user;
 
-    router.get('/api/plugins', (req, res, next) => {
-        request({
-            url: `http://${process.env.GATEWAY}/_private/plugins`,
-            method: 'GET'
-        }, function (err, responce, body) {
-            if (err) return next(err)
-            if (responce) {
-                return res.status(responce.statusCode).send(body)
-            } else {
-                return res.sendStatus(500)
-            }
-        });
-    });
+    // router.get('/api/plugins', (req, res, next) => {
+    //     request({
+    //         url: `http://${process.env.GATEWAY}/_private/plugins`,
+    //         method: 'GET'
+    //     }, function (err, responce, body) {
+    //         if (err) return next(err)
+    //         if (responce) {
+    //             return res.status(responce.statusCode).send(body)
+    //         } else {
+    //             return res.sendStatus(500)
+    //         }
+    //     });
+    // });
 
     /**
      * Get all installed drivers
      */
-    router.get('/api/drivers', (req, res, next) => {
-        request({
-            url: `http://${process.env.GATEWAY}/_private/drivers`,
-            method: 'GET'
-        }, function (err, responce, body) {
-            if (err) return next(err)
-            if (responce) {
-                return res.status(responce.statusCode).send(body)
-            } else {
-                return res.sendStatus(500)
-            }
-        });
-    });
+    // router.get('/api/drivers', (req, res, next) => {
+    //     request({
+    //         url: `http://${process.env.GATEWAY}/_private/drivers`,
+    //         method: 'GET'
+    //     }, function (err, responce, body) {
+    //         if (err) return next(err)
+    //         if (responce) {
+    //             return res.status(responce.statusCode).send(body)
+    //         } else {
+    //             return res.sendStatus(500)
+    //         }
+    //     });
+    // });
     /**
      * Get driver template by it's name'
      */

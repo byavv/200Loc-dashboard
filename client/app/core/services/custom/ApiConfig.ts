@@ -22,8 +22,8 @@ export class ApiConfigApi extends BaseLoopBackApi {
 
   constructor(
     @Inject(Http) http: Http,
-    @Inject(LoopBackAuth) protected auth: LoopBackAuth, 
-    @Inject(JSONSearchParams) protected searchParams: JSONSearchParams, 
+    @Inject(LoopBackAuth) protected auth: LoopBackAuth,
+    @Inject(JSONSearchParams) protected searchParams: JSONSearchParams,
     @Optional() @Inject(ErrorHandler) errorHandler: ErrorHandler
   ) {
     super(http, auth, searchParams, errorHandler);
@@ -48,7 +48,7 @@ export class ApiConfigApi extends BaseLoopBackApi {
   public create(data: any = undefined) {
     let method: string = "POST";
     let url: string = CoreConfig.getPath() + "/" + CoreConfig.getApiVersion() +
-    "/ApiConfigs";
+      "/ApiConfigs";
     let routeParams: any = {};
     let postBody: any = {
       data: data
@@ -77,7 +77,7 @@ export class ApiConfigApi extends BaseLoopBackApi {
   public upsert(data: any = undefined) {
     let method: string = "PUT";
     let url: string = CoreConfig.getPath() + "/" + CoreConfig.getApiVersion() +
-    "/ApiConfigs";
+      "/ApiConfigs";
     let routeParams: any = {};
     let postBody: any = {
       data: data
@@ -106,7 +106,7 @@ export class ApiConfigApi extends BaseLoopBackApi {
   public replaceOrCreate(data: any = undefined) {
     let method: string = "POST";
     let url: string = CoreConfig.getPath() + "/" + CoreConfig.getApiVersion() +
-    "/ApiConfigs/replaceOrCreate";
+      "/ApiConfigs/replaceOrCreate";
     let routeParams: any = {};
     let postBody: any = {
       data: data
@@ -135,7 +135,7 @@ export class ApiConfigApi extends BaseLoopBackApi {
   public findById(id: any, filter: LoopBackFilter = undefined) {
     let method: string = "GET";
     let url: string = CoreConfig.getPath() + "/" + CoreConfig.getApiVersion() +
-    "/ApiConfigs/:id";
+      "/ApiConfigs/:id";
     let routeParams: any = {
       id: id
     };
@@ -167,7 +167,7 @@ export class ApiConfigApi extends BaseLoopBackApi {
   public replaceById(id: any, data: any = undefined) {
     let method: string = "POST";
     let url: string = CoreConfig.getPath() + "/" + CoreConfig.getApiVersion() +
-    "/ApiConfigs/:id/replace";
+      "/ApiConfigs/:id/replace";
     let routeParams: any = {
       id: id
     };
@@ -196,14 +196,14 @@ export class ApiConfigApi extends BaseLoopBackApi {
   public find(filter: LoopBackFilter = undefined) {
     let method: string = "GET";
     let url: string = CoreConfig.getPath() + "/" + CoreConfig.getApiVersion() +
-    "/ApiConfigs";
+      "/ApiConfigs";
     let routeParams: any = {};
     let postBody: any = {};
     let urlParams: any = {};
     if (filter) urlParams.filter = filter;
     let result = this.request(method, url, routeParams, urlParams, postBody);
     return result.map((instances: Array<ApiConfig>) =>
-        instances.map((instance: ApiConfig) => new ApiConfig(instance))
+      instances.map((instance: ApiConfig) => new ApiConfig(instance))
     );
   }
 
@@ -224,7 +224,7 @@ export class ApiConfigApi extends BaseLoopBackApi {
   public findOne(filter: LoopBackFilter = undefined) {
     let method: string = "GET";
     let url: string = CoreConfig.getPath() + "/" + CoreConfig.getApiVersion() +
-    "/ApiConfigs/findOne";
+      "/ApiConfigs/findOne";
     let routeParams: any = {};
     let postBody: any = {};
     let urlParams: any = {};
@@ -250,7 +250,7 @@ export class ApiConfigApi extends BaseLoopBackApi {
   public deleteById(id: any) {
     let method: string = "DELETE";
     let url: string = CoreConfig.getPath() + "/" + CoreConfig.getApiVersion() +
-    "/ApiConfigs/:id";
+      "/ApiConfigs/:id";
     let routeParams: any = {
       id: id
     };
@@ -276,7 +276,7 @@ export class ApiConfigApi extends BaseLoopBackApi {
   public count(where: any = undefined) {
     let method: string = "GET";
     let url: string = CoreConfig.getPath() + "/" + CoreConfig.getApiVersion() +
-    "/ApiConfigs/count";
+      "/ApiConfigs/count";
     let routeParams: any = {};
     let postBody: any = {};
     let urlParams: any = {};
@@ -306,7 +306,7 @@ export class ApiConfigApi extends BaseLoopBackApi {
   public updateAttributes(id: any, data: any = undefined) {
     let method: string = "PUT";
     let url: string = CoreConfig.getPath() + "/" + CoreConfig.getApiVersion() +
-    "/ApiConfigs/:id";
+      "/ApiConfigs/:id";
     let routeParams: any = {
       id: id
     };
@@ -316,5 +316,33 @@ export class ApiConfigApi extends BaseLoopBackApi {
     let urlParams: any = {};
     let result = this.request(method, url, routeParams, urlParams, postBody);
     return result;
-  } 
+  }
+
+
+  public testApiConfig(methodToTest, plugins, headers, params, body?) {
+    // let reqHeaders = new Headers();
+    // reqHeaders.append('Content-Type', 'application/json');
+
+    // let reqBody = JSON.stringify({ method, plugins, headers, params, body });
+    // let options = new RequestOptions({
+    //   headers: reqHeaders,
+    //   method: 'post',
+    //   body: reqBody,
+    //   url: CoreConfig.getPath() + "/" + CoreConfig.getApiVersion() + "/test"
+    // });
+    // return this._http
+    //   .request(new Request(options))
+    //   .map(res => res.json());
+
+    let method: string = "POST";
+    let url: string = CoreConfig.getPath() + "/" + CoreConfig.getApiVersion() +
+      "/ApiConfigs/test";
+    let routeParams: any = {};
+    let postBody: any = {
+      data: { method: methodToTest, plugins, headers, params, body }
+    };
+    let urlParams: any = {};
+    let result = this.request(method, url, routeParams, urlParams, postBody);
+    return result;
+  }
 }

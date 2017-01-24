@@ -14,6 +14,7 @@ export class ApiListComponent implements OnInit, OnDestroy {
   configs: Array<any> = [];
   sub: Subscription;
   loading: boolean = false;
+
   constructor(private appController: AppController,
     private router: Router,
     private route: ActivatedRoute,
@@ -21,12 +22,14 @@ export class ApiListComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.loading = true;
-    this.sub = this._apiConfigApi.find().subscribe(configs => {
-      this.configs = configs;
-      this.loading = false;
-    }, (err) => {
-      console.error(err);
-    })
+    this.sub = this._apiConfigApi
+      .find()
+      .subscribe(configs => {
+        this.configs = configs;
+        this.loading = false;
+      }, (err) => {
+        console.error(err);
+      });
   }
 
   ngOnDestroy() {
@@ -34,11 +37,11 @@ export class ApiListComponent implements OnInit, OnDestroy {
   }
 
   onRemove(config) {
-    this._apiConfigApi.deleteById(config.id).subscribe(res => {
-      console.log(res);
-      let ind = this.configs.indexOf(config);
-      this.configs.splice(ind, 1);
-    });
+    this._apiConfigApi.deleteById(config.id)
+      .subscribe(res => {
+        let ind = this.configs.indexOf(config);
+        this.configs.splice(ind, 1);
+      });
   }
 
   editApi(config) {

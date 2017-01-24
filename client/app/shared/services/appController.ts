@@ -2,38 +2,51 @@ import { Injectable, NgZone, isDevMode } from '@angular/core';
 import { Http, Response } from '@angular/http';
 import { ReplaySubject, Observable } from "rxjs";
 
-import { CustomBackEndApi } from "./backEndApi";
 import { Store } from '@ngrx/store';
-import { AppState } from '../../core/reducers';
+import { AppState, isUserLoggedIn } from '../../core/reducers';
 import { DefaultsActions } from '../../core/actions';
+import { PluginApi, DriverApi, LoopBackAuth } from '../../core/services';
 
 @Injectable()
 export class AppController {
     private _init$: ReplaySubject<any> = new ReplaySubject();
-    constructor(private _backEnd: CustomBackEndApi,
+    constructor(
         private _store: Store<AppState>,
         private _defaultsActions: DefaultsActions,
+        private _pluginsApi: PluginApi,
+        private _authService: LoopBackAuth,
+        private _driversApi: DriverApi,
         private _ngZone: NgZone) { }
 
     get init$() {
         return this._init$.asObservable().share();
     }
-
+    /**
+     * Application start point, kicks authentication service and loads default data from server
+     */
     start() {
-        this._ngZone.runOutsideAngular(() => {
-            this._loadAppDefaults((defaults) => {
-                this._ngZone.run(() => {
-                    this._store.dispatch(this._defaultsActions.setDefaults(defaults));
-                    this._init$.next(true);
-                });
-            })
-        });
+        this._store
+            .let(isUserLoggedIn())
+            .subscribe((isLoggedIn) => {
+                if (isLoggedIn == true) {
+                    this._store.dispatch(this._defaultsActions.setLoading());
+                    this._ngZone.runOutsideAngular(() => {
+                        this._loadAppDefaults((defaults) => {
+                            this._ngZone.run(() => {
+                                this._store.dispatch(this._defaultsActions.setDefaults(defaults));
+                                this._init$.next(true);
+                            });
+                        })
+                    });
+                }
+            });
+        this._authService.populate();
     }
 
     _loadAppDefaults(doneCallback: (defaults: any) => void) {
         Observable.zip(
-            this._backEnd.getPlugins(),
-            this._backEnd.getAvailableDrivers(),
+            this._pluginsApi.find(),
+            this._driversApi.find(),
             (plugins, drivers) => [plugins, drivers])
             .subscribe(value => {
                 doneCallback({
@@ -41,7 +54,7 @@ export class AppController {
                     drivers: value[1]
                 });
             }, err => {
-                console.log(err);
+                console.error(err);
             })
     }
 }

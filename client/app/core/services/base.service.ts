@@ -45,10 +45,11 @@ export abstract class BaseLoopBackApi {
     url: string,
     routeParams: any = {},
     urlParams: any = {},
-    postBody: any = null
+    postBody: any = null,
+    customHeaders?: Headers
   ) {
 
-    let headers = new Headers();
+    let headers = customHeaders ? customHeaders : new Headers();
     headers.append('Content-Type', 'application/json');
 
     if (this.auth.user && this.auth.user.accessToken) {

@@ -5,11 +5,10 @@ import {
     QueryList, SimpleChanges, TemplateRef
 } from '@angular/core';
 
-//import { TabDirective, ModalDirective } from 'ng2-bootstrap'
 import { Router, ActivatedRoute } from "@angular/router";
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Config } from '../../../core/models';
-import { CustomBackEndApi, AppController } from '../../../shared/services';
+import { Config, ApiConfigApi } from '../../../core';
+import { AppController } from '../../../shared/services';
 import { Observable } from 'rxjs';
 
 import { Store } from '@ngrx/store';
@@ -59,13 +58,15 @@ export class StepPreview {
         this.bodyDisabled = value == 'GET';
         this._selectedMethod = value;
     }
+    public testresult = 'text';
+
 
     constructor(
         private _masterActions: MasterActions,
-        private _validationActions: ValidationActions,
-        private backEnd: CustomBackEndApi,
+        private _validationActions: ValidationActions,      
         private modalService: NgbModal,
-        private _store: Store<AppState>
+        private _store: Store<AppState>,
+        private _apiConfig: ApiConfigApi
     ) { }
 
     ngOnInit() {
@@ -100,24 +101,52 @@ export class StepPreview {
     modalRef: NgbModalRef;
 
     send() {
-        this.backEnd.testApiConfig(this.selectedMethod, this.config.plugins, this.headers, this.params, this.body)
-            .subscribe((res) => {
-
+        this.testresult = 'text';
+        this._apiConfig.testApiConfig(this.selectedMethod, this.config.plugins, this.headers, this.params, this.body)
+            .subscribe((res: any) => {
                 this.modalRef = this.modalService
-                    .open(this.content, { windowClass: 'oh-modal' });
-
-
+                    .open(this.content, { windowClass: 'test-results-modal' });
                 this.modalRef.result.then((result) => {
-
                 }, (reason) => {
 
                 });
-
-                // this.resultModal.show();
                 this.result = res.body;
+                if (typeof this.result == 'string' && this.result.toLowerCase().startsWith('<!doctype')) {
+                    this.testresult = 'html';
+                } else {
+                    let json;
+                    try {
+                        this.result = JSON.parse(this.result);
+                        this.testresult = 'json';
+                    } catch (error) {
+                        this.testresult = 'text';
+                    }
+                }
             }, err => {
                 console.error(err)
             });
+    }
+
+    prettifyJson(json: string) {
+        if (typeof json != 'string') {
+            json = JSON.stringify(json, undefined, 4);
+        }
+        json = json.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+        return json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, function (match) {
+            var cls = 'number';
+            if (/^"/.test(match)) {
+                if (/:$/.test(match)) {
+                    cls = 'key';
+                } else {
+                    cls = 'string';
+                }
+            } else if (/true|false/.test(match)) {
+                cls = 'boolean';
+            } else if (/null/.test(match)) {
+                cls = 'null';
+            }
+            return '<span class="' + cls + '">' + match + '</span>';
+        });
     }
 
     onOk() {

@@ -45,12 +45,33 @@
                 </div>
             </div>
         <template #contentPreview let-c="close" let-d="dismiss">
-          <div class="plugin-menu-container" style='font-size:0.8em'>
-              {{result}}
-          </div>
-          <div>
-              <button type="button" class="btn btn-large btn-block btn-default" (click)="c()">Ok</button>
-          </div>
+            <div class="l-steps__resultModal-container">
+                <div [ngSwitch]="testresult" style='display: flex; flex-direction: row; flex: 0 1 auto; max-width: 100%; height: 100%'>
+               
+                    <template ngSwitchCase="json">
+                        <div style='overflow: scroll;  overflow-x: auto; flex: 1 0 auto; max-width: 100%; border: 1px solid #ccc; overflow-x: auto; margin-bottom: 5px;'>
+                            <pre [innerHTML]='prettifyJson(result) | safeHtml' class='json'>                            
+                            </pre>
+                        </div>
+                    </template>
+                    <template ngSwitchCase="html">
+                        <iframe  [srcdoc]='result | safeHtml'></iframe>
+                    </template>
+                    <template ngSwitchDefault>
+                        <div>
+                            {{result}}
+                        </div>
+                    </template>
+              
+
+                </div>
+
+
+                
+                
+                <button type="button" class="button button--primary" (click)="c()" style='flex: 0 1 auto;'>Ok</button>               
+            </div>    
+         
         </template>
     </div>
     <button type="button" (click)="onSubmit()" class="button button--primary l-master__next">

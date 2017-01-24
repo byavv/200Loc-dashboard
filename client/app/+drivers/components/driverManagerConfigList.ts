@@ -1,7 +1,6 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { CustomBackEndApi } from '../../shared/services';
-import { DriverConfig, DriverConfigApi } from '../../core';
+import { DriverConfig, DriverConfigApi, DriverApi } from '../../core';
 import { ModalDirective } from 'ng2-bootstrap';
 import { Observable } from 'rxjs';
 
@@ -11,7 +10,7 @@ import { Observable } from 'rxjs';
 export class DriverManagerConfigComponent implements AfterViewInit {
     driverName: string;
     driverTemplate: any;
-    driverConfigs: Array<any> = [];
+    driverConfigs: Array<DriverConfig> = [];
     currentSettings = {};
     currentDriver: any = {};
     @ViewChild('lgModal') modal: ModalDirective;
@@ -19,7 +18,7 @@ export class DriverManagerConfigComponent implements AfterViewInit {
     constructor(
         private activeRoute: ActivatedRoute,
         private driverConfigApi: DriverConfigApi,
-        private moduleApi: CustomBackEndApi
+        private driverApi: DriverApi
     ) { }
 
     ngAfterViewInit() {
@@ -28,9 +27,9 @@ export class DriverManagerConfigComponent implements AfterViewInit {
             // find configurations of current driver
             this._updateDriverConfigList(),
             // find driver's template to fill form fields
-            this.moduleApi
+            this.driverApi
                 .getDriverTemplateByName(this.driverName), (v1, v2) => [v1, v2])
-            .subscribe(result => {
+            .subscribe((result: any) => {
                 this.driverConfigs = result[0];
                 this.driverTemplate = result[1];
             });
@@ -39,7 +38,7 @@ export class DriverManagerConfigComponent implements AfterViewInit {
             this.currentDriver = {};
         });
     }
-    private _updateDriverConfigList() {
+    private _updateDriverConfigList(): Observable<Array<DriverConfig>> {
         return this.driverConfigApi
             .find({ where: { driverId: this.driverName } });
     }

@@ -10,8 +10,66 @@
     }
   }
 
+  &__resultModal {
+    &-container {
+      overflow: auto;    
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      padding: 5px;
+
+      iframe {
+        height: 100%;
+        width: 100%;
+      }
+
+      button {
+        margin-top: auto;
+      }
+
+    }
+  }
+
 }
 
 .plugin-modal {
   @extend .loc-modal;
+}
+
+.test-results-modal {
+  @extend .loc-modal;
+
+  .modal-dialog {
+    height: calc(100% - 90px);
+  }
+
+  .modal-content {   
+    height: 100%;
+    display: flex;
+  }
+}
+
+pre.json { 
+  padding: 5px;
+  margin: 5px;
+
+  span.string {
+    color: green;
+  }
+
+  span.number {
+    color: darkorange;
+  }
+
+  span.boolean {
+    color: blue;
+  }
+
+  span.null {
+    color: magenta;
+  }
+
+  span.key {
+    color: red;
+  }
 }

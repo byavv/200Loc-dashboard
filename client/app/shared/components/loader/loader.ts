@@ -18,6 +18,10 @@ export class LoaderComponent implements OnInit, OnDestroy {
     async: Observable<any>;
     @Input()
     delay: number = 0;
+
+    @Input()
+    trigger: Observable<any>;
+
     @Input()
     active: boolean = false;
     @Input()
@@ -26,6 +30,11 @@ export class LoaderComponent implements OnInit, OnDestroy {
     completed: EventEmitter<any> = new EventEmitter();
     constructor() { }
     ngOnInit() {
+        if (this.trigger) {
+            this.trigger.share().subscribe(value => {
+                this.active = value;
+            });
+        }
         if (this.async)
             this._subscription = this.async
                 .subscribe(() => {
