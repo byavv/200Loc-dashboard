@@ -2,10 +2,10 @@ import {
     Component, OnInit, Output, Input,
     EventEmitter, OnDestroy, Host,
     Optional, ViewChild, ViewChildren,
-    QueryList, SimpleChanges
+    QueryList, SimpleChanges, TemplateRef
 } from '@angular/core';
 
-import { TabDirective, ModalDirective } from 'ng2-bootstrap'
+//import { TabDirective, ModalDirective } from 'ng2-bootstrap'
 import { Router, ActivatedRoute } from "@angular/router";
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Config } from '../../../core/models';
@@ -15,6 +15,7 @@ import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { AppState, getMasterState, getPlugins, getMasterConfigPlugins } from '../../../core/reducers';
 import { MasterActions, ValidationActions } from '../../../core/actions';
+import { NgbModal, ModalDismissReasons, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
     selector: 'step-preview',
@@ -25,8 +26,11 @@ export class StepPreview {
     @Output()
     next: EventEmitter<any> = new EventEmitter();
 
-    @ViewChildren(TabDirective) tabs: QueryList<TabDirective>;
-    @ViewChild(ModalDirective) resultModal: ModalDirective;
+    @ViewChild('close') public close;
+    @ViewChild('contentPreview') content: TemplateRef<any>;
+
+    // @ViewChildren(TabDirective) tabs: QueryList<TabDirective>;
+    // @ViewChild(ModalDirective) resultModal: ModalDirective;
 
     loading: boolean = false;
     submitted: boolean = false;
@@ -60,8 +64,9 @@ export class StepPreview {
         private _masterActions: MasterActions,
         private _validationActions: ValidationActions,
         private backEnd: CustomBackEndApi,
+        private modalService: NgbModal,
         private _store: Store<AppState>
-    ) {}
+    ) { }
 
     ngOnInit() {
         this._store.let(getMasterState())
@@ -82,23 +87,42 @@ export class StepPreview {
 
     methodChange(method: string) {
         this.selectedMethod = method;
-        let tabs = this.tabs.toArray();
-        if (tabs[2].active) {
-            tabs[0].active = true;
-        }
+        /*  let tabs = this.tabs.toArray();
+          if (tabs[2].active) {
+              tabs[0].active = true;
+          }*/
     }
 
     onSubmit() {
         this.next.next("Done");
     }
 
+    modalRef: NgbModalRef;
+
     send() {
         this.backEnd.testApiConfig(this.selectedMethod, this.config.plugins, this.headers, this.params, this.body)
             .subscribe((res) => {
-                this.resultModal.show();
+
+                this.modalRef = this.modalService
+                    .open(this.content, { windowClass: 'oh-modal' });
+
+
+                this.modalRef.result.then((result) => {
+
+                }, (reason) => {
+
+                });
+
+                // this.resultModal.show();
                 this.result = res.body;
             }, err => {
                 console.error(err)
             });
+    }
+
+    onOk() {
+        if (this.modalRef) {
+            this.modalRef.close();
+        }
     }
 }

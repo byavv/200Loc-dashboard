@@ -1,13 +1,27 @@
 .m-form {
-  &__control {}
+  &__control {
+    @extend .form-control;
+  }
+
+  &__group {
+    @extend .form-group;
+
+    > label {
+      margin-bottom: .2rem !important;
+    }
+  }
 }
 
 .input {
   &__switch {
     cursor: pointer;
     display: inline-block;
-    margin-top: 5px;
+    margin-top: 4px;
     padding-left: 8px;
+    border: none;
+    border: none;
+    background: transparent;
+
 
     > .switch-container {
       width: 35px;

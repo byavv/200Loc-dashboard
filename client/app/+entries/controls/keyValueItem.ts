@@ -19,7 +19,11 @@ import {
         </form>
      </div>     
   `,
-  styleUrls: ['./styles/header.scss']
+  styleUrls: ['./styles/header.scss'],
+  host:{
+    '[style.width]':"'100%'",
+    '[style.display]':"'inline-block'"
+  }
 })
 export class KeyValueItem {
   @Input() item: any;

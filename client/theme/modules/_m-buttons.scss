@@ -3,10 +3,7 @@ button {
 }
 
 .button {
-  @extend .btn;
-  text-transform: uppercase;
-  font-size: 1.4rem;
-  font-weight: 600;
+  @extend .btn;   
   border-width: 1px;
   border-radius: 0;
   padding: .5em 1.5em;

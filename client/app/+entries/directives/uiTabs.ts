@@ -15,8 +15,7 @@ import {
         .pane-content{  
             flex: 1;        
             display: flex;
-            flex-direction: column;
-            margin-bottom: 15px;
+            flex-direction: column;           
         }
         :host {
             display: flex;
@@ -51,8 +50,8 @@ export class UiPane {
     selector: 'ui-tabs',
     template: ` 
         <div class='l-container'>
-            <div class="row">
-               <div class="col-sm-12 col-md-2 padding-shrink-right">           
+            <div class="l-row">
+               <div class="col-sm-12 col-md-2 padding-shrink-right l-col">           
                   <ul class="my-steps">
                       <li *ngFor="let pane of panes" class='{{ pane.id }}' 
                           (click)="goTo(pane.id)"
@@ -63,7 +62,7 @@ export class UiPane {
                       </li>
                   </ul>            
                </div>
-               <div class="col-sm-12 col-md-10 padding-shrink-left flexy" rest-height>                
+               <div class="col-sm-12 col-md-10 padding-shrink-left l-col" rest-height style='display: flex;'>                
                     <ng-content></ng-content>                        
                </div>
             </div>

@@ -1,30 +1,29 @@
-<header>
-    <nav class="navbar navbar-light app-header">
-        <button class='l-header__toggle' #openMenuBtn (click)="active = true"><span class="icon-android-menu"></span></button>
-        <a [routerLink]="['/']" class="navbar-brand">200Loc-Dashboard</a>
+<nav class="l-header__navbar">
+    <button class='l-header__toggle' #openMenuBtn (click)="active = true"><span class="icon-android-menu"></span></button>
+    <a [routerLink]="['/']" class="l-header__brand">200Loc-Dashboard</a>
 
+    <ul class="l-header__menu" *ngIf="!isAuthenticated">
+        <li class="nav-item">
+            <a [routerLink]="['/auth/signin']" class="nav-link">Sign in</a>
+        </li>
+    </ul>
 
-        <ul class="nav navbar-nav  l-header__menu" *ngIf="!isAuthenticated" style='margin-left: auto;'>
-            <li class="nav-item">
-                <a [routerLink]="['/auth/signin']" class="nav-link">Sign in</a>
-            </li>
-        </ul>
-
-
-        <div ngbDropdown class="l-header__menu" *ngIf="isAuthenticated" style='margin-left: auto;' #myDrop="ngbDropdown">
-            <button class="l-header__menu-toggle" id="1dropdownMenu1" ngbDropdownToggle><i class="icon-user"></i></button>
-            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="1dropdownMenu1">              
-                <a href="" (click)="signOut()" class="dropdown-item">
-                    <span>Log off</span>
-                </a>
-                 <a [routerLink]="['/auth/change']" class="dropdown-item">
-                    <span>Options</span>
-                </a>
-            </div>
+    <div ngbDropdown class="l-header__menu" *ngIf="isAuthenticated" style='margin-left: auto;' #myDrop="ngbDropdown">
+        <button class="l-header__menu-toggle" id="1dropdownMenu1" ngbDropdownToggle><i class="icon-user"></i></button>
+        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="1dropdownMenu1">
+            <span class="dropdown-item">
+                            <span>Signed in as <b>{{ username }}</b></span>
+            </span>
+            <div class="dropdown-divider"></div>
+            <a [routerLink]="['/auth/change']" class="dropdown-item">
+                <span>Change password</span>
+            </a>
+            <a href="" (click)="signOut()" class="dropdown-item">
+                <span>Sign out</span>
+            </a>
         </div>
-
-    </nav>
-</header>
+    </div>
+</nav>
 
 <div class="l-header__sidebar" [class.active]="active" [offClick]='closeSidebarHandler' [ignore]='openMenuBtn'>
     <ul class="l-header__sidebar-menu">

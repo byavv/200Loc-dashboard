@@ -4,7 +4,7 @@ import { LoopBackAuth, UserApi, UserActions, AppState, getAuthenticationState } 
 import { Store } from '@ngrx/store';
 
 @Component({
-    selector: 'app-header',
+    selector: 'loc-header',
     templateUrl: './header.html'    
 })
 export class HeaderComponent implements OnInit {

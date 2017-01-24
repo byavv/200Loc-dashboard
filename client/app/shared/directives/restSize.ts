@@ -1,5 +1,5 @@
-import { Directive, ElementRef, Renderer, Input} from '@angular/core';
-import {getDOM, DomAdapter} from '@angular/platform-browser/src/dom/dom_adapter';
+import { Directive, ElementRef, Renderer, Input } from '@angular/core';
+import { getDOM, DomAdapter } from '@angular/platform-browser/src/dom/dom_adapter';
 
 @Directive({
     selector: '[rest-height]',
@@ -14,7 +14,7 @@ export class RestSize {
         this._doc = this._domAdapter.defaultDoc();
     }
 
-    ngAfterViewInit() {       
+    ngAfterViewInit() {
         this.renderer.listenGlobal('window', 'resize', (evt: any) => {
             this._setMinHeight();
         });
@@ -24,8 +24,10 @@ export class RestSize {
     _setMinHeight() {
         var scrollTop = this._doc.documentElement.scrollTop || this._doc.body.scrollTop;
         var docHeight = this._doc.documentElement.clientHeight;
-        var rect = this._domAdapter.getBoundingClientRect(this.element.nativeElement);       
-        this._domAdapter.setStyle(this.element.nativeElement, 'min-height', `${docHeight - rect.top - 65}px`);
+        var docWidth = this._doc.documentElement.clientWidth;
+        const footerHeight = docWidth > 769 ? 60 + 10/*padding*/ : 0;
+        var rect = this._domAdapter.getBoundingClientRect(this.element.nativeElement);
+        this._domAdapter.setStyle(this.element.nativeElement, 'min-height', `${docHeight - rect.top - footerHeight}px`);
     }
 
     _reset() {

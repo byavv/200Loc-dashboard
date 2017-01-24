@@ -1,33 +1,14 @@
 <template #content let-c="close" let-d="dismiss">
     <div class="l-login__container f-exclude">
-
-        <!--<div class="l-appointment__container">-->
-        <h3 class="l-login__title--page">Login</h3>
-        <div class="row">
-            <div class="col-xs-offset-2 col-xs-8 col-md-4 col-md-offset-4">
-                <div class="login-form-container">
-                    <div *ngIf="!!error">
-                        {{error}}
-                    </div>
-                    <form [formGroup]="signInForm" no-validate (ngSubmit)="onSubmit(signInForm.value)">
-                        <div class="form-group">
-                            <label for="username">Username</label>
-                            <input type="text" class="form-control" id="username" placeholder="name" formControlName="username">
-                        </div>
-                        <div class="form-group">
-                            <label for="password">Password</label>
-                            <input type="password" class="form-control" id="password" placeholder="password" formControlName="password">
-                        </div>
-                        <div class="form-group">
-                            <button type="submit" class="btn btn-primary">Submit</button>
-                        </div>
-                    </form>
-                    <!--<div class="form-group">
-                        <button type="button" (click)='onSubmit(signInForm.value)' class="btn btn-primary">Submit</button>
-                    </div>-->
-                </div>
-            </div>
-        </div>
+        <form class="l-login__loginform" [formGroup]="signInForm" novalidate (ngSubmit)="onSubmit(signInForm.value)">
+            <h2 class="l-login__loginform-heading">Login</h2>
+            <input type="text" class="form-control" name="username" placeholder="Name" formControlName="username" autofocus='true'>
+            <input type="password" class="form-control" name="password" placeholder="Password" formControlName="password">
+            <label class="checkbox">
+        <input type="checkbox" formControlName="remember" id="rememberMe" name="rememberMe"> Remember me
+      </label>
+            <button type="submit" class="button button--primary">Login</button>
+        </form>
     </div>
 </template>
 

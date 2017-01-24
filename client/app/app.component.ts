@@ -9,15 +9,20 @@ import '../theme/styles.scss';
     selector: 'app',
     template: `
     
-    <div class="page-wrap">
+    <div class="l-page__wrap">
         <loader [active]='loading' [async]='appController.init$'></loader>
-        <app-header class='authH'></app-header>
+        <header class="l-page__header">
+            <loc-header class='authH'></loc-header>
+        </header>        
         <div [hidden]='loading' class='l-container'>
             <router-outlet>
             </router-outlet>
         </div>       
     </div>
-    <app-footer class='authH'></app-footer>  
+    <footer class='l-page__footer'> 
+        <loc-footer class='authH'></loc-footer>  
+    </footer>
+   
     
     `
 })

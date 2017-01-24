@@ -9,20 +9,23 @@ import { DefaultsActions } from '../../core/actions';
 
 @Injectable()
 export class AppController {
-    init$: ReplaySubject<any> = new ReplaySubject();
+    private _init$: ReplaySubject<any> = new ReplaySubject();
     constructor(private _backEnd: CustomBackEndApi,
         private _store: Store<AppState>,
         private _defaultsActions: DefaultsActions,
         private _ngZone: NgZone) { }
+
+    get init$() {
+        return this._init$.asObservable().share();
+    }
 
     start() {
         this._ngZone.runOutsideAngular(() => {
             this._loadAppDefaults((defaults) => {
                 this._ngZone.run(() => {
                     this._store.dispatch(this._defaultsActions.setDefaults(defaults));
-                    this.init$.next(true);
+                    this._init$.next(true);
                 });
-                console.log(`APPLICATION STARTED IN ${isDevMode ? 'DEV' : 'PROD'} MODE`);
             })
         });
     }

@@ -1,0 +1,17 @@
+.l-steps {
+  &__preview {
+    &-tabset {
+      display: block;
+
+      li.nav-item {
+        flex: 1 0 auto;
+        text-align: center;
+      }
+    }
+  }
+
+}
+
+.plugin-modal {
+  @extend .loc-modal;
+}

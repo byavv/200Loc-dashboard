@@ -14,49 +14,14 @@ import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'auth-login',
-  templateUrl: './login.component.html',
-  styles: [
-    `
-   :host >>> .modal-dialog {
-      position: relative;         
-      margin-top: 60px;
-      width: 720px!important;
-      max-width: 100%;
-    }
-   :host >>> .modal-content {
-      border-radius: 0;  
-      background: transparent;
-      width: 100%;
-      height: 100%;
-      border: none;
-    }
-   @media screen and (max-width: 768px) {
-      :host >>> .modal-dialog {
-        width: 100%!important;          
-        height: 100%!important;        
-        margin: 0px;   
-      }
-   }
-
-   :host >>> .modal-backdrop:before{
-      content: '';
-      margin: -35px;
-      position: absolute;
-      top: 0;
-      right: 0;
-      bottom: 0;
-      left: 0;
-      filter: blur(10px);
-      z-index: -1;
-   }
-   
-   `
-  ]
+  templateUrl: './login.component.html'
 })
 
 export class LoginComponent {
   @ViewChild('close') public close;
   @ViewChild('content') content: TemplateRef<any>;
+  signInForm: FormGroup;
+  error: string;
 
   constructor(
     private element: ElementRef,
@@ -67,19 +32,19 @@ export class LoginComponent {
     builder: FormBuilder,
     private _store: Store<AppState>,
     private _userActions: UserActions,
-
     private userApi: UserApi,
     private authService: LoopBackAuth,
     private route: ActivatedRoute) {
     this.signInForm = builder.group({
       username: [''],
-      password: ['']
+      password: [''],
+      remember: [true]
     });
   }
 
   ngAfterViewInit() {
     const modalRef = this.modalService
-      .open(this.content, { windowClass: 'oh-modal', backdrop: 'static' });
+      .open(this.content, { windowClass: 'login-modal', backdrop: 'static' });
 
     modalRef.result.then((result) => {
       this._location.back();
@@ -98,33 +63,29 @@ export class LoginComponent {
       this._renderer.setElementClass(body, 'blurred', false);
     }
   }
+
   goBack() {
     this._location.back();
   }
 
-  signInForm: FormGroup;
-  error: string;
-
-
   onSubmit(value) {
-    console.log(value)
     this.userApi.login(value)
       .subscribe(
       (data) => this.onSuccess(data),
       (err) => this.onError(err));
   }
+
   onSuccess(data) {
     const userdata = {
       accessToken: data.id,
       username: data.user.username
-    }
-    this.authService.persist(userdata);
+    }   
     this._store.dispatch(this._userActions.login(userdata));
     const from = this.route.snapshot.queryParams['from'] || '/';
     this.router.navigate([from]);
   }
+
   onError(err) {
-    console.error(err)
     this.error = 'Login failed';
   }
 }

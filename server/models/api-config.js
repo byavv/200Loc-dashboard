@@ -20,5 +20,5 @@ module.exports = function (ApiConfig) {
     ApiConfig.observe('after save', function (ctx, next) {
         publisher.publish("cluster", JSON.stringify({ action: "update" }));
         next();
-    });
+    });   
 }

@@ -1,4 +1,12 @@
 .l-header {
+  &__navbar {
+    @extend .navbar;
+    @extend .navbar-light;
+
+    background: $white;
+    flex-direction: row;
+  }
+
   &__sidebar {
     position: absolute;
     transform: translateX(-280px);
@@ -53,12 +61,22 @@
     }
   }
 
+  &__brand {
+    @extend .navbar-brand;
+    padding-top: 0.3em;
+    @media screen and (max-width: $grid-md) {
+
+      }
+  }
+
   &__menu {
+    @extend .nav;
+    @extend .navbar-nav;
+
     cursor: pointer;
     display: inline-block;
     padding: 0;
     margin: 0;
-    -webkit-flex: 1.5;
     flex: 1.5;
     padding-bottom: 12px;
     padding-top: 16px;
@@ -68,6 +86,8 @@
     top: 0;
     height: 100%;
     width: 60px !important;
+
+    margin-left: auto;
 
     &-toggle {
       @extend .button--icon;

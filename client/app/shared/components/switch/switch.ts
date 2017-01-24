@@ -14,10 +14,8 @@ import { Component, OnInit, Input, Output, EventEmitter, HostListener } from '@a
 export class SwitchComponent {
     @Input() disabled: boolean;
     @Input() value: boolean;
-    @Output() valueChange: EventEmitter<boolean> = new EventEmitter<boolean>();
+    @Output() change: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-    constructor()
-    { }
 
     @HostListener('click', ['$event'])
     private onClick(event): void {
@@ -25,19 +23,9 @@ export class SwitchComponent {
             this.toggleValue();
     }
 
-    public setValue(value: boolean): void {
-        this.value = value;
-        this.onChange(value);
-    }
 
     public toggleValue(): void {
-        if (this.value)
-            this.setValue(false)
-        else
-            this.setValue(true)
-    }
-
-    public onChange(event): void {
-        this.valueChange.emit(event);
+        this.value = !this.value;
+        this.change.emit(this.value);
     }
 }

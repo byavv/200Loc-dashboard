@@ -11,18 +11,21 @@ import { MasterActions, ConfigActions } from '../../core/actions';
 @Component({
   selector: "api-master",
   template: `
-    <div class="l-master">       
-       <ui-tabs #tab rest-height default='general'>
-          <ui-pane id='general' title='config' [valid]='(stepGeneral.validation | async)'>
-              <step-general #stepGeneral (next)="tab.goTo($event)" [submitted]='submitted'> </step-general>
-          </ui-pane>
-          <ui-pane id='plugins' title='pipe' [valid]='(stepPlugins.validation | async)'>
-              <step-plugins #stepPlugins (next)="tab.goTo($event)" [submitted]='submitted' ></step-plugins>
-          </ui-pane>
-          <ui-pane id='preview' title='test' [valid]='true'>
-              <step-preview (next)="onDone()"></step-preview>
-          </ui-pane>     
-       </ui-tabs>     
+    <div class="l-api">
+      <section class="l-api__master">      
+        <ui-tabs #tab rest-height default='general'>
+            <ui-pane id='general' title='config' [valid]='(stepGeneral.validation | async)'>
+                <step-general #stepGeneral (next)="tab.goTo($event)" [submitted]='submitted'> </step-general>
+            </ui-pane>
+            <ui-pane id='plugins' title='pipe' [valid]='(stepPlugins.validation | async)'>
+                <step-plugins #stepPlugins (next)="tab.goTo($event)" [submitted]='submitted' ></step-plugins>
+            </ui-pane>
+            <ui-pane id='preview' title='test' [valid]='true'>
+                <step-preview (next)="onDone()"></step-preview>
+            </ui-pane>     
+        </ui-tabs>     
+      </section>
+      <template ngbModalContainer></template>
     </div>
     ` 
 })

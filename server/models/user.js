@@ -1,6 +1,14 @@
 'use strict';
 
 module.exports = function (User) {
+ 
+    User.disableRemoteMethodByName('prototype.__count__accessTokens');
+    User.disableRemoteMethodByName('prototype.__create__accessTokens');
+    User.disableRemoteMethodByName('prototype.__delete__accessTokens');
+    User.disableRemoteMethodByName('prototype.__destroyById__accessTokens');
+    User.disableRemoteMethodByName('prototype.__findById__accessTokens');
+    User.disableRemoteMethodByName('prototype.__get__accessTokens');
+    User.disableRemoteMethodByName('prototype.__updateById__accessTokens');
 
     delete User.validations.email;
 

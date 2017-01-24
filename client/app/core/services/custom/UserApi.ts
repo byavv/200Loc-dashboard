@@ -595,7 +595,7 @@ export class UserApi extends BaseLoopBackApi {
      *
      */
 
-    public login(credentials: any, include: any = 'user') {
+    public login(credentials: { username: string, password: string, remember: boolean }, include: any = 'user') {
         let method: string = "POST";
         // let url: string = CoreConfig.getPath() + "/" + CoreConfig.getApiVersion() +
         //     "/login";
@@ -612,7 +612,8 @@ export class UserApi extends BaseLoopBackApi {
             .share();
         result.subscribe(
             (response: { id: string, userId: string, user: any }) => {
-                this.auth.persist({ accessToken: response.id, username: response.user.username });
+                if (credentials.remember)
+                    this.auth.persist({ accessToken: response.id, username: response.user.username });
             },
             (err) => { console.error(err) }
         );

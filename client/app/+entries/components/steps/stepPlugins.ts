@@ -1,4 +1,9 @@
-import { Component, OnInit, AfterViewInit, Output, Input, EventEmitter, OnDestroy, Host, ViewChildren, QueryList, ViewContainerRef } from '@angular/core';
+import {
+    Component, OnInit,
+    AfterViewInit, Output, Input,
+    EventEmitter, OnDestroy, Host,
+    ViewChildren, QueryList, TemplateRef, ViewChild, ViewContainerRef
+} from '@angular/core';
 import { Router, ActivatedRoute } from "@angular/router";
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Config, Plugin } from '../../../core/models';
@@ -7,6 +12,7 @@ import { Observable, Subject, Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { AppState, getConfigState, getPlugins, getMasterConfigPlugins } from '../../../core/reducers';
 import { MasterActions, ValidationActions } from '../../../core/actions';
+import { NgbModal, ModalDismissReasons, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
     selector: 'step-plugins',
@@ -14,6 +20,8 @@ import { MasterActions, ValidationActions } from '../../../core/actions';
     styleUrls: ['./styles/stepPlugins.scss']
 })
 export class StepPlugins implements AfterViewInit {
+    @ViewChild('close') public close;
+    @ViewChild('contentPlugins') content: TemplateRef<any>;
     _apiConfig;
     @Output()
     next: EventEmitter<any> = new EventEmitter();
@@ -33,6 +41,7 @@ export class StepPlugins implements AfterViewInit {
     pluginsSub_n: Subscription;
     constructor(
         private _masterActions: MasterActions,
+        private modalService: NgbModal,
         private _validationActions: ValidationActions,
         private _store: Store<AppState>) {
     }
@@ -241,4 +250,19 @@ export class StepPlugins implements AfterViewInit {
             this.next.next('preview');
         }
     }
+    modalRef;
+    showModal() {
+        this.modalRef = this.modalService
+            .open(this.content, { windowClass: 'plugin-modal' });
+
+
+        this.modalRef.result.then((result) => {
+
+        }, (reason) => {
+
+        });
+    }
+
+
+
 }
