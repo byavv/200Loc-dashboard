@@ -48,8 +48,6 @@ export class DriverManagerConfigComponent implements AfterViewInit {
             .find({ where: { driverId: this.driverName } });
     }
 
-    applyValidation() { }
-
     addOrUpdate() {
         this.currentDriver.settings = this.currentSettings;
         this.currentDriver.driverId = this.driverName;
@@ -95,7 +93,7 @@ export class DriverManagerConfigComponent implements AfterViewInit {
 
     private _show() {
         this.modalRef = this.modalService
-            .open(this.content, { windowClass: 'driver-modal' });
+            .open(this.content, { windowClass: 'services-modal' });
 
         this.modalRef.result.then((result) => {
             this.currentSettings = {};
@@ -103,6 +101,10 @@ export class DriverManagerConfigComponent implements AfterViewInit {
         }, (reason) => {
 
         });
+    }
+
+    showSideMenu(config) {
+
     }
 
 }

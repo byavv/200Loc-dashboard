@@ -15,7 +15,7 @@
 .input {
   &__switch {
     cursor: pointer;
-    display: inline-block;  
+    display: inline-block;
     padding-left: 8px;
     border: none;
     border: none;
@@ -56,16 +56,22 @@
     }
   }
 
-  &__text {
+  &__search {
     position: relative;
     display: inline-block;
+    background: transparent;
 
     input {
       font-size: 16px;
-      padding: 7px 0 8px;
       display: block;
       width: 100%;
       border: none;
+      background: transparent;
+      padding: 0 0 4px !important;
+
+      &::-webkit-input-placeholder {
+        color: #ccc;
+      }
     }
 
     input:focus {
@@ -76,6 +82,8 @@
       position: absolute;
       height: 1px;
       width: 100%;
+      background-color: lighten($light-blue, 5%);
+      opacity: .9;
     }
 
     .hightlite-bar {
@@ -90,8 +98,29 @@
     }
 
     input:focus ~ .hightlite-underline > .hightlite-bar {
-      background-color: #007EE5;
+      background-color: $light-blue;
+      height: 1px;
+      opacity: 1;
     }
 
+    input:focus ~ i {
+      opacity: 1;
+      color: $light-blue;
+    }
+
+    .hightlite-underline,
+    i {
+      transition: .2s all linear;
+    }
+
+    i {
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      opacity: .9;
+      color: #d0dce7;
+      font-size: 1.1rem;
+    }
   }
+
 }

@@ -1,0 +1,117 @@
+.l-services {
+  @extend .l-api;
+
+  &__list {
+    &-body {
+      display: flex;
+      flex-wrap: wrap;
+
+      > * {
+        flex: 0 1 25%;
+        height: 120px;
+        background: #ffffff;
+        font-size: 14px;
+        font-weight: 300;
+        transition: all .3s ease-in-out;
+        overflow: hidden;
+        text-decoration: none;
+        text-align: center;
+        cursor: pointer;
+        color: #455A64!important;
+        margin: 2px;
+        padding: 25px 8px 8px;
+
+        & span {
+          padding: 0 8px;
+          display: block;
+          font-size: 1.5rem;
+          @media (max-width: $grid-md) {
+            font-size: 1.3rem;
+          }
+        }
+
+        & i {
+          font-size: 2.5rem;
+          @media (max-width: $grid-md) {
+            font-size: 2rem;
+          }
+          font-family: FontAwesome;
+          font-style: normal;
+          font-weight: normal;
+          text-decoration: inherit;
+        }
+        box-shadow: 0 0 0 1px #F8F8F8 inset, 0 0 0 1px #CCCCCC;
+      }
+    }
+  }
+
+  &__configlist {
+    @extend .l-api__list;
+  }
+
+  &__table {
+    @extend .l-api__table;
+
+    &--actions {
+      @extend .l-api__table--actions;
+
+      &-item {
+        @extend .l-api__table--actions-item;
+      }
+    }
+  }
+
+  &__search {
+    @extend .l-api__search;
+    background: transparent!important;
+  }
+
+  &__header {
+    @extend .l-api__header;
+  }
+
+  &__modalcontainer {
+    padding: .625rem;
+  }
+
+  .services-modal {
+    @extend .loc-modal;
+   
+  }
+
+  // .services-modal {
+  //   @extend .loc-modal;
+  //   @media screen and (min-width: $grid-md) {
+
+  //     display: flex;
+  //     flex-direction: row;
+  //     overflow: hidden!important;
+
+  //     .modal-dialog {
+  //       transform: translate(0, calc(50% - 140px))!important;
+  //       flex: 0 1 auto;
+  //       height: 100%;
+  //       width: 400px!important;
+  //       max-width: 100%;
+  //       margin: 0 auto !important;
+  //     }
+  //   }
+  // }
+}
+@media screen and (max-width: $grid-md) {
+  .l-services {
+    &__list {
+      &-body {
+        padding: 0 .625rem;
+
+        > * {
+          flex: 1 0 auto;
+          margin: 0 .625rem;
+          height: 100px;
+          padding-top: 15px;
+        }
+      }
+    }
+  }
+
+}

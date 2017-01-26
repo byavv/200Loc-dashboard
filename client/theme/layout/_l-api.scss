@@ -160,51 +160,6 @@
     }
   }
 
-  &__search-body {
-    @extend .input__text;
-    display: inline-block;
-    background: transparent;
-
-    input {
-      background: transparent;
-      padding: 0 0 4px !important;
-
-      &::-webkit-input-placeholder {
-        color: #ccc;
-      }
-    }
-
-    .hightlite-underline {
-      background-color: lighten($light-blue, 5%);
-      opacity: .9;
-    }
-
-    input:focus ~ .hightlite-underline > .hightlite-bar {
-      background-color: $light-blue;
-      height: 1px;
-      opacity: 1;
-    }
-
-    input:focus ~ i {
-      opacity: 1;
-      color: $light-blue;
-    }
-
-    .hightlite-underline,
-    i {
-      transition: .2s all linear;
-    }
-
-    i {
-      position: absolute;
-      right: 0;
-      bottom: 0;
-      opacity: .9;
-      color: #d0dce7;
-      font-size: 1.1rem;
-    }
-  }
-
   // &__menu {
   //   min-width: 10rem;
   //   padding: .5rem 0;
@@ -304,7 +259,7 @@ div.l-api__method {
       display: flex;
       background: white;
 
-      &-body {
+      .input__search {
         display: block;
         position: relative;
         padding: .625rem 0 0;
