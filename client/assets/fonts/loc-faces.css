@@ -38,6 +38,7 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+
 .icon-edit:before {
   content: "\63";
 }
@@ -104,6 +105,27 @@
 .icon-arrow-down-b:before {
   content: "\76";
 }
+.icon-android-create:before {
+  content: "\78";
+}
+.icon-pencil:before {
+  content: "\79";
+}
 .icon-user:before {
+  content: "\42";
+}
+.icon-download:before {
   content: "\77";
+}
+.icon-upload:before {
+  content: "\7a";
+}
+.icon-more:before {
+  content: "\41";
+}
+.icon-info-circle:before {
+  content: "\43";
+}
+.icon-search:before {
+  content: "\44";
 }

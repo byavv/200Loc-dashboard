@@ -1,6 +1,7 @@
 .l-page {
   &__wrap {
     min-height: 100%;
+    position: relative;
     @media screen and (min-width: $grid-md) {
       margin-bottom: -60px;
 

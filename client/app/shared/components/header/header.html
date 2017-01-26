@@ -1,4 +1,4 @@
-<nav class="l-header__navbar">
+<nav class="l-header__navbar" [class.splitted]="active"> 
     <button class='l-header__toggle' #openMenuBtn (click)="active = true"><span class="icon-android-menu"></span></button>
     <a [routerLink]="['/']" class="l-header__brand">200Loc-Dashboard</a>
 
@@ -26,8 +26,12 @@
 </nav>
 
 <div class="l-header__sidebar" [class.active]="active" [offClick]='closeSidebarHandler' [ignore]='openMenuBtn'>
+    <span class="l-header__sidebar-brand hidden-md-up">200Loc-Dashboard</span>
     <ul class="l-header__sidebar-menu">
-        <li><a class="l-header__sidebar-menu--item" [routerLink]="['/entries']" routerLinkActive="active"><i class="icon-home icon-1x"></i>Api table</a></li>
-        <li><a class="l-header__sidebar-menu--item" [routerLink]="['/drivers']" routerLinkActive="active"><i class="icon-home icon-1x"></i>Drivers manager</a></li>
+        <li><a class="l-header__sidebar-menu--item" [routerLink]="['/entries']" routerLinkActive="active"><i class="icon-home icon-1x"></i>Entries</a></li>
+        <li><a class="l-header__sidebar-menu--item" [routerLink]="['/groups']" routerLinkActive="active"><i class="icon-home icon-1x"></i>Groups</a></li>
+        <li><a class="l-header__sidebar-menu--item" [routerLink]="['/drivers']" routerLinkActive="active"><i class="icon-home icon-1x"></i>Services</a></li>       
+        <li><a class="l-header__sidebar-menu--item" [routerLink]="['/cluster']" routerLinkActive="active"><i class="icon-home icon-1x"></i>Cluster</a></li>
+        <li><a class="l-header__sidebar-menu--item" [routerLink]="['/restore']" routerLinkActive="active"><i class="icon-home icon-1x"></i>Restore</a></li>
     </ul>
 </div>

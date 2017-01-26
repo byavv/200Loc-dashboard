@@ -29,13 +29,13 @@ export class LoginComponent {
     private _location: Location,
     private modalService: NgbModal,
     private _renderer: Renderer,
-    builder: FormBuilder,
+    private _builder: FormBuilder,
     private _store: Store<AppState>,
     private _userActions: UserActions,
     private userApi: UserApi,
     private authService: LoopBackAuth,
     private route: ActivatedRoute) {
-    this.signInForm = builder.group({
+    this.signInForm = _builder.group({
       username: [''],
       password: [''],
       remember: [true]

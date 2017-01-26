@@ -86,6 +86,7 @@
     "loopback": "^3.2.1",
     "loopback-boot": "^2.23.0",
     "loopback-component-explorer": "^4.0.0",
+    "loopback-component-storage": "^3.0.0",
     "loopback-connector-mongodb": "^3.0.0",
     "loopback-connector-redis": "^0.1.0",
     "loopback-context": "^3.0.0",

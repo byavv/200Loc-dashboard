@@ -1,63 +1,76 @@
 <div class="l-api">
-    <section class="l-api__list">
-        <loader [active]='loading'></loader>
-        <div class="l-api__list-header">
-            <span class="title">Api table</span>
-            <a [routerLink]="['./master']" class="action" role="button" aria-expanded="false">
-                <i class="icon-android-add" aria-hidden="true"></i>
-            </a>
+    <div class="l-api__header">
+        <span class="title">Entries</span>
+    </div>
+    <div class="l-api__search">
+        <div class="l-api__search-body">
+            <input #searchInput placeholder='Filter by name'>
+            <div class='hightlite-underline'>
+                <span class="hightlite-bar"></span>
+            </div>
+            <i class="icon-search"></i>
         </div>
+    </div>
+    <section class="l-api__list">
+
+        <loader [active]='loading'></loader>
+        <!--<div class="l-api__list-header">
+            <span class="title">Entries</span>-->
+        <!--<ul class="l-api__list-header--actions">
+                <li>
+                    <a href class='action'>
+                        <i class="icon-search"></i>
+                    </a>
+                </li>
+            </ul>-->
+
+        <!--<div class="l-api__search">
+                <input #searchInput placeholder='Filter by name'>             
+                <div class='hightlite-underline'>
+                    <span class="hightlite-bar"></span>
+                </div>
+                <i class="icon-search"></i>
+            </div>
+        </div>-->
+
         <div class="l-api__list-body">
             <div class="l-api__table">
-                <div class='m__table-row m__table-row--header'>
-                    <div class="m__table-cell">
-                        Name
-                    </div>
-                    <div class="m__table-cell">
-                        Url
+                <div *ngFor='let config of configs' class='m__table-row'>
+                    <div class="m__table-cell auto">
+                        <div class='l-api__table--indicator' [ngClass]="{'green': config.active, 'red': !config.active}">
+                            <i class='icon-record' [title]="config.active ? 'Service check OK': 'Service check FAIL'"></i>
+                        </div>
                     </div>
                     <div class="m__table-cell hidden-sm-down">
-                        Methods
-                    </div>
-                    <div class="m__table-cell">
-
-                    </div>
-                </div>
-
-                <div *ngFor='let config of configs' class='m__table-row'>
-                    <div class="m__table-cell">
-                        <span class='l-api__table--indicator green'>
-                            <i class='icon-record'></i>                            
-                        </span>
-                        <!-- show description on hover -->
                         <span class='l-api__description'>{{ config.name }}</span>
                     </div>
                     <div class="m__table-cell">
-                        <a [routerLink]="['./master', {t:'test'}]" [queryParams]='{ id: config.id }'>~{{ config.entry }}</a>
+                        <a [routerLink]="['./master', {t:'test'}]" [queryParams]='{ id: config.id }' [ngbPopover]="getConfigMethodsString(config)"
+                            placement="right" triggers="mouseenter:mouseleave">
+                                ~{{ config.entry }}
+                            </a>
                     </div>
                     <div class="m__table-cell hidden-sm-down">
-                        <div *ngFor='let method of config?.methods' class='l-api__method'>
-                            <span class="label label-default">{{ method }}</span>
+                        <span>{{ getGroupsApplied(config) }}</span>
+                    </div>
+                    <div class="m__table-cell auto">
+                        <loc-switch [value]='config.active' (change)='toggleActive(config, $event)'> </loc-switch>
+                    </div>
+                    <div class="m__table-cell auto hidden-sm-down">
+                        <div class="l-api__table--actions">
+                            <button class="l-api__table--actions-item" (click)="editApi(config)">
+                                        <span class="icon-android-create"></span>                                       
+                            </button>
+                            <button class="l-api__table--actions-item" (click)="onRemove(config)">
+                                        <span class="icon-ios-trash"></span>
+                            </button>
                         </div>
                     </div>
-                    <div class="m__table-cell">
+                    <div class="m__table-cell auto hidden-md-up">
                         <div class="l-api__table--actions">
-                            <button [popover]="actionsPopover" class="l-api__table--actions-item"><i class="icon-android-more-vertical"></i></button>
-                            <popover-content #actionsPopover placement="auto bottom" [floating]='true' [shiftLeft]='-15' size='md' [closeOnClickOutside]="true">
-                                <div class="l-api__menu">
-                                    <button class="l-api__menu-item" (click)="editApi(config)">
-                                        <span class="icon-edit"></span>
-                                        <span>Edit entry</span>
-                                    </button>
-                                    <button class="l-api__menu-item" (click)="onRemove(config)">
-                                   <span class="icon-ios-trash"></span>Remove entry</button>
-                                    <div class="l-api__menu-item" style='position: relative'>
-                                        <span class="icon-checkmark-circled"></span>
-                                        <span>Activate</span>
-                                        <loc-switch [value]='config.active' (change)='toggleActive(config, $event)'> </loc-switch>
-                                    </div>
-                                </div>
-                            </popover-content>
+                            <button class="l-api__table--actions-item" (click)="showSideMenu(config)">
+                                        <span class="icon-android-more-vertical"></span>                                       
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -65,5 +78,5 @@
         </div>
         <h3 *ngIf='configs.length == 0'>No entry points added</h3>
     </section>
-    <button class='l-api__add-button' (click)='onAddClick()'>  <i class="icon-android-add" aria-hidden="true"></i></button>
 </div>
+<button class='l-api__add-button' (click)='onAddClick()'>  <i class="icon-android-add" aria-hidden="true"></i></button>

@@ -205,10 +205,10 @@ export class PopoverContent implements AfterViewInit, OnDestroy {
     }
 
     calculateWidth() {
-        if (this.size == 'md') return '300px';
+        if (this.size == 'md') return '350px';
         if (this.size == 'lg') return '450px';
-        if (this.size == 'sm') return '200px';
-        else return '300px';
+        if (this.size == 'sm') return '250px';
+        else return '250px';
     }
 
     // -------------------------------------------------------------------------

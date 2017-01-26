@@ -1,20 +1,21 @@
 @font-face {
-  font-family: 'Roboto';
+  font-family: 'Open Sans';
   font-style: normal;
   font-weight: 300;
-  src: local('Roboto'), local('Roboto-Light'), url(/assets/fonts/Roboto-Light.ttf) format('ttf');  
+  src: local('Open Sans'), local('Open Sans Light'), url(/assets/fonts/OpenSans-Light.ttf)  format('truetype');  
 }
 
 @font-face {
-  font-family: 'Roboto';
+  font-family: 'Open Sans';
   font-style: normal;
   font-weight: 400;
-  src: local('Roboto'), local('Roboto-Regular'), url(/assets/fonts/Roboto-Regular.ttf) format('ttf');  
+  src: local('Open Sans'), local('Open Sans Regular'), url(/assets/fonts/OpenSans-Regular.ttf)  format('truetype');  
 }
 
 @font-face {
-  font-family: 'Roboto';
+  font-family: 'Open Sans';
   font-style: normal;
   font-weight: 500;
-  src: local('Roboto Medium'), local('Roboto-Medium'), url(/assets/fonts/Roboto-Medium.ttf) format('ttf');  
+  src: local('Open Sans'), local('Open Sans Semibold'), url(/assets/fonts/OpenSans-Semibold.ttf)  format('truetype');  
 }
+

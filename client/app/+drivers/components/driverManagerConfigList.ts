@@ -1,8 +1,9 @@
-import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit, TemplateRef } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { DriverConfig, DriverConfigApi, DriverApi } from '../../core';
 import { ModalDirective } from 'ng2-bootstrap';
 import { Observable } from 'rxjs';
+import { NgbModal, ModalDismissReasons, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
     templateUrl: './templates/driverManagerConfigList.tmpl.html'
@@ -13,12 +14,16 @@ export class DriverManagerConfigComponent implements AfterViewInit {
     driverConfigs: Array<DriverConfig> = [];
     currentSettings = {};
     currentDriver: any = {};
-    @ViewChild('lgModal') modal: ModalDirective;
+    modalRef: NgbModalRef;
+    //  @ViewChild('lgModal') modal: ModalDirective;
+    @ViewChild('close') public close;
+    @ViewChild('driverModalContent') content: TemplateRef<any>;
 
     constructor(
         private activeRoute: ActivatedRoute,
         private driverConfigApi: DriverConfigApi,
-        private driverApi: DriverApi
+        private driverApi: DriverApi,
+        private modalService: NgbModal,
     ) { }
 
     ngAfterViewInit() {
@@ -33,10 +38,10 @@ export class DriverManagerConfigComponent implements AfterViewInit {
                 this.driverConfigs = result[0];
                 this.driverTemplate = result[1];
             });
-        this.modal.onHidden.subscribe(() => {
-            this.currentSettings = {};
-            this.currentDriver = {};
-        });
+        // this.modal.onHidden.subscribe(() => {
+        //     this.currentSettings = {};
+        //     this.currentDriver = {};
+        // });
     }
     private _updateDriverConfigList(): Observable<Array<DriverConfig>> {
         return this.driverConfigApi
@@ -51,7 +56,7 @@ export class DriverManagerConfigComponent implements AfterViewInit {
         this.driverConfigApi
             .upsert(this.currentDriver)
             .subscribe(result => {
-                this.modal.hide();
+                if (this.modalRef) this.modalRef.close();
                 this._updateDriverConfigList().subscribe((result) => {
                     this.driverConfigs = result
                 })
@@ -71,7 +76,7 @@ export class DriverManagerConfigComponent implements AfterViewInit {
                 .subscribe((driver) => {
                     this.currentSettings = driver.settings;
                     this.currentDriver = Object.assign({}, driver);
-                    this.modal.show();
+                    this._show();
                 });
         } else {
             let temp = {}
@@ -81,10 +86,40 @@ export class DriverManagerConfigComponent implements AfterViewInit {
             this.currentDriver = new DriverConfig();
             this.currentSettings = temp;
             try {
-                this.modal.show();
+                this._show();
             } catch (error) {
                 console.error(error)
             }
         }
     }
+
+    private _show() {
+        this.modalRef = this.modalService
+            .open(this.content, { windowClass: 'driver-modal' });
+
+        this.modalRef.result.then((result) => {
+            this.currentSettings = {};
+            this.currentDriver = {};
+        }, (reason) => {
+
+        });
+    }
+
 }
+/*
+
+
+ const modalRef = this.modalService
+      .open(this.content, { windowClass: 'login-modal', backdrop: 'static' });
+
+    modalRef.result.then((result) => {
+      this._location.back();
+    }, (reason) => {
+      this._location.back();
+    });
+    let body = getDOM().defaultDoc().getElementsByTagName('body')[0];
+    if (body) {
+      this._renderer.setElementClass(body, 'blurred', true);
+    }
+
+ */

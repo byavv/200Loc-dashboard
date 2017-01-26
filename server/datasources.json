@@ -1,9 +1,4 @@
 {
-  "db1": {
-    "name": "db1",
-    "connector": "memory",
-    "file": "gateway.json"
-  },
   "db": {
     "host": "${redis_host}",
     "port": "6379",
@@ -14,5 +9,11 @@
     "name": "auth",
     "connector": "memory",
     "file": "auth.json"
+  },
+  "storage": {
+    "name": "storage",
+    "connector": "loopback-component-storage",
+    "provider": "filesystem",
+    "root": "./storage"
   }
 }

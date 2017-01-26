@@ -1,0 +1,31 @@
+.l-driver {
+  @extend .l-api;
+
+  &__list {
+    @extend .l-api__list;
+  }
+
+  &__table {
+    @extend .l-api__table;
+
+  }
+
+  .driver-modal {
+    @extend .loc-modal;
+    @media screen and (min-width: $grid-md) {
+
+      display: flex;
+      flex-direction: row;
+      overflow: hidden!important;
+
+      .modal-dialog {
+        transform: translate(0, calc(50% - 140px))!important;
+        flex: 0 1 auto;
+        height: 100%;
+        width: 400px!important;
+        max-width: 100%;
+        margin: 0 auto !important;
+      }
+    }
+  }
+}

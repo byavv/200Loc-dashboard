@@ -3,7 +3,7 @@ import { AppController } from '../../shared/services';
 import { LoaderComponent } from '../../shared/components';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { ApiConfigApi } from '../../core'
+import { ApiConfigApi, Config } from '../../core'
 
 @Component({
   selector: 'api-list',
@@ -54,5 +54,17 @@ export class ApiListComponent implements OnInit, OnDestroy {
 
   onAddClick() {
     this.router.navigate(['./master'], { relativeTo: this.route });
+  }
+
+  getConfigMethodsString(config: Config) {
+    return (config.methods || []).join(', ');
+  }
+
+  getGroupsApplied(){
+    return '-';
+  }
+
+  showSideMenu(config){
+
   }
 }

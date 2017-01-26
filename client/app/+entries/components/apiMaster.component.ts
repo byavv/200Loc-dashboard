@@ -12,6 +12,9 @@ import { MasterActions, ConfigActions } from '../../core/actions';
   selector: "api-master",
   template: `
     <div class="l-api">
+      <div class="l-api__header">
+          <span class="title"><a routerLink='/entries'>Entries</a> / wizard</span>
+      </div>
       <section class="l-api__master">      
         <ui-tabs #tab rest-height default='general'>
             <ui-pane id='general' title='config' [valid]='(stepGeneral.validation | async)'>
