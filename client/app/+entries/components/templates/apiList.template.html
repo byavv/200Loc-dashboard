@@ -36,10 +36,47 @@
         <div class="l-api__list-body">
             <div class="l-api__table">
                 <div *ngFor='let config of configs' class='m__table-row'>
-                    <div class="m__table-cell auto">
-                        <div class='l-api__table--indicator' [ngClass]="{'green': config.active, 'red': !config.active}">
-                            <i class='icon-record' [title]="config.active ? 'Service check OK': 'Service check FAIL'"></i>
+                    <div class="m__table-cell auto" style="position: static">
+
+                      
+                        <div *ngIf="config.errors.length == 0" class='l-api__table--indicator' [ngClass]="config.class">
+                            <i class='icon-record' [ngbPopover]='indicatorContent'  placement="bottom"></i>
+                            <template #indicatorContent>                               
+                                <div *ngFor='let status of config.messages' class='l-api__table--statusPopoverContainer'>                                    
+                                    <span style='margin-bottom:10px;'><i class='icon-record' [ngStyle]="{'color': status.error ? 'red' : 'green'}"></i><span style='margin-left:10px;'>{{status.name}} v{{status.version}}</span></span>                                   
+                                    <div>{{status.message}}</div>
+                                </div>
+                            </template>
                         </div>
+                   
+                     
+                        <div *ngIf="config.errors.length > 0" class='l-api__table--indicator red'>
+                            <i class='icon-alert-circled' [ngbPopover]='errorContent' triggers="mouseenter:mouseleave" placement="bottom"></i>
+                            <template #errorContent>
+                                <div *ngFor='let error of config.errors' class='l-api__table--statusPopoverContainer'>
+                                    <span style='margin-bottom:10px;'>IN: <b>{{error.name}}</b> service</span>
+                                    <div>{{error.message}}</div>
+                                </div>
+                            </template>
+                        </div>
+                      
+
+                        <!--<div class='l-api__table--indicator' *ngIf="config.errors.length == 0; then noErrorBlock; else errorBlock">this is ignored</div>
+                        <template #noErrorBlock>
+                            <i class='icon-record' [title]="config.ok ? 'Service check OK': 'Service check FAIL'" [ngbPopover]='indicatorContent' triggers="mouseenter:mouseleave"
+                                placement="bottom"></i>
+                            <template #indicatorContent>
+                                fsdfsdfsfsd
+                            </template>
+                        </template>
+                        <template #errorBlock>
+                            <i class='icon-alert-circled' [title]="Error" [ngbPopover]='errorContent' triggers="mouseenter:mouseleave" placement="bottom"></i>
+                            <template #errorContent>
+                                <div *ngFor='let error of config.errors'>
+                                    <p> {{error}} </p>
+                                </div>
+                            </template>
+                        </template>-->
                     </div>
                     <div class="m__table-cell hidden-sm-down">
                         <span class='l-api__description'>{{ config.name }}</span>
@@ -54,7 +91,8 @@
                         <span>{{ getGroupsApplied(config) }}</span>
                     </div>
                     <div class="m__table-cell auto">
-                        <loc-switch [value]='config.active' (change)='toggleActive(config, $event)'> </loc-switch>
+                        <loc-switch [value]='config.active' (change)='toggleActive(config, $event)' [disabled]='config.errors && config.errors.length > 0'>
+                        </loc-switch>
                     </div>
                     <div class="m__table-cell auto hidden-sm-down">
                         <div class="l-api__table--actions">

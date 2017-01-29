@@ -31,6 +31,16 @@
       "required": true,
       "default": "[\"GET\"]"
     },
+    "errors": {
+      "type": [
+        "object"
+      ]
+    },
+    "active": {
+      "type": "boolean",
+      "required": true,
+      "default": true
+    },
     "plugins": {
       "type": "object"
     },

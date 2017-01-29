@@ -68,7 +68,8 @@
         "sharedMethods": {
           "*": false,
           "find": true,
-          "template": true
+          "template": true,
+          "check": true
         }
       }
     }

@@ -88,6 +88,35 @@ export class ApiConfigApi extends BaseLoopBackApi {
   }
 
   /**
+    * Create a new instance of the model and persist it into the data source.
+    *
+    * @param object data Request data.
+    *
+    * This method expects a subset of model properties as request parameters.
+    *
+    * @returns object An empty reference that will be
+    *   populated with the actual data once the response is returned
+    *   from the server.
+    *
+    * <em>
+    * (The remote method definition does not provide any description.
+    * This usually means the response is a `Cart` object.)
+    * </em>
+    */
+  public patchOrCreate(data: any = {}) {
+    let method: string = "PATCH";
+    let url: string = CoreConfig.getPath() + "/" + CoreConfig.getApiVersion() +
+      "/ApiConfigs";
+    let routeParams: any = {};
+    let postBody: any = {
+      data: data
+    };
+    let urlParams: any = {};
+    let result = this.request(method, url, routeParams, urlParams, postBody);
+    return result.map((instance: ApiConfig) => new ApiConfig(instance));
+  }
+
+  /**
    * Replace an existing model instance or insert a new one into the data source.
    *
    * @param object data Request data.
@@ -320,20 +349,6 @@ export class ApiConfigApi extends BaseLoopBackApi {
 
 
   public testApiConfig(methodToTest, plugins, headers, params, body?) {
-    // let reqHeaders = new Headers();
-    // reqHeaders.append('Content-Type', 'application/json');
-
-    // let reqBody = JSON.stringify({ method, plugins, headers, params, body });
-    // let options = new RequestOptions({
-    //   headers: reqHeaders,
-    //   method: 'post',
-    //   body: reqBody,
-    //   url: CoreConfig.getPath() + "/" + CoreConfig.getApiVersion() + "/test"
-    // });
-    // return this._http
-    //   .request(new Request(options))
-    //   .map(res => res.json());
-
     let method: string = "POST";
     let url: string = CoreConfig.getPath() + "/" + CoreConfig.getApiVersion() +
       "/ApiConfigs/test";

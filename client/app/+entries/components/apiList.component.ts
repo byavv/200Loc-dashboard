@@ -2,8 +2,8 @@ import { Component, OnInit, OnDestroy, trigger, state, transition, style, animat
 import { AppController } from '../../shared/services';
 import { LoaderComponent } from '../../shared/components';
 import { Router, ActivatedRoute } from '@angular/router';
-import { Subscription } from 'rxjs';
-import { ApiConfigApi, Config } from '../../core'
+import { Subscription, Observable } from 'rxjs';
+import { ApiConfigApi, ApiConfig, DriverApi, ServiceStatus } from '../../core'
 
 @Component({
   selector: 'api-list',
@@ -14,34 +14,77 @@ export class ApiListComponent implements OnInit, OnDestroy {
   configs: Array<any> = [];
   sub: Subscription;
   loading: boolean = false;
+  serviceStatusArray: Array<ServiceStatus> = [];
 
   constructor(private appController: AppController,
     private router: Router,
     private route: ActivatedRoute,
+    private _driverApi: DriverApi,
     private _apiConfigApi: ApiConfigApi) { }
 
   ngOnInit() {
     this.loading = true;
-    this.sub = this._apiConfigApi
-      .find()
-      .subscribe(configs => {
-        this.configs = configs;
+    // this.sub = this._apiConfigApi
+    //   .find()
+    //   .do((configs) => this.configs = configs)
+    //   .flatMap(() => this._driverApi.check())
+    //   .subscribe((status: any) => {
+    //     this.serviceStatusArray = status;
+    //     console.log(this.serviceStatusArray);
+    //     this.configs.forEach(c => {
+    //       //  this.updateServiceStatus(c);
+    //     })
+    //     this.loading = false;
+    //   }, (err) => {
+    //     console.error(err);
+    //   });
+
+    Observable.forkJoin(this._apiConfigApi.find(), this._driverApi.check())
+      .subscribe((result: Array<any>) => {
+        this.configs = result[0];
+        this.serviceStatusArray = result[1];
+        this.configs = this.configs.map(c => this.setStatus(c))
         this.loading = false;
-      }, (err) => {
-        console.error(err);
+        console.log(result);
       });
   }
 
   ngOnDestroy() {
-    this.sub.unsubscribe();
+    if (this.sub)
+      this.sub.unsubscribe();
   }
 
   onRemove(config) {
-    this._apiConfigApi.deleteById(config.id)
+    this._apiConfigApi
+      .deleteById(config.id)
       .subscribe(res => {
         let ind = this.configs.indexOf(config);
         this.configs.splice(ind, 1);
       });
+  }
+
+  setStatus(config: ApiConfig) {
+    let ok = true;
+    const messages = new Array<ServiceStatus>()
+
+    config.plugins.forEach(pl => {
+      if (pl.dependencies) {
+        Object.keys(pl.dependencies).forEach(key => {
+          const st = this.serviceStatusArray.find(s => s.id == pl.dependencies[key]);
+          if (st) {
+            if (ok && st.error) {
+              ok = false;
+            }
+            messages.push(st);
+          }
+        });
+      }
+    });
+
+    return Object.assign(config, {
+      class: ok ? 'green' : 'red',
+      messages: messages
+    })
   }
 
   editApi(config) {
@@ -49,22 +92,34 @@ export class ApiListComponent implements OnInit, OnDestroy {
   }
 
   toggleActive(config, value) {
-    console.log(config, value)
+    this.loading = true;
+    this._apiConfigApi.patchOrCreate(Object.assign({}, config, {
+      active: value,
+      loaded: null,
+      status: null
+    }))
+      .subscribe((result) => {
+        this.loading = false;
+      }, (err) => {
+        // notify
+        console.error(err);
+      });
+
   }
 
   onAddClick() {
     this.router.navigate(['./master'], { relativeTo: this.route });
   }
 
-  getConfigMethodsString(config: Config) {
+  getConfigMethodsString(config: ApiConfig) {
     return (config.methods || []).join(', ');
   }
 
-  getGroupsApplied(){
+  getGroupsApplied() {
     return '-';
   }
 
-  showSideMenu(config){
+  showSideMenu(config) {
 
   }
 }

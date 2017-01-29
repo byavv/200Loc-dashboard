@@ -1,6 +1,11 @@
 .popover {
+  font-family: 'Open Sans';
+  font-size: 16px;
+  color: #555;
+  border-radius: 0;
+
   &__wrapper {
-    position: relative;  
+    position: relative;
     display: inline-block;
 
     &:hover {
@@ -8,8 +13,8 @@
         z-index: 10;
         opacity: 1;
         visibility: visible;
-     //   transform: translate(0,-20px);
-     //   transition: all .5s cubic-bezier(0.75, -0.02, 0.2, 0.97);
+        //   transform: translate(0,-20px);
+        //   transition: all .5s cubic-bezier(0.75, -0.02, 0.2, 0.97);
       }
     }
   }
@@ -27,7 +32,7 @@
 
     &.right {
       left: calc(100% + 10px);
-      top: calc(50% - 15px);    
+      top: calc(50% - 15px);
 
       &:before {
         position: absolute;

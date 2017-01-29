@@ -23,6 +23,11 @@ module.exports = function (ApiConfig) {
         next();
     });
 
+    ApiConfig.observe('after delete', function (ctx, next) {
+        publisher.publish("cluster", JSON.stringify({ action: "update" }));
+        next();
+    });
+
     ApiConfig.test = function (data, callback) {
         console.log(data)
         request({

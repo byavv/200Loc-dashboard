@@ -1,7 +1,7 @@
 /* tslint:disable */
 
 export interface DriverConfigInterface {
-  name: string;
+  name?: string;
   description?: string;
   settings?: any;
   driverId?: string;
@@ -9,11 +9,11 @@ export interface DriverConfigInterface {
 }
 
 export class DriverConfig implements DriverConfigInterface {
-  name: string;
-  description: string;
-  settings: any;
-  driverId: string;
-  id: number;
+  name?: string;
+  description?: string;
+  settings?: any;
+  driverId?: string;
+  id?: number;
   constructor(instance?: DriverConfig) {
     Object.assign(this, instance);
   }

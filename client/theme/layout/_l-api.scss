@@ -121,10 +121,26 @@
 
     }
 
+    &--statusPopoverContainer {
+      color: black;
+      display: flex;
+      flex-direction: column;
+      border-top: 1px solid #e6e6e6;
+      border-bottom: 1px solid #e6e6e6;
+      padding: 10px 0;
+
+      &:first-child {
+        border-top: none;
+      }
+      &:last-child {
+        border-bottom: none;
+      }
+    }
+
     &--indicator {
       cursor: pointer;
-      opacity: .9;
       padding-top: 3px;
+      color: transparent;
 
       &.green {
         color: $green;

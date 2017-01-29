@@ -12,10 +12,8 @@ export class DriverManagerConfigComponent implements AfterViewInit {
     driverName: string;
     driverTemplate: any;
     driverConfigs: Array<DriverConfig> = [];
-    currentSettings = {};
     currentDriver: any = {};
     modalRef: NgbModalRef;
-    //  @ViewChild('lgModal') modal: ModalDirective;
     @ViewChild('close') public close;
     @ViewChild('driverModalContent') content: TemplateRef<any>;
 
@@ -38,10 +36,6 @@ export class DriverManagerConfigComponent implements AfterViewInit {
                 this.driverConfigs = result[0];
                 this.driverTemplate = result[1];
             });
-        // this.modal.onHidden.subscribe(() => {
-        //     this.currentSettings = {};
-        //     this.currentDriver = {};
-        // });
     }
     private _updateDriverConfigList(): Observable<Array<DriverConfig>> {
         return this.driverConfigApi
@@ -49,15 +43,15 @@ export class DriverManagerConfigComponent implements AfterViewInit {
     }
 
     addOrUpdate() {
-        this.currentDriver.settings = this.currentSettings;
         this.currentDriver.driverId = this.driverName;
         this.driverConfigApi
             .upsert(this.currentDriver)
             .subscribe(result => {
                 if (this.modalRef) this.modalRef.close();
-                this._updateDriverConfigList().subscribe((result) => {
-                    this.driverConfigs = result
-                })
+                this._updateDriverConfigList()
+                    .subscribe((result) => {
+                        this.driverConfigs = result
+                    })
             })
     }
     deleteConfig(id) {
@@ -72,7 +66,7 @@ export class DriverManagerConfigComponent implements AfterViewInit {
         if (id) {
             this.driverConfigApi.findById(id)
                 .subscribe((driver) => {
-                    this.currentSettings = driver.settings;
+                    console.log(driver)
                     this.currentDriver = Object.assign({}, driver);
                     this._show();
                 });
@@ -81,8 +75,7 @@ export class DriverManagerConfigComponent implements AfterViewInit {
             for (const key in this.driverTemplate.settings) {
                 temp[key] = this.driverTemplate.settings[key].default || '';
             }
-            this.currentDriver = new DriverConfig();
-            this.currentSettings = temp;
+            this.currentDriver = new DriverConfig({ settings: temp });
             try {
                 this._show();
             } catch (error) {
@@ -96,7 +89,6 @@ export class DriverManagerConfigComponent implements AfterViewInit {
             .open(this.content, { windowClass: 'services-modal' });
 
         this.modalRef.result.then((result) => {
-            this.currentSettings = {};
             this.currentDriver = {};
         }, (reason) => {
 

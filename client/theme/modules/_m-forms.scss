@@ -33,7 +33,7 @@
         content: "";
         position: absolute;
         top: 50%;
-        right: 65%;
+        right: 55%;
         transform: translate(0%, -50%);
         width: 22px;
         height: 22px;
@@ -45,12 +45,20 @@
       }
     }
 
+    &.disabled {
+      cursor: initial;
+
+      > .switch-container {
+        filter: grayscale(100%);
+      }
+    }
+
     &.on {
       > .switch-container {
         background: $green;
 
         &:before {
-          right: -15%;
+          right: -13%;
         }
       }
     }

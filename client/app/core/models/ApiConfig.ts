@@ -1,4 +1,6 @@
 /* tslint:disable */
+import { Plugin } from './Plugin';
+import { ServiceStatus } from './ServiceStatus';
 
 export interface ApiConfigInterface {
   name: string;
@@ -6,8 +8,10 @@ export interface ApiConfigInterface {
   description?: string;
   entry: string;
   methods: Array<string>;
-  plugins?: any;
+  plugins?: Array<Plugin>;
   id?: number;
+  ok?: any;
+  errors?: Array<any>; 
 }
 
 export class ApiConfig implements ApiConfigInterface {
@@ -16,8 +20,11 @@ export class ApiConfig implements ApiConfigInterface {
   description: string;
   entry: string;
   methods: Array<string> = ["GET", "POST"];
-  plugins: Array<any> = [];
+  plugins: Array<Plugin> = [];
   id: number;
+  ok: any;
+  errors: Array<any> = [];  
+
   constructor(instance?: ApiConfig) {
     Object.assign(this, instance);
   }

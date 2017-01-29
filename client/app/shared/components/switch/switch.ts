@@ -4,7 +4,7 @@ import { Component, OnInit, Input, Output, EventEmitter, HostListener } from '@a
     selector: 'loc-switch',
     template: `
     
-    <div class="input__switch" [class.on]="value">
+    <div class="input__switch" [class.on]="value" [class.disabled]='disabled'>
         <div class="switch-container">         
         </div>
     </div>

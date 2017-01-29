@@ -104,7 +104,7 @@ export class ApiMasterComponent {
       }
     });
     console.log("CONFIG TO SAVE", Object.assign(this.config, { plugins: plugins }));
-    this.apiConfigApi.upsert(Object.assign(this.config, { plugins: plugins }))
+    this.apiConfigApi.patchOrCreate(Object.assign(this.config, { plugins: plugins }))
       .subscribe((result) => {
         this.router.navigate(['/']);
       }, (err) => {

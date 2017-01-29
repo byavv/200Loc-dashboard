@@ -5,10 +5,10 @@ import { BaseLoopBackApi } from '../base.service';
 import { CoreConfig } from '../../core.config';
 import { LoopBackAuth } from '../auth.service';
 import { LoopBackFilter } from '../../models/BaseModels';
+import { ServiceStatus } from '../../models';
 import { JSONSearchParams } from '../search.params';
 import { ErrorHandler } from '../error.service';
-import { Subject } from 'rxjs/Subject';
-import 'rxjs/add/operator/map';
+import { Subject, Observable } from 'rxjs';
 import { Driver } from '../../models/Driver';
 
 // Making Sure EventSource Type is available to avoid compilation issues.
@@ -107,5 +107,30 @@ export class DriverApi extends BaseLoopBackApi {
         let urlParams: any = {};
         let result = this.request(method, url, routeParams, urlParams, postBody);
         return result;
+    }
+
+    /**
+     * Get service status
+     *
+     * @param string name Driver name
+     *
+     * @returns object And object reprents driver required configuration
+     * with populated settings field which consists of required options to br set for 
+     * driver's proper configuration
+     *    
+     */
+    public check(id: string = 'all'): Observable<Array<ServiceStatus>> {
+        let method: string = "GET";
+        let url: string = CoreConfig.getPath() + "/" + CoreConfig.getApiVersion() +
+            "/Drivers/check/:id";
+        let routeParams: any = {
+            id: id
+        };
+        let postBody: any = {};
+        let urlParams: any = {};
+        let result = this.request(method, url, routeParams, urlParams, postBody);
+        return result.map((instances: Array<ServiceStatus>) =>
+            instances.map((instance: ServiceStatus) => new ServiceStatus(instance))
+        );
     }
 }
