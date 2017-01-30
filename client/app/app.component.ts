@@ -11,7 +11,7 @@ import '../theme/styles.scss';
     template: `
     
     <div class="l-page__wrap">
-        <loader [trigger]='getLoaded()'></loader>
+        <loader [trigger]='getLoaded()' [spinner]='false'></loader>
         <header class="l-page__header">
             <loc-header class='authH'></loc-header>
         </header>        
@@ -39,7 +39,7 @@ export class AppComponent {
         } else {
             CoreConfig.setBaseURL('http://localhost:5601');
         }
-     //   this.authService.populate();
+        //   this.authService.populate();
         this.appController.start();
     }
     getLoaded() {

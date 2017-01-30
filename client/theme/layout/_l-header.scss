@@ -26,66 +26,6 @@
     transition: padding .25s cubic-bezier(0.4,0.0,0.2,1);
   }
 
-  &__sidebar {
-    position: absolute;
-    transform: translateX(-280px);
-    transition: transform 0.25s cubic-bezier(0.4,0.0,0.2,1),opacity 0.25s linear;
-    width: 280px;
-    background-color: #fff;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    opacity: 0;
-    // visibility: hidden;
-    box-shadow: 0 0 4px rgba(0,0,0,.28);
-    bottom: 0;
-    color: #000;
-    overflow: hidden;
-    top: 0;
-    left: 0;
-    z-index: 990;
-
-    &.active {
-      transform: translateX(0);   
-      opacity: 1;
-      transition: transform 0.25s cubic-bezier(0.4,0.0,0.2,1),opacity 0s linear;
-    }
-
-    &-brand {
-      padding: .625rem;
-      text-align: center;
-      margin: auto 0;
-      flex: 0 1 auto;
-      margin-top: .625rem;
-    }
-
-    &-menu {
-      @extend .list-group;
-      padding: .625rem;
-      margin: auto 0;
-      flex: 1 0 auto;
-
-      > * {
-        list-style: none;
-        margin-bottom: .625rem;
-      }
-
-      &--item {
-        @extend .list-group-item;
-        padding: .5rem 1.5rem .5rem 3.5rem;
-
-        [class^="icon-"] {
-          font-size: 1.2em;
-          margin: 0 10px;
-          color: $white;
-          position: absolute;
-          left: 5px;
-          font-size: 1.5rem;
-        }
-      }
-    }
-  }
-
   &__toggle {
     @extend .button--icon;
     margin-right: 20px;

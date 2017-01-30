@@ -1,7 +1,7 @@
 /* Absolute Center Spinner */
-.loader-container{
-  position: absolute; 
-  width:100%; 
+.loader-container {
+  position: absolute;
+  width: 100%;
   left: 0;
   top: 0;
   height: 100%;
@@ -15,10 +15,10 @@
   position: absolute;
   z-index: 999;
   left: 0;
-  right: 0;   
-  top:0;
-  bottom:0;  
-  margin:auto;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
   -webkit-animation: rotation .6s infinite linear;
   -moz-animation: rotation .6s infinite linear;
   -o-animation: rotation .6s infinite linear;
@@ -29,39 +29,89 @@
   border-top: 6px solid rgba(0, 174, 239, .8);
   border-radius: 100%;
 }
-
 @-webkit-keyframes rotation {
   from {
     -webkit-transform: rotate(0deg);
   }
+
   to {
     -webkit-transform: rotate(359deg);
   }
 }
-
 @-moz-keyframes rotation {
   from {
     -moz-transform: rotate(0deg);
   }
+
   to {
     -moz-transform: rotate(359deg);
   }
 }
-
 @-o-keyframes rotation {
   from {
     -o-transform: rotate(0deg);
   }
+
   to {
     -o-transform: rotate(359deg);
   }
 }
-
 @keyframes rotation {
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(359deg);
+  }
+}
+@keyframes scale {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+
+  45% {
+    transform: scale(0.1);
+    opacity: .7;
+  }
+
+  80% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+@function delay($interval, $count, $index) {
+   @return ($index * $interval) - ($interval * $count);
+}
+
+// mixins should be separated out
+@mixin ball-pulse($n: 3, $start: 1) {
+   @for $i from $start through $n{
+    > div:nth-child(#{$i}) {
+      animation: scale .75s delay(0.12s, $n, $i) infinite cubic-bezier(.2,.68,.18,1.08);
+    }
+  }
+}
+@mixin balls() {
+  background: transparent;
+  width: 10px;
+  height: 10px;
+  border-radius: 100%;
+  margin: 5px;
+}
+
+.ball-pulse {
+  @include ball-pulse();
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+
+  > div {
+    @include balls();
+    background: #cfd8dc;
+    animation-fill-mode: both;
+    display: inline-block;
   }
 }

@@ -21,7 +21,7 @@ export class OffClickDirective implements OnInit, OnDestroy {
             document.addEventListener('click', (event: Event) => {
                 if (this.ignore && (event.target !== this.ignore && !this.ignore.contains(<HTMLElement>event.target))) {
                     this.offClickHandler()
-                }
+                }               
             });
         }, 0);
     }

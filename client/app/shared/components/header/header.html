@@ -1,5 +1,6 @@
-<nav class="l-header__navbar" [class.splitted]="active"> 
-    <button class='l-header__toggle' #openMenuBtn (click)="active = true"><span class="icon-android-menu"></span></button>
+<nav class="l-header__navbar" [class.splitted]="sidebar.state$ | async">   
+
+    <button class='l-header__toggle' (click)="sidebar.open($event)"><span class="icon-android-menu"></span></button>
     <a [routerLink]="['/']" class="l-header__brand">200Loc-Dashboard</a>
 
     <ul class="l-header__menu" *ngIf="!isAuthenticated">
@@ -9,29 +10,30 @@
     </ul>
 
     <div ngbDropdown class="l-header__menu" *ngIf="isAuthenticated" style='margin-left: auto;' #myDrop="ngbDropdown">
-        <button class="l-header__menu-toggle" id="1dropdownMenu1" ngbDropdownToggle><i class="icon-user"></i></button>
-        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="1dropdownMenu1">
-            <span class="dropdown-item">
+<button class="l-header__menu-toggle" id="1dropdownMenu1" ngbDropdownToggle><i class="icon-user"></i></button>
+<div class="dropdown-menu dropdown-menu-right" aria-labelledby="1dropdownMenu1">
+    <span class="dropdown-item">
                             <span>Signed in as <b>{{ username }}</b></span>
-            </span>
-            <div class="dropdown-divider"></div>
-            <a [routerLink]="['/auth/change']" class="dropdown-item">
-                <span>Change password</span>
-            </a>
-            <a href="" (click)="signOut()" class="dropdown-item">
-                <span>Sign out</span>
-            </a>
-        </div>
-    </div>
+    </span>
+    <div class="dropdown-divider"></div>
+    <a [routerLink]="['/auth/change']" class="dropdown-item">
+        <span>Change password</span>
+    </a>
+    <a href="" (click)="signOut()" class="dropdown-item">
+        <span>Sign out</span>
+    </a>
+</div>
+</div>
 </nav>
 
-<div class="l-header__sidebar" [class.active]="active" [offClick]='closeSidebarHandler' [ignore]='openMenuBtn'>
-    <span class="l-header__sidebar-brand hidden-md-up">200Loc-Dashboard</span>
-    <ul class="l-header__sidebar-menu">
-        <li><a class="l-header__sidebar-menu--item" [routerLink]="['/entries']" routerLinkActive="active"><i class="icon-home icon-1x"></i>Entries</a></li>
-        <li><a class="l-header__sidebar-menu--item" [routerLink]="['/groups']" routerLinkActive="active"><i class="icon-home icon-1x"></i>Groups</a></li>
-        <li><a class="l-header__sidebar-menu--item" [routerLink]="['/drivers']" routerLinkActive="active"><i class="icon-home icon-1x"></i>Services</a></li>       
-        <li><a class="l-header__sidebar-menu--item" [routerLink]="['/cluster']" routerLinkActive="active"><i class="icon-home icon-1x"></i>Cluster</a></li>
-        <li><a class="l-header__sidebar-menu--item" [routerLink]="['/restore']" routerLinkActive="active"><i class="icon-home icon-1x"></i>Restore</a></li>
+<loc-side-bar [content]='sidebarContent' #sidebar='locSidebar' position='left'></loc-side-bar>
+<template #sidebarContent>
+    <span class="l-sidebar__brand hidden-md-up">200Loc-Dashboard</span>
+    <ul class="l-sidebar__menu">
+        <li><a class="l-sidebar__menu--item" [routerLink]="['/entries']" (click)='sidebar.close()' routerLinkActive="active"><i class="icon-home icon-1x"></i>Entries</a></li>
+        <li><a class="l-sidebar__menu--item" [routerLink]="['/groups']"  (click)='sidebar.close()' routerLinkActive="active"><i class="icon-home icon-1x"></i>Groups</a></li>
+        <li><a class="l-sidebar__menu--item" [routerLink]="['/drivers']" (click)='sidebar.close()' routerLinkActive="active"><i class="icon-home icon-1x"></i>Services</a></li>
+        <li><a class="l-sidebar__menu--item" [routerLink]="['/cluster']" (click)='sidebar.close()' routerLinkActive="active"><i class="icon-home icon-1x"></i>Cluster</a></li>
+        <li><a class="l-sidebar__menu--item" [routerLink]="['/restore']" (click)='sidebar.close()' routerLinkActive="active"><i class="icon-home icon-1x"></i>Restore</a></li>
     </ul>
-</div>
+<template>

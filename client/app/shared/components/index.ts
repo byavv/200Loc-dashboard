@@ -5,6 +5,7 @@ import { AceEditorComponent } from './ace-editor/aceEditorComponent';
 import { POPOVER_DIRECTIVES } from './popover';
 import { SwitchComponent } from './switch';
 import { DynamicForm } from './dynamic-form';
+import { SIDEBAR_COMPONENTS } from './sidebar';
 
 export * from './loader/loader';
 export * from './header/header';
@@ -20,5 +21,6 @@ export var SHARED_COMPONENTS = [
     AceEditorComponent,
     SwitchComponent,
     DynamicForm,
-    ...POPOVER_DIRECTIVES
+    ...POPOVER_DIRECTIVES,
+    ...SIDEBAR_COMPONENTS
 ]

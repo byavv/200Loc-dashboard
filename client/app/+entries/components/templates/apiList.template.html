@@ -12,44 +12,27 @@
         </div>
     </div>
     <section class="l-api__list">
-
-        <loader [active]='loading'></loader>
-        <!--<div class="l-api__list-header">
-            <span class="title">Entries</span>-->
-        <!--<ul class="l-api__list-header--actions">
-                <li>
-                    <a href class='action'>
-                        <i class="icon-search"></i>
-                    </a>
-                </li>
-            </ul>-->
-
-        <!--<div class="l-api__search">
-                <input #searchInput placeholder='Filter by name'>             
-                <div class='hightlite-underline'>
-                    <span class="hightlite-bar"></span>
-                </div>
-                <i class="icon-search"></i>
-            </div>
-        </div>-->
+        <!--Loading indicvator-->
+        <loader [active]='loading' [spinner]='false' [delay]='500'></loader>
 
         <div class="l-api__list-body">
             <div class="l-api__table">
                 <div *ngFor='let config of configs' class='m__table-row'>
-                    <div class="m__table-cell auto" style="position: static">
-
-                      
-                        <div *ngIf="config.errors.length == 0" class='l-api__table--indicator' [ngClass]="config.class">
-                            <i class='icon-record' [ngbPopover]='indicatorContent'  placement="bottom"></i>
+                    <!--Indicator cell with green or red information icon-->
+                    <!--TODO: For @angular 4.0 refactor it for ngIfElse-->
+                    <div class="m__table-cell auto" style="position: static">                      
+                        <div #d *ngIf="config.errors.length == 0" class='l-api__table--indicator' [ngClass]="config.class" [offClick]='p.close.bind(p)' [ignore]='d'>
+                            <i class='icon-record' [ngbPopover]='indicatorContent' #p="ngbPopover"  placement="bottom"></i>
                             <template #indicatorContent>                               
                                 <div *ngFor='let status of config.messages' class='l-api__table--statusPopoverContainer'>                                    
-                                    <span style='margin-bottom:10px;'><i class='icon-record' [ngStyle]="{'color': status.error ? 'red' : 'green'}"></i><span style='margin-left:10px;'>{{status.name}} v{{status.version}}</span></span>                                   
+                                    <span style='margin-bottom:10px;'>
+                                        <i class='icon-record' [ngStyle]="{'color': status.error ? 'red' : 'green'}"></i>
+                                        <span style='margin-left:10px;'>{{status.name}} v{{status.version}}</span>
+                                    </span>                                   
                                     <div>{{status.message}}</div>
                                 </div>
                             </template>
-                        </div>
-                   
-                     
+                        </div> 
                         <div *ngIf="config.errors.length > 0" class='l-api__table--indicator red'>
                             <i class='icon-alert-circled' [ngbPopover]='errorContent' triggers="mouseenter:mouseleave" placement="bottom"></i>
                             <template #errorContent>
@@ -59,62 +42,75 @@
                                 </div>
                             </template>
                         </div>
-                      
-
-                        <!--<div class='l-api__table--indicator' *ngIf="config.errors.length == 0; then noErrorBlock; else errorBlock">this is ignored</div>
-                        <template #noErrorBlock>
-                            <i class='icon-record' [title]="config.ok ? 'Service check OK': 'Service check FAIL'" [ngbPopover]='indicatorContent' triggers="mouseenter:mouseleave"
-                                placement="bottom"></i>
-                            <template #indicatorContent>
-                                fsdfsdfsfsd
-                            </template>
-                        </template>
-                        <template #errorBlock>
-                            <i class='icon-alert-circled' [title]="Error" [ngbPopover]='errorContent' triggers="mouseenter:mouseleave" placement="bottom"></i>
-                            <template #errorContent>
-                                <div *ngFor='let error of config.errors'>
-                                    <p> {{error}} </p>
-                                </div>
-                            </template>
-                        </template>-->
                     </div>
+                    <!--Name cell-->
                     <div class="m__table-cell hidden-sm-down">
                         <span class='l-api__description'>{{ config.name }}</span>
                     </div>
+                    <!--Etry path cell-->
                     <div class="m__table-cell">
                         <a [routerLink]="['./master', {t:'test'}]" [queryParams]='{ id: config.id }' [ngbPopover]="getConfigMethodsString(config)"
                             placement="right" triggers="mouseenter:mouseleave">
                                 ~{{ config.entry }}
-                            </a>
+                        </a>
                     </div>
+                    <!--Groups being applied to the entry (TBD)-->
                     <div class="m__table-cell hidden-sm-down">
                         <span>{{ getGroupsApplied(config) }}</span>
                     </div>
+                    <!-- Activate/deactivate entry -->
                     <div class="m__table-cell auto">
                         <loc-switch [value]='config.active' (change)='toggleActive(config, $event)' [disabled]='config.errors && config.errors.length > 0'>
                         </loc-switch>
                     </div>
+                    <!-- Actions cell responsive-->
                     <div class="m__table-cell auto hidden-sm-down">
                         <div class="l-api__table--actions">
                             <button class="l-api__table--actions-item" (click)="editApi(config)">
-                                        <span class="icon-android-create"></span>                                       
+                                <span class="icon-android-create"></span>                                       
                             </button>
                             <button class="l-api__table--actions-item" (click)="onRemove(config)">
-                                        <span class="icon-ios-trash"></span>
+                                <span class="icon-ios-trash"></span>
                             </button>
                         </div>
                     </div>
                     <div class="m__table-cell auto hidden-md-up">
-                        <div class="l-api__table--actions">
-                            <button class="l-api__table--actions-item" (click)="showSideMenu(config)">
-                                        <span class="icon-android-more-vertical"></span>                                       
+                        <div class="l-api__table--actions">                            
+                           <template #sidebarTmpl>
+                                <div class="l-sidebar__header"> 
+                                        <a [routerLink]="['profile']" (click)="setActive(false)" class="l-header__name">{{ config.name }}</a>
+                                        <span class="l-header__career">{{ config.description }}</span>
+                                </div>
+                               
+                                <ul class="l-sidebar__menu">
+                                    <li><a class="l-sidebar__menu--item" (click)="editApi(config);sidebar.close()" ><i class="icon-android-create"></i>Edit entry</a></li>                                    
+                                    <li><a class="l-sidebar__menu--item" (click)="onRemove(config);sidebar.close()" ><i class="icon-ios-trash"></i>Remove entry</a></li>
+                                </ul>
+                                <div class="l-sidebar__content">
+                                    <div *ngIf="config.errors.length == 0" class='l-api__table--indicator' [ngClass]="config.class" >                                                              
+                                        <div *ngFor='let status of config.messages' class='l-api__table--statusPopoverContainer'>                                    
+                                            <span style='margin-bottom:10px;'><i class='icon-record' [ngStyle]="{'color': status.error ? 'red' : 'green'}"></i><span style='margin-left:10px;'>{{status.name}} v{{status.version}}</span></span>                                   
+                                            <div>{{status.message}}</div>
+                                        </div>                                  
+                                    </div> 
+                                    <div *ngIf="config.errors.length > 0" class='l-api__table--indicator red'>                                  
+                                        <div *ngFor='let error of config.errors' class='l-api__table--statusPopoverContainer'>
+                                            <span style='margin-bottom:10px;'>IN: <b>{{error.name}}</b> service</span>
+                                            <div>{{error.message}}</div>
+                                        </div>
+                                    </div>
+                                </div>                               
+                            </template>
+                            <button class="l-api__table--actions-item" (click)="sidebarMore.open($event, sidebarTmpl)">
+                                <span class="icon-android-more-vertical"></span>                                       
                             </button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <h3 *ngIf='configs.length == 0'>No entry points added</h3>
+        <h3 *ngIf='configs.length == 0 && !loading'>No entry points added</h3>
     </section>
 </div>
 <button class='l-api__add-button' (click)='onAddClick()'>  <i class="icon-android-add" aria-hidden="true"></i></button>
+<loc-side-bar #sidebarMore='locSidebar' position='right'></loc-side-bar>

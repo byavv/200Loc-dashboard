@@ -12,8 +12,8 @@ import { ApiConfigApi, ApiConfig, DriverApi, ServiceStatus } from '../../core'
 })
 export class ApiListComponent implements OnInit, OnDestroy {
   configs: Array<any> = [];
-  sub: Subscription;
   loading: boolean = false;
+  sidebarActive: boolean = false;
   serviceStatusArray: Array<ServiceStatus> = [];
 
   constructor(private appController: AppController,
@@ -24,35 +24,16 @@ export class ApiListComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.loading = true;
-    // this.sub = this._apiConfigApi
-    //   .find()
-    //   .do((configs) => this.configs = configs)
-    //   .flatMap(() => this._driverApi.check())
-    //   .subscribe((status: any) => {
-    //     this.serviceStatusArray = status;
-    //     console.log(this.serviceStatusArray);
-    //     this.configs.forEach(c => {
-    //       //  this.updateServiceStatus(c);
-    //     })
-    //     this.loading = false;
-    //   }, (err) => {
-    //     console.error(err);
-    //   });
-
     Observable.forkJoin(this._apiConfigApi.find(), this._driverApi.check())
       .subscribe((result: Array<any>) => {
         this.configs = result[0];
         this.serviceStatusArray = result[1];
         this.configs = this.configs.map(c => this.setStatus(c))
         this.loading = false;
-        console.log(result);
       });
   }
 
-  ngOnDestroy() {
-    if (this.sub)
-      this.sub.unsubscribe();
-  }
+  ngOnDestroy() { }
 
   onRemove(config) {
     this._apiConfigApi
@@ -120,6 +101,6 @@ export class ApiListComponent implements OnInit, OnDestroy {
   }
 
   showSideMenu(config) {
-
+    this.sidebarActive = true;
   }
 }

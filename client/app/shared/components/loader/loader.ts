@@ -7,13 +7,18 @@ import { Observable, Subscription } from 'rxjs';
 @Component({
     selector: 'loader',
     template: `
-    <div class='loader-container' *ngIf='active'>
+    <div class='loader-container' *ngIf='pActive'>
         <div *ngIf='spinner' class='spinner'></div>
+         <div *ngIf='!spinner' class='ball-pulse'>
+         <div></div><div></div><div></div>
+         </div>
     </div>`,
     styleUrls: ['./component.scss']
 })
 export class LoaderComponent implements OnInit, OnDestroy {
     private _subscription: Subscription
+    private _active: boolean;
+    protected pActive: boolean;
     @Input()
     async: Observable<any>;
     @Input()
@@ -23,30 +28,40 @@ export class LoaderComponent implements OnInit, OnDestroy {
     trigger: Observable<any>;
 
     @Input()
-    active: boolean = false;
+    public get active(): boolean {
+        return this._active;
+    }
+    public set active(value) {
+        this._active = value;
+        if (!value) {
+            setTimeout(() => {
+                this.pActive = value;
+                this.completed.next(this.active);
+            }, this.delay);
+        } else {
+            this.pActive = value;
+        }
+    }
+
     @Input()
     spinner: boolean = true;
     @Output()
     completed: EventEmitter<any> = new EventEmitter();
     constructor() { }
+
     ngOnInit() {
         if (this.trigger) {
-            this.trigger.share().subscribe(value => {
-                this.active = value;
-            });
+            this.trigger.share()
+                .subscribe(value => {
+                    this.active = value;
+                });
         }
         if (this.async)
             this._subscription = this.async
                 .subscribe(() => {
-                    setTimeout(() => {
-                        this.active = false;
-                        this.completed.next(this.active)
-                    }, this.delay)
+                    this.active = false;
                 }, (err) => {
-                    setTimeout(() => {
-                        this.active = false;
-                        this.completed.next(this.active)
-                    }, this.delay)
+                    this.active = false;
                 })
     }
     ngOnDestroy() {
