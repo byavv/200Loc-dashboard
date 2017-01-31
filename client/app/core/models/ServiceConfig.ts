@@ -1,20 +1,20 @@
 /* tslint:disable */
 
-export interface DriverConfigInterface {
+export interface ServiceConfigInterface {
   name?: string;
   description?: string;
   settings?: any;
-  driverId?: string;
+  serviceId?: string;
   id?: number;
 }
 
-export class DriverConfig implements DriverConfigInterface {
+export class ServiceConfig implements ServiceConfigInterface {
   name?: string;
   description?: string;
   settings?: any;
-  driverId?: string;
+  serviceId?: string;
   id?: number;
-  constructor(instance?: DriverConfig) {
+  constructor(instance?: ServiceConfig) {
     Object.assign(this, instance);
   }
 }

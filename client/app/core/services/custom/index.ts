@@ -1,20 +1,20 @@
 /* tslint:disable */
 export * from './ApiConfig';
-export * from './DriverConfig';
+export * from './ServiceConfig';
 export * from './UserApi';
 export * from './PluginsApi.service';
-export * from './DriverApi.service';
+export * from './ServiceApi.service';
 
 import { ApiConfigApi } from './ApiConfig';
-import { DriverConfigApi } from './DriverConfig';
+import { ServiceConfigApi } from './ServiceConfig';
 import { UserApi } from './UserApi';
 import { PluginApi } from './PluginsApi.service';
-import { DriverApi } from './DriverApi.service';
+import { ServiceApi } from './ServiceApi.service';
 
 export const CUSTOM_SERVICES = [
     ApiConfigApi,
-    DriverConfigApi,
+    ServiceConfigApi,
     UserApi,
     PluginApi,
-    DriverApi
+    ServiceApi
 ]

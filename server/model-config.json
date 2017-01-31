@@ -29,7 +29,7 @@
     "dataSource": "db",
     "public": true
   },
-  "DriverConfig": {
+  "ServiceConfig": {
     "dataSource": "db",
     "public": true
   },
@@ -60,7 +60,7 @@
       }
     }
   },
-  "driver": {
+  "service": {
     "dataSource": "db",
     "public": true,
     "options": {

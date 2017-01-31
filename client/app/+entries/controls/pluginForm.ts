@@ -10,7 +10,7 @@ import {
 } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { DynamicForm } from '../../shared';
-import { Plugin, DriverConfig, DriverConfigApi } from '../../core';
+import { Plugin, ServiceConfig, ServiceConfigApi } from '../../core';
 
 @Component({
     selector: 'plugin-form',
@@ -23,7 +23,7 @@ export class PluginForm {
     deps: Array<any>;
     settingsValue: any;
     dependenciesValue: any = {};
-    driverConfigs: any = {};
+    serviceConfigs: any = {};
 
     @ViewChild('settingsForm') settForm: DynamicForm;
     @ViewChild('dependenciesForm') depsForm: DynamicForm;
@@ -35,7 +35,7 @@ export class PluginForm {
         this._plugin = Object.assign({}, pl);
         // set template for plugin settings
         this.pluginTemplate = this._plugin.settingsTemplate;
-        // set config and find available options for required driver
+        // set config and find available options for required service
         let fromDependencies = Observable
             .from([...this._plugin.dependenciesTemplate || []]);
 
@@ -43,16 +43,16 @@ export class PluginForm {
             // save key
             fromDependencies
                 .map((dep) => dep),
-            // find driver configs to fill select options
+            // find service configs to fill select options
             fromDependencies
-                .flatMap((dep) => this.driverConfigApi
-                    .find({ where: { driverId: dep } })),
+                .flatMap((dep) => this.serviceConfigApi
+                    .find({ where: { serviceId: dep } })),
 
-            /* turn required driver name as string into dynamic-form format
-             *  Ex: 'myDriver' => 
+            /* turn required service name as string into dynamic-form format
+             *  Ex: 'myService' => 
              *              {                          
-             *                  label: 'myDriver',
-             *                  helpString: myDriver configuration,
+             *                  label: 'myService',
+             *                  helpString: myService configuration,
              *                  type: 'select'               
              *              } 
              */
@@ -70,14 +70,14 @@ export class PluginForm {
             /*  Zip callback
              *  add options to construct 'dynamicForm-ready' object
              *  Ex: {                          
-             *         label: 'myDriver',
-             *         helpString: myDriver configuration,
+             *         label: 'myservice',
+             *         helpString: myservice configuration,
              *         type: 'select'               
              *      }  
              *         => 
              *      {                          
-             *         label: 'myDriver',
-             *         helpString: myDriver configuration,
+             *         label: 'myservice',
+             *         helpString: myservice configuration,
              *         type: 'select',
              *         options: [
              *             key:'someKey', value:'someValue'
@@ -109,7 +109,7 @@ export class PluginForm {
     }
 
     constructor(private _builder: FormBuilder,
-        private driverConfigApi: DriverConfigApi) {
+        private serviceConfigApi: ServiceConfigApi) {
         this.form = this._builder.group({
             settings: [],
             dependencies: []

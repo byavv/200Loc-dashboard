@@ -4,12 +4,12 @@ const async = require('async')
     , request = require('request')
     , redis = require('redis');
 
-module.exports = function (DriverConfig) {
+module.exports = function (ServiceConfig) {
 
     let app;
     let publisher;
 
-    DriverConfig.on('attached', function (a) {
+    ServiceConfig.on('attached', function (a) {
         app = a;
         publisher = redis.createClient({
             host: app.get('redis_host'),
@@ -17,12 +17,12 @@ module.exports = function (DriverConfig) {
         });
     });
 
-    DriverConfig.observe('after save', function (ctx, next) {
+    ServiceConfig.observe('after save', function (ctx, next) {
         publisher.publish("cluster", JSON.stringify({ action: "update" }));
         next();
     });
 
-    DriverConfig.observe('after delete', function (ctx, next) {
+    ServiceConfig.observe('after delete', function (ctx, next) {
         publisher.publish("cluster", JSON.stringify({ action: "update" }));
         next();
     });

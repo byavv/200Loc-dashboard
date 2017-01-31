@@ -1,5 +1,5 @@
 {
-  "name": "driver",
+  "name": "service",
   "base": "PersistedModel",
   "idInjection": true,
   "options": {

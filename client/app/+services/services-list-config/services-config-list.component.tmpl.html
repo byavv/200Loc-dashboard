@@ -1,14 +1,14 @@
 <div class="l-services">
     <div class="l-services__header">
-        <span class="title"><a routerLink='/drivers'>Services</a> / {{ driverName }}</span>
+        <span class="title"><a routerLink='/services'>Services</a> / {{ serviceName }}</span>
     </div>
     <section class="l-services__configlist">
         <loader [active]='loading'></loader>
         <div class="l-services__configlist-body">
             <div class="l-services__table">
-                <div *ngFor='let config of driverConfigs' class='m__table-row'>
+                <div *ngFor='let config of serviceConfigs' class='m__table-row'>
                     <div class="m__table-cell">
-                        <span class='l-driver__description'>{{ config.name }}</span>
+                        <span class='l-services__description'>{{ config.name }}</span>
                     </div>
                     <div class="m__table-cell auto hidden-sm-down">
                         <div class="l-services__table--actions">
@@ -32,7 +32,7 @@
         </div>
     </section>
 
-    <template #driverModalContent let-c="close" let-d="dismiss">
+    <template #serviceModalContent let-c="close" let-d="dismiss">
         <div class="l-services__modalcontainer">
             <button type="button" class="close" (click)="c()" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
@@ -41,18 +41,18 @@
             <form #configForm="ngForm">
                 <div class="form-group">
                     <label for='configName'>Name</label>
-                    <input id='configName' type="text" class='form-control' name="name" #name='ngModel' [(ngModel)]='currentDriver.name' required/>
+                    <input id='configName' type="text" class='form-control' name="name" #name='ngModel' [(ngModel)]='currentService.name' required/>
                     <show-error *ngIf='!name.valid' [control]="name" [options]="{'required': 'Name is required'}">
                     </show-error>
                 </div>
                 <div class="form-group">
                     <label for='description'>Description</label>
-                    <input id='description' type="text" class='form-control' name="description" #description='ngModel' [(ngModel)]='currentDriver.description'
+                    <input id='description' type="text" class='form-control' name="description" #description='ngModel' [(ngModel)]='currentService.description'
                         required/>
                     <show-error *ngIf='!description.valid' [control]="description" [options]="{'required': 'Description is required'}">
                     </show-error>
                 </div>
-                <dynamic-form [fields]="driverTemplate?.settings" name="settings" [(ngModel)]='currentDriver.settings'>
+                <dynamic-form [fields]="serviceTemplate?.settings" name="settings" [(ngModel)]='currentService.settings'>
                 </dynamic-form>
             </form>
             <div>

@@ -12,12 +12,12 @@ module.exports = function (app) {
 
 
     /**
-     * Get driver template by it's name'
+     * Get service template by it's name'
      */
-    router.get('/api/driver/config/:name', (req, res) => {
+    router.get('/api/service/config/:name', (req, res) => {
         const name = req.params['name'];
         request({
-            url: `http://${process.env.GATEWAY}/_private/driver/config/${name ? name : ''}`,
+            url: `http://${process.env.GATEWAY}/_private/service/config/${name ? name : ''}`,
             method: 'GET'
         }, function (err, responce, body) {
             if (err) return next(err)

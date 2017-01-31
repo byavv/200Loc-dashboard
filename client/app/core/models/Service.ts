@@ -1,15 +1,15 @@
 /* tslint:disable */
-export interface IDriver {
+export interface IService {
     name: string;
     description: string;
     settings?: Array<any>;
 }
 
-export class Driver {
+export class Service {
     name: string;
     description: string;
     settings?: Array<any> = [];
-    constructor(instance?: IDriver) {
+    constructor(instance?: IService) {
         Object.assign(this, instance);
     }
 }

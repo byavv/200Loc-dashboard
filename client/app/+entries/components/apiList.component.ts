@@ -3,7 +3,7 @@ import { AppController } from '../../shared/services';
 import { LoaderComponent } from '../../shared/components';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Subscription, Observable } from 'rxjs';
-import { ApiConfigApi, ApiConfig, DriverApi, ServiceStatus } from '../../core'
+import { ApiConfigApi, ApiConfig, ServiceApi, ServiceStatus } from '../../core'
 
 @Component({
   selector: 'api-list',
@@ -19,12 +19,12 @@ export class ApiListComponent implements OnInit, OnDestroy {
   constructor(private appController: AppController,
     private router: Router,
     private route: ActivatedRoute,
-    private _driverApi: DriverApi,
+    private _serviceApi: ServiceApi,
     private _apiConfigApi: ApiConfigApi) { }
 
   ngOnInit() {
     this.loading = true;
-    Observable.forkJoin(this._apiConfigApi.find(), this._driverApi.check())
+    Observable.forkJoin(this._apiConfigApi.find(), this._serviceApi.check())
       .subscribe((result: Array<any>) => {
         this.configs = result[0];
         this.serviceStatusArray = result[1];

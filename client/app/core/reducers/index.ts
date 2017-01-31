@@ -77,10 +77,10 @@ export function getPlugins() {
     return compose(defaults.getAvailablePlugins(), getDefaultsState());
 }
 /**
- * Get all available drivers installed in system
+ * Get all available services installed in system
  */
-export function getDrivers() {
-    return compose(defaults.getAvailableDrivers(), getDefaultsState());
+export function getServices() {
+    return compose(defaults.getAvailableServices(), getDefaultsState());
 }
 
 

@@ -19,8 +19,8 @@ import { StoreModule } from '@ngrx/store';
 import reducer from './core/reducers';
 
 import 'brace';
-import 'brace/theme/eclipse'
-import 'brace/mode/json'
+import 'brace/theme/eclipse';
+import 'brace/mode/json';
 
 import {
   LocationStrategy,
@@ -30,12 +30,12 @@ import {
 @NgModule({
   bootstrap: [AppComponent],
   declarations: [
-    AppComponent, 
+    AppComponent,
     ...AUTHENTICATION_COMPONENTS
   ],
   imports: [
     BrowserModule,
-    HttpModule,   
+    HttpModule,
     SharedModule,
     NgbModule.forRoot(),
     StoreModule.provideStore(reducer),

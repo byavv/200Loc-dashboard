@@ -2,11 +2,11 @@
 const async = require('async'),
     request = require('request')
 
-module.exports = function (Driver) {
-    Driver.on('attached', function () {
-        Driver.find = function (filter, ctx, callback) {
+module.exports = function (Service) {
+    Service.on('attached', function () {
+        Service.find = function (filter, ctx, callback) {
             request({
-                url: `http://${process.env.GATEWAY}/_private/drivers`,
+                url: `http://${process.env.GATEWAY}/_private/services`,
                 method: 'GET'
             }, function (err, responce, body) {
                 if (err) return callback(err);
@@ -19,9 +19,9 @@ module.exports = function (Driver) {
         }
     });
 
-    Driver.template = function (name, callback) {
+    Service.template = function (name, callback) {
         request({
-            url: `http://${process.env.GATEWAY}/_private/driver/config/${name ? name : ''}`,
+            url: `http://${process.env.GATEWAY}/_private/service/config/${name ? name : ''}`,
             method: 'GET'
         }, function (err, responce, body) {
             if (err) return callback(err);
@@ -33,7 +33,7 @@ module.exports = function (Driver) {
         });
     };
 
-    Driver.remoteMethod('template', {
+    Service.remoteMethod('template', {
         accepts: {
             arg: 'name',
             type: 'string'
@@ -43,7 +43,7 @@ module.exports = function (Driver) {
     });
 
     ///_private/service/status/:serviceId
-    Driver.check = function (id, callback) {
+    Service.check = function (id, callback) {
         request({
             url: `http://${process.env.GATEWAY}/_private/service/status/${id}`,
             method: 'GET'
@@ -56,7 +56,7 @@ module.exports = function (Driver) {
             }
         });
     };
-    Driver.remoteMethod('check', {
+    Service.remoteMethod('check', {
         accepts: {
             arg: 'id',
             type: 'string',

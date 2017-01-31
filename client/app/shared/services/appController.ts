@@ -5,7 +5,7 @@ import { ReplaySubject, Observable } from "rxjs";
 import { Store } from '@ngrx/store';
 import { AppState, isUserLoggedIn } from '../../core/reducers';
 import { DefaultsActions } from '../../core/actions';
-import { PluginApi, DriverApi, LoopBackAuth } from '../../core/services';
+import { PluginApi, ServiceApi, LoopBackAuth } from '../../core/services';
 
 @Injectable()
 export class AppController {
@@ -15,7 +15,7 @@ export class AppController {
         private _defaultsActions: DefaultsActions,
         private _pluginsApi: PluginApi,
         private _authService: LoopBackAuth,
-        private _driversApi: DriverApi,
+        private _servicesApi: ServiceApi,
         private _ngZone: NgZone) { }
 
     get init$() {
@@ -46,12 +46,12 @@ export class AppController {
     _loadAppDefaults(doneCallback: (defaults: any) => void) {
         Observable.zip(
             this._pluginsApi.find(),
-            this._driversApi.find(),
-            (plugins, drivers) => [plugins, drivers])
+            this._servicesApi.find(),
+            (plugins, services) => [plugins, services])
             .subscribe(value => {
                 doneCallback({
                     plugins: value[0],
-                    drivers: value[1]
+                    services: value[1]
                 });
             }, err => {
                 console.error(err);

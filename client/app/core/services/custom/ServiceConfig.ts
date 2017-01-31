@@ -9,16 +9,16 @@ import { JSONSearchParams } from '../search.params';
 import { ErrorHandler } from '../error.service';
 import { Subject } from 'rxjs/Subject';
 import 'rxjs/add/operator/map';
-import { DriverConfig } from '../../models/DriverConfig';
+import { ServiceConfig } from '../../models/ServiceConfig';
 
 // Making Sure EventSource Type is available to avoid compilation issues.
 declare var EventSource: any;
 
 /**
- * Api services for the `DriverConfig` model.
+ * Api services for the `ServiceConfig` model.
  */
 @Injectable()
-export class DriverConfigApi extends BaseLoopBackApi {
+export class ServiceConfigApi extends BaseLoopBackApi {
 
   constructor(
     @Inject(Http) http: Http,
@@ -42,20 +42,20 @@ export class DriverConfigApi extends BaseLoopBackApi {
    *
    * <em>
    * (The remote method definition does not provide any description.
-   * This usually means the response is a `DriverConfig` object.)
+   * This usually means the response is a `ServiceConfig` object.)
    * </em>
    */
   public create(data: any = undefined) {
     let method: string = "POST";
     let url: string = CoreConfig.getPath() + "/" + CoreConfig.getApiVersion() +
-    "/DriverConfigs";
+    "/ServiceConfigs";
     let routeParams: any = {};
     let postBody: any = {
       data: data
     };
     let urlParams: any = {};
     let result = this.request(method, url, routeParams, urlParams, postBody);
-    return result.map((instance: DriverConfig) => new DriverConfig(instance));
+    return result.map((instance: ServiceConfig) => new ServiceConfig(instance));
   }
 
   /**
@@ -71,20 +71,20 @@ export class DriverConfigApi extends BaseLoopBackApi {
    *
    * <em>
    * (The remote method definition does not provide any description.
-   * This usually means the response is a `DriverConfig` object.)
+   * This usually means the response is a `ServiceConfig` object.)
    * </em>
    */
   public upsert(data: any = undefined) {
     let method: string = "PUT";
     let url: string = CoreConfig.getPath() + "/" + CoreConfig.getApiVersion() +
-    "/DriverConfigs";
+    "/ServiceConfigs";
     let routeParams: any = {};
     let postBody: any = {
       data: data
     };
     let urlParams: any = {};
     let result = this.request(method, url, routeParams, urlParams, postBody);
-    return result.map((instance: DriverConfig) => new DriverConfig(instance));
+    return result.map((instance: ServiceConfig) => new ServiceConfig(instance));
   }
 
   /**
@@ -100,13 +100,13 @@ export class DriverConfigApi extends BaseLoopBackApi {
    *
    * <em>
    * (The remote method definition does not provide any description.
-   * This usually means the response is a `DriverConfig` object.)
+   * This usually means the response is a `ServiceConfig` object.)
    * </em>
    */
   public replaceOrCreate(data: any = undefined) {
     let method: string = "POST";
     let url: string = CoreConfig.getPath() + "/" + CoreConfig.getApiVersion() +
-    "/DriverConfigs/replaceOrCreate";
+    "/ServiceConfigs/replaceOrCreate";
     let routeParams: any = {};
     let postBody: any = {
       data: data
@@ -129,13 +129,13 @@ export class DriverConfigApi extends BaseLoopBackApi {
    *
    * <em>
    * (The remote method definition does not provide any description.
-   * This usually means the response is a `DriverConfig` object.)
+   * This usually means the response is a `ServiceConfig` object.)
    * </em>
    */
   public findById(id: any, filter: LoopBackFilter = undefined) {
     let method: string = "GET";
     let url: string = CoreConfig.getPath() + "/" + CoreConfig.getApiVersion() +
-    "/DriverConfigs/:id";
+    "/ServiceConfigs/:id";
     let routeParams: any = {
       id: id
     };
@@ -143,7 +143,7 @@ export class DriverConfigApi extends BaseLoopBackApi {
     let urlParams: any = {};
     if (filter) urlParams.filter = filter;
     let result = this.request(method, url, routeParams, urlParams, postBody);
-    return result.map((instance: DriverConfig) => new DriverConfig(instance));
+    return result.map((instance: ServiceConfig) => new ServiceConfig(instance));
   }
 
   /**
@@ -157,20 +157,20 @@ export class DriverConfigApi extends BaseLoopBackApi {
    *
    * <em>
    * (The remote method definition does not provide any description.
-   * This usually means the response is a `DriverConfig` object.)
+   * This usually means the response is a `ServiceConfig` object.)
    * </em>
    */
   public find(filter: LoopBackFilter = undefined) {
     let method: string = "GET";
     let url: string = CoreConfig.getPath() + "/" + CoreConfig.getApiVersion() +
-    "/DriverConfigs";
+    "/ServiceConfigs";
     let routeParams: any = {};
     let postBody: any = {};
     let urlParams: any = {};
     if (filter) urlParams.filter = filter;
     let result = this.request(method, url, routeParams, urlParams, postBody);
-    return result.map((instances: Array<DriverConfig>) =>
-        instances.map((instance: DriverConfig) => new DriverConfig(instance))
+    return result.map((instances: Array<ServiceConfig>) =>
+        instances.map((instance: ServiceConfig) => new ServiceConfig(instance))
     );
   }
 
@@ -185,13 +185,13 @@ export class DriverConfigApi extends BaseLoopBackApi {
    *
    * <em>
    * (The remote method definition does not provide any description.
-   * This usually means the response is a `DriverConfig` object.)
+   * This usually means the response is a `ServiceConfig` object.)
    * </em>
    */
   public deleteById(id: any) {
     let method: string = "DELETE";
     let url: string = CoreConfig.getPath() + "/" + CoreConfig.getApiVersion() +
-    "/DriverConfigs/:id";
+    "/ServiceConfigs/:id";
     let routeParams: any = {
       id: id
     };
@@ -217,7 +217,7 @@ export class DriverConfigApi extends BaseLoopBackApi {
   public count(where: any = undefined) {
     let method: string = "GET";
     let url: string = CoreConfig.getPath() + "/" + CoreConfig.getApiVersion() +
-    "/DriverConfigs/count";
+    "/ServiceConfigs/count";
     let routeParams: any = {};
     let postBody: any = {};
     let urlParams: any = {};
@@ -241,13 +241,13 @@ export class DriverConfigApi extends BaseLoopBackApi {
    *
    * <em>
    * (The remote method definition does not provide any description.
-   * This usually means the response is a `DriverConfig` object.)
+   * This usually means the response is a `ServiceConfig` object.)
    * </em>
    */
   public updateAttributes(id: any, data: any = undefined) {
     let method: string = "PUT";
     let url: string = CoreConfig.getPath() + "/" + CoreConfig.getApiVersion() +
-    "/DriverConfigs/:id";
+    "/ServiceConfigs/:id";
     let routeParams: any = {
       id: id
     };

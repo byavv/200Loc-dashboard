@@ -3,7 +3,7 @@
     "mountPath": "/explorer",
     "apiInfo": {
       "title": "Loc dashboard",
-      "description": "Loc dashboard plugin & driver management api",
+      "description": "Loc dashboard plugin & service management api",
       "termsOfServiceUrl": "http://api.mycompany.io/terms/",
       "contact": "apiteam@mycompany.io",
       "license": "Apache 2.0",

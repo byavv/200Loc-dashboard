@@ -9,16 +9,16 @@ import { ServiceStatus } from '../../models';
 import { JSONSearchParams } from '../search.params';
 import { ErrorHandler } from '../error.service';
 import { Subject, Observable } from 'rxjs';
-import { Driver } from '../../models/Driver';
+import { Service } from '../../models/Service';
 
 // Making Sure EventSource Type is available to avoid compilation issues.
 declare var EventSource: any;
 
 /**
- * Api services for the `Driver` model.
+ * Api services for the `Service` model.
  */
 @Injectable()
-export class DriverApi extends BaseLoopBackApi {
+export class ServiceApi extends BaseLoopBackApi {
 
     constructor(
         @Inject(Http) http: Http,
@@ -42,13 +42,13 @@ export class DriverApi extends BaseLoopBackApi {
      *
      * <em>
      * (The remote method definition does not provide any description.
-     * This usually means the response is a `Driver` object.)
+     * This usually means the response is a `Service` object.)
      * </em>
      */
     public findById(id: any, filter: LoopBackFilter = undefined) {
         let method: string = "GET";
         let url: string = CoreConfig.getPath() + "/" + CoreConfig.getApiVersion() +
-            "/Drivers/:id";
+            "/Services/:id";
         let routeParams: any = {
             id: id
         };
@@ -56,7 +56,7 @@ export class DriverApi extends BaseLoopBackApi {
         let urlParams: any = {};
         if (filter) urlParams.filter = filter;
         let result = this.request(method, url, routeParams, urlParams, postBody);
-        return result.map((instance: Driver) => new Driver(instance));
+        return result.map((instance: Service) => new Service(instance));
     }
 
     /**
@@ -70,36 +70,36 @@ export class DriverApi extends BaseLoopBackApi {
      *
      * <em>
      * (The remote method definition does not provide any description.
-     * This usually means the response is a `Driver` object.)
+     * This usually means the response is a `Service` object.)
      * </em>
      */
     public find(filter: LoopBackFilter = undefined) {
         let method: string = "GET";
         let url: string = CoreConfig.getPath() + "/" + CoreConfig.getApiVersion() +
-            "/Drivers";
+            "/Services";
         let routeParams: any = {};
         let postBody: any = {};
         let urlParams: any = {};
         if (filter) urlParams.filter = filter;
         let result = this.request(method, url, routeParams, urlParams, postBody);
-        return result.map((instances: Array<Driver>) =>
-            instances.map((instance: Driver) => new Driver(instance))
+        return result.map((instances: Array<Service>) =>
+            instances.map((instance: Service) => new Service(instance))
         );
     }
     /**
-     * Get template object for driver by it's uniq name
+     * Get template object for Service by it's uniq name
      *
-     * @param string name Driver name
+     * @param string name Service name
      *
-     * @returns object And object reprents driver required configuration
+     * @returns object And object reprents Service required configuration
      * with populated settings field which consists of required options to br set for 
-     * driver's proper configuration
+     * Service's proper configuration
      *    
      */
-    public getDriverTemplateByName(name: string) {
+    public getServiceTemplateByName(name: string) {
         let method: string = "GET";
         let url: string = CoreConfig.getPath() + "/" + CoreConfig.getApiVersion() +
-            "/Drivers/template/:name";
+            "/Services/template/:name";
         let routeParams: any = {
             name: name
         };
@@ -112,17 +112,17 @@ export class DriverApi extends BaseLoopBackApi {
     /**
      * Get service status
      *
-     * @param string name Driver name
+     * @param string name Service name
      *
-     * @returns object And object reprents driver required configuration
+     * @returns object And object reprents Service required configuration
      * with populated settings field which consists of required options to br set for 
-     * driver's proper configuration
+     * Service's proper configuration
      *    
      */
     public check(id: string = 'all'): Observable<Array<ServiceStatus>> {
         let method: string = "GET";
         let url: string = CoreConfig.getPath() + "/" + CoreConfig.getApiVersion() +
-            "/Drivers/check/:id";
+            "/Services/check/:id";
         let routeParams: any = {
             id: id
         };

@@ -1,19 +1,19 @@
 import '@ngrx/core/add/operator/select';
 import { Observable } from 'rxjs/Observable';
 import { Action } from '@ngrx/store';
-import { Plugin, Driver } from '../models';
+import { Plugin, Service } from '../models';
 import { DefaultsActions } from '../actions';
 
 export interface DefaultAppState {
     plugins: Array<Plugin>;
-    drivers: Array<Driver>;
+    services: Array<Service>;
     loaded: boolean;
     loading: boolean;
 };
 
 const initialState: DefaultAppState = {
     plugins: [],
-    drivers: [],
+    services: [],
     loaded: false,
     loading: false
 };
@@ -29,10 +29,10 @@ export function defaultsReducer(state = initialState, action: Action): DefaultAp
             })
             return newState;
         }
-        case DefaultsActions.SET_DRIVERS_LIST: {
-            const drivers: any[] = [...action.payload];
+        case DefaultsActions.SET_SERVICES_LIST: {
+            const services: any[] = [...action.payload];
             const newState = Object.assign({}, state, {
-                drivers: drivers,
+                services: services,
                 loaded: true,
                 loading: false
             })
@@ -62,9 +62,9 @@ export function getAvailablePlugins() {
         .select((state) => state.plugins);
 }
 
-export function getAvailableDrivers() {
+export function getAvailableServices() {
     return (state$: Observable<DefaultAppState>) => state$
-        .select((state) => state.drivers);
+        .select((state) => state.services);
 }
 
 export function isLoading() {
@@ -76,8 +76,3 @@ export function isLoaded() {
     return (state$: Observable<DefaultAppState>) => state$
         .select((state) => state.loaded);
 }
-
-// export function getAvailableDrivers() {
-//     return (state$: Observable<DefaultAppState>) => state$
-//         .pluck('validity');
-// }

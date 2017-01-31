@@ -1,15 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AppState, getDrivers } from '../../core'
+import { AppState, getServices } from '../../core'
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs/Subscription';
 
 @Component({
-    templateUrl: './templates/driverTypes.tmpl.html',
-    styleUrls: ['./styles/driverTypes.scss']
+    templateUrl: './services-types-list.component.tmpl.html'   
 })
-export class DriverTypesComponent implements OnInit {
-    drivers: Array<any> = [];
+export class ServicesTypesListComponent implements OnInit {
+    services: Array<any> = [];
     storeSub_n: Subscription;
 
     constructor(
@@ -17,9 +16,9 @@ export class DriverTypesComponent implements OnInit {
         private _store: Store<AppState>) { }
 
     ngOnInit() {
-        this.storeSub_n = this._store.let(getDrivers())
-            .subscribe((drivers) => {
-                this.drivers = drivers || [];
+        this.storeSub_n = this._store.let(getServices())
+            .subscribe((services) => {
+                this.services = services || [];
             });     
     }
     ngOnDestroy(){

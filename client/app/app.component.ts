@@ -38,8 +38,7 @@ export class AppComponent {
             CoreConfig.setBaseURL('');
         } else {
             CoreConfig.setBaseURL('http://localhost:5601');
-        }
-        //   this.authService.populate();
+        }      
         this.appController.start();
     }
     getLoaded() {
