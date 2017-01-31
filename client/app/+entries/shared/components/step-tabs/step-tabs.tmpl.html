@@ -1,0 +1,18 @@
+ <div class='l-container'>
+      <div class="l-row">
+         <div class="col-sm-12 col-md-2 padding-shrink-right l-col">           
+            <ul class="my-steps">
+                <li *ngFor="let pane of panes" class='{{ pane.id }}' 
+                    (click)="goTo(pane.id)"
+                    role="presentation" 
+                    [ngClass] = "{ invalid: !pane.valid, active: pane.active, visited: pane.visited }">
+                    <i class='fa'></i>
+                    <span>{{ pane.title }}</span> 
+                </li>
+            </ul>            
+         </div>
+         <div class="col-sm-12 col-md-10 padding-shrink-left l-col" rest-height style='display: flex;'>                
+              <ng-content></ng-content>                        
+         </div>
+      </div>
+</div>

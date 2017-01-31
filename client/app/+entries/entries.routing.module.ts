@@ -1,4 +1,6 @@
-import { ApiManagementComponent, ApiListComponent, ApiMasterComponent } from './components';
+import { EntriesWizardBaseComponent } from './entries-wizard-base';
+import { EntriesListComponent } from './entries-list';
+import { EntriesBaseComponent } from './entries-base';
 
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
@@ -7,21 +9,20 @@ import { IsAuthenticatedGuard } from '../core';
 export const routes: Routes = [
   {
     path: '',
-    component: ApiManagementComponent,
+    component: EntriesBaseComponent,
     canActivate: [IsAuthenticatedGuard],
     children: [
       {
         path: 'master',
-        component: ApiMasterComponent
+        component: EntriesWizardBaseComponent
       },
       {
         path: '',
-        component: ApiListComponent
+        component: EntriesListComponent
       }
     ]
   }
 ];
-
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
