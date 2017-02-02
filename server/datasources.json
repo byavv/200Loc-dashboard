@@ -1,5 +1,5 @@
 {
-  "db": {
+  "db1": {
     "host": "${redis_host}",
     "port": "6379",
     "name": "db",
@@ -15,5 +15,10 @@
     "connector": "loopback-component-storage",
     "provider": "filesystem",
     "root": "./storage"
+  },
+  "db": {
+    "name": "db",   
+    "connector": "loopback-connector-mongodb",
+    "url": "mongodb://admin:admin@ds135049.mlab.com:35049/200loc"
   }
 }

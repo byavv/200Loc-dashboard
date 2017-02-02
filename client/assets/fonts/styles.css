@@ -128,3 +128,30 @@
 .icon-search:before {
   content: "\44";
 }
+.icon-github:before {
+  content: "\45";
+}
+.icon-arrows-ccw:before {
+  content: "\46";
+}
+.icon-log-out:before {
+  content: "\47";
+}
+.icon-logo-github:before {
+  content: "\48";
+}
+.icon-plus:before {
+  content: "\49";
+}
+.icon-list-add:before {
+  content: "\4a";
+}
+.icon-loop:before {
+  content: "\4b";
+}
+.icon-trash-o:before {
+  content: "\4c";
+}
+.icon-plus-1:before {
+  content: "\4d";
+}

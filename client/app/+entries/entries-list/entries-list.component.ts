@@ -1,35 +1,107 @@
-import { Component, OnInit, OnDestroy, trigger, state, transition, style, animate } from '@angular/core';
+import { Component, OnInit, OnDestroy, trigger, state, transition, style, animate, ViewChild, ElementRef, NgZone } from '@angular/core';
 import { AppController } from '../../shared/services';
 import { LoaderComponent } from '../../shared/components';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Subscription, Observable } from 'rxjs';
 import { ApiConfigApi, ApiConfig, ServiceApi, ServiceStatus } from '../../core'
+import { FormControl } from '@angular/forms';
+import { NgbPagination } from '@ng-bootstrap/ng-bootstrap'
 
 @Component({
   selector: 'api-list',
-  templateUrl: './entries-list.component.tmpl.html'  
+  templateUrl: './entries-list.component.tmpl.html'
 })
 export class EntriesListComponent implements OnInit, OnDestroy {
+  @ViewChild('searchInput') searchInput: ElementRef;
+  @ViewChild(NgbPagination) pager: NgbPagination;
+
   configs: Array<any> = [];
   loading: boolean = false;
   sidebarActive: boolean = false;
   serviceStatusArray: Array<ServiceStatus> = [];
+  
+
+  count: number;
+  searchParams: any = {};
+  maxItems: number = 6;
+
+  searchQuery: string;
+  searchControl: FormControl = new FormControl();
 
   constructor(private appController: AppController,
     private router: Router,
     private route: ActivatedRoute,
     private _serviceApi: ServiceApi,
+    private _ngZone: NgZone,
     private _apiConfigApi: ApiConfigApi) { }
 
   ngOnInit() {
-    this.loading = true;
-    Observable.forkJoin(this._apiConfigApi.find(), this._serviceApi.check())
-      .subscribe((result: Array<any>) => {
-        this.configs = result[0];
-        this.serviceStatusArray = result[1];
-        this.configs = this.configs.map(c => this.setStatus(c))
+    this.searchParams = { name: this.route.snapshot.queryParams['name'] || '', page: +this.route.snapshot.queryParams['page'] || 1 }
+    this.route.queryParams
+      .do((qParams) => { this.loading = true })
+      .map((qParams: any) => {
+        let q: any = {
+          limit: this.maxItems,
+          skip: +qParams.page && +qParams.page > 0 ? this.maxItems * (+qParams.page - 1) : 0
+        }
+        if (qParams && qParams.name && qParams.name.trim) {
+          q.where = { name: { regexp: `/^${qParams.name.trim()}/i` } }
+        }
+        return q;
+      })
+      .switchMap((query: any) => this._doSearchQuery(query))
+      .subscribe((result: any) => {
+        this.configs = result.configs;
+        this.count = result.count;
+        this.loading = false;
+        this.pager.collectionSize = this.count;
+        this.pager.selectPage(this.searchParams.page || 1);
+      }, (err) => {
+        console.error(err);
         this.loading = false;
       });
+  }
+
+  _doSearchQuery(query) {
+    return Observable.zip(
+      this._apiConfigApi.find(query),
+      this._apiConfigApi.count(!!query.where ? query.where : {}),
+      this._serviceApi.check()
+      , (configs: any, conuntResult: any, checkResult: any) => {
+        this.serviceStatusArray = checkResult;
+        this.configs = configs.map(c => this.setStatus(c));
+        return {
+          configs: configs,
+          count: conuntResult.count,
+          serviceStatus: checkResult
+        }
+      });
+  }
+
+  ngAfterViewInit() {
+    Observable
+      .merge(
+      // search input
+      this.searchControl
+        .valueChanges
+        .distinctUntilChanged()
+        .debounceTime(500)
+        .map((value) => { return { name: value } }),
+      // pager
+      this.pager ? this.pager
+        .pageChange
+        .distinctUntilChanged()
+        .map((value) => { return { page: value } })
+        : Observable.of({})
+      )
+      .subscribe(req => {     
+        this.doSearch(req);
+      });
+  }
+
+  doSearch(q: { name?: string, page?: number }) {
+    const req = Object.assign(this.searchParams, q)
+    this.router.navigate(['/entries'], { queryParams: req });
   }
 
   ngOnDestroy() { }
@@ -45,7 +117,7 @@ export class EntriesListComponent implements OnInit, OnDestroy {
 
   setStatus(config: ApiConfig) {
     let ok = true;
-    const messages = new Array<ServiceStatus>()
+    const messages = new Array<ServiceStatus>();
 
     config.plugins.forEach(pl => {
       if (pl.dependencies) {
@@ -81,10 +153,8 @@ export class EntriesListComponent implements OnInit, OnDestroy {
       .subscribe((result) => {
         this.loading = false;
       }, (err) => {
-        // notify
         console.error(err);
       });
-
   }
 
   onAddClick() {

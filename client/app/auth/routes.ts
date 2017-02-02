@@ -1,7 +1,7 @@
 import { Routes } from '@angular/router';
 
 import { IsNotAuthenticatedGuard, IsAuthenticatedGuard } from '../core';
-import { LoginComponent } from './login/login.component';
+import { LoginComponent } from './auth-login/auth-login.component';
 import { ChangePasswordComponent } from './auth-password-change/auth-password-change.component';
 
 export const AuthenticationRoutes: Routes = [

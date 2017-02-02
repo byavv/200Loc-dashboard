@@ -7,7 +7,7 @@ import { Observable, Subscription } from 'rxjs';
 @Component({
     selector: 'loader',
     template: `
-    <div class='loader-container' *ngIf='pActive'>
+    <div class='loader-container' *ngIf='pActive' [class.overlay]='overlay'>
         <div *ngIf='spinner' class='spinner'></div>
          <div *ngIf='!spinner' class='ball-pulse'>
          <div></div><div></div><div></div>
@@ -26,6 +26,9 @@ export class LoaderComponent implements OnInit, OnDestroy {
 
     @Input()
     trigger: Observable<any>;
+
+    @Input()
+    overlay: boolean = true;
 
     @Input()
     public get active(): boolean {

@@ -1,0 +1,32 @@
+<div class='l-api__indicator'>
+    <!--<div #d *ngIf="errors?.length == 0 && messages?.length != 0" class='l-api__indicator-{{type}}' [offClick]='p.close.bind(p)' [ignore]='d'>
+        <i class='icon-record' [ngbPopover]='statusContent' #p="ngbPopover" placement="bottom" (click)='click.emit($event)'></i>
+        <template #statusContent>
+            <div *ngFor='let status of messages' class='l-api__indicator--popover'>
+                <span style='margin-bottom:10px;'>
+                    <i class='icon-record' [ngStyle]="{'color': status.error ? 'red' : 'green'}"></i>
+                    <span style='margin-left:10px;'>{{status.name}} v{{status.version}}</span>
+                </span>
+                <div>{{status.message}}</div>
+            </div>
+        </template>
+    </div>
+    <div *ngIf="errors?.length > 0" class='l-api__indicator-red'>
+        <i class='icon-alert-circled'  title='Some error' [ngbPopover]='errorContent' triggers="mouseenter:mouseleave" placement="bottom"></i>
+        <template #errorContent>
+            <div *ngFor='let error of errors' class='l-api__indicator--popover'>
+                <span style='margin-bottom:10px;'>IN: <b>{{error.name}}</b> service</span>
+                <div>{{error.message}}</div>
+            </div>
+        </template>
+    </div>-->
+    <div #d *ngIf="errors?.length == 0 && messages?.length != 0" class='l-api__indicator-{{type}}' (click)='onClick.emit($event)'>
+        <i class='icon-record'></i>
+    </div>
+    <div *ngIf="errors?.length > 0" class='l-api__indicator-red' (click)='onClick.emit($event)'>
+        <i class='icon-alert-circled' title='Some error'></i>
+    </div>
+    <div *ngIf="errors?.length == 0 && messages?.length == 0" class='l-api__indicator-blank'>
+        <i class='icon-android-radio-button-off' title='No services used'></i>
+    </div>
+</div>

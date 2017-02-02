@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core';
+import { PaginationModule } from 'ng2-bootstrap';
 
 import { EntriesBaseComponent } from './entries-base';
-import { EntriesListComponent } from './entries-list'
+import { ENTRIES_LIST_COMPONENTS } from './entries-list'
 import { EntriesWizardBaseComponent } from './entries-wizard-base'
 import { EntriesWizardStepGeneral } from './entries-wizard-step-general'
 import { EntriesWizardStepPlugins } from './entries-wizard-step-plugins'
@@ -9,11 +10,11 @@ import { EntriesWizardStepPreview } from './entries-wizard-step-preview'
 
 const ENTRIES_DECLARATIONS = [
   EntriesBaseComponent,
-  EntriesListComponent,
   EntriesWizardBaseComponent,
   EntriesWizardStepGeneral,
   EntriesWizardStepPlugins,
-  EntriesWizardStepPreview
+  EntriesWizardStepPreview,
+  ...ENTRIES_LIST_COMPONENTS
 ];
 
 import { EntriesRoutingModule } from './entries.routing.module';
@@ -27,7 +28,8 @@ import { SharedModule } from '../shared';
   imports: [
     SharedModule,
     EntriesRoutingModule,
-    EntriesSharedModule
+    EntriesSharedModule,
+    PaginationModule.forRoot()
   ]
 })
 export class EntriesModule { }

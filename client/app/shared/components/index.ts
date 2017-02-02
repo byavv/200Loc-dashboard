@@ -1,5 +1,5 @@
 import { LoaderComponent } from './loader/loader';
-import { HeaderComponent } from './header/header';
+import { HEADER_COMPONENTS } from './header';
 import { FooterComponent } from './footer/footer';
 import { AceEditorComponent } from './ace-editor/aceEditorComponent';
 import { POPOVER_DIRECTIVES } from './popover';
@@ -8,7 +8,7 @@ import { DynamicForm } from './dynamic-form';
 import { SIDEBAR_COMPONENTS } from './sidebar';
 
 export * from './loader/loader';
-export * from './header/header';
+export * from './header';
 export * from './footer/footer';
 export * from './ace-editor/aceEditorComponent';
 export * from './switch';
@@ -16,11 +16,11 @@ export * from './dynamic-form';
 
 export var SHARED_COMPONENTS = [
     LoaderComponent,
-    HeaderComponent,
     FooterComponent,
     AceEditorComponent,
     SwitchComponent,
     DynamicForm,
     ...POPOVER_DIRECTIVES,
-    ...SIDEBAR_COMPONENTS
+    ...SIDEBAR_COMPONENTS,
+    ...HEADER_COMPONENTS,
 ]

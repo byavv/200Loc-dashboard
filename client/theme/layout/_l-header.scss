@@ -83,5 +83,145 @@
     }
 
   }
+  //l-header__dropdown--actions
+  &__dropdown {
+    text-align: left;
+    z-index: 1;
+    display: none;
 
+    &.active {
+      display: block;
+    }
+
+    //  &-menu {
+    &--title {
+      margin-bottom: 20px;
+      display: block;
+      color: darken($light-grey, 20%);
+      text-align: center;
+
+    }
+
+    &--actions {
+      padding: 15px;
+
+      &-item {
+
+        display: block;
+        cursor: pointer;
+        padding-left: 45px;
+        position: relative;
+        margin-bottom: 20px;
+        transition: color .15s ease-out;
+        text-decoration: none;
+
+        &:after {
+          content: "";
+          position: absolute;
+          bottom: -10px;
+          right: 0;
+          left: 45px;
+          height: 1px;
+          background: lighten($light-grey,5%);
+        }
+
+        &:last-child {
+          margin-bottom: 0;
+
+          &:after {
+            content: none;
+          }
+        }
+
+        &:hover {
+          .l-header__dropdown {
+            &--icon {
+              background: $blue;
+            }
+
+            &--text {
+              color: $blue;
+            }
+          }
+        }
+
+        .l-header__dropdown {
+          &--icon {
+            width: 33px;
+            height: 33px;
+            background: #d0dce7;
+            position: absolute;
+            top: 0;
+            left: 0;
+            border-radius: 33px;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            color: $white;
+            font-size: 1.8rem;
+            transition: .15s ease-out;
+
+            &:before {
+              flex: 1;
+            }
+          }
+
+          &--text {
+            padding: 6px 0;
+            display: block;
+            font-weight: 600;
+            color: darken($light-grey, 40%);
+            transition: .15s ease-out;
+          }
+        }
+      }
+    }
+  }
+}
+@media screen and (min-width: $grid-md) {
+  .l-header {
+    &__dropdown {
+      background: #f5f8f9;
+      border: 1px solid #dee1e4;
+      border-top: 0;
+      position: absolute;
+      right: 5px;
+      top: 60px;
+    }
+  }
+}
+@media screen and (max-width: $grid-md) {
+  .l-header {
+    &__dropdown {
+      background: #ffffff;
+      transition: .2s ease-out;
+      position: relative;
+      width: 100%;
+
+      &.active {
+        display: block;
+        background: white;
+        width: 100%;
+        height: 100%;
+        margin-top: 40px;
+      }
+
+      &:after {
+        content: '';
+        position: absolute;
+        height: 40px;
+        width: 100%;
+        background: $light-blue;
+        left: 0;
+      }
+
+      &--title {
+        position: absolute;
+        top: -32px;
+        right: .625rem;
+        color: white;
+        margin: 0;
+      }
+    }
+  }
 }

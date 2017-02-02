@@ -38,6 +38,32 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+[data-icon]:before {
+  font-family: "loc" !important;
+  content: attr(data-icon);
+  font-style: normal !important;
+  font-weight: normal !important;
+  font-variant: normal !important;
+  text-transform: none !important;
+  speak: none;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+[class^="icon-"]:before,
+[class*=" icon-"]:before {
+  font-family: "loc" !important;
+  font-style: normal !important;
+  font-weight: normal !important;
+  font-variant: normal !important;
+  text-transform: none !important;
+  speak: none;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
 
 .icon-edit:before {
   content: "\63";
@@ -128,4 +154,31 @@
 }
 .icon-search:before {
   content: "\44";
+}
+.icon-github:before {
+  content: "\45";
+}
+.icon-arrows-ccw:before {
+  content: "\46";
+}
+.icon-log-out:before {
+  content: "\47";
+}
+.icon-logo-github:before {
+  content: "\48";
+}
+.icon-plus:before {
+  content: "\49";
+}
+.icon-list-add:before {
+  content: "\4a";
+}
+.icon-loop:before {
+  content: "\4b";
+}
+.icon-trash-o:before {
+  content: "\4c";
+}
+.icon-plus-1:before {
+  content: "\4d";
 }

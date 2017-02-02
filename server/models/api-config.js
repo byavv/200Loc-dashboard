@@ -55,4 +55,77 @@ module.exports = function (ApiConfig) {
         returns: { type: 'object', root: true },
         http: { path: '/test', verb: 'post', errorStatus: 400 }
     });
+
+
+    // ApiConfig.searchByName = function (query, cb) {
+    //     ApiConfig
+    //         .find(query)           
+    //         .then((configs) => {
+    //             return cb(null, configs)
+    //         }).catch((err) => {
+    //             return cb(err)
+    //         });
+    // }
+    // ApiConfig.remoteMethod('searchByName', {
+    //     accepts: [
+    //         {
+    //             arg: 'query',
+    //             type: 'object',
+    //             http: (ctx) => {
+    //                 var filterQuery = _createFilterQuery(ctx.req.body);
+    //                 var optionsQuery = _createOptionsQuery(ctx.req.body);
+    //                 return Object.assign({ where: filterQuery }, optionsQuery);
+    //             }
+    //         }
+    //     ],
+    //     returns: { type: 'array', root: true },
+    //     http: { path: '/searchByName', verb: 'post', errorStatus: 400 }
+    // });
+
+    
+    // ApiConfig.countByName = function (query, cb) {
+    //     ApiConfig
+    //         .count(query)           
+    //         .then((count) => {
+    //             return cb(null, count)
+    //         }).catch((err) => {
+    //             return cb(err)
+    //         });
+    // }
+    // ApiConfig.remoteMethod('countByName', {
+    //     accepts: [
+    //         {
+    //             arg: 'query',
+    //             type: 'object',
+    //             http: (ctx) => {
+    //                 var filterQuery = _createFilterQuery(ctx.req.body);
+    //                 var optionsQuery = _createOptionsQuery(ctx.req.body);
+    //                 return Object.assign({ where: filterQuery }, optionsQuery);
+    //             }
+    //         }
+    //     ],
+    //     returns: { type: 'array', root: true },
+    //     http: { path: '/countByName', verb: 'post', errorStatus: 400 }
+    // });
+
+    // function _createFilterQuery(request) {
+    //     var query = [];
+    //     if (request) {
+    //         if (request.name) {
+    //             query.push({ name: { regexp: `.*${request.name}.*` } });
+    //         }
+    //     }
+    //     return query.length > 0 ? { and: query } : {};
+    // }
+
+    // function _createOptionsQuery(request) {
+    //     var query = {};
+    //     if (request.limit) {
+    //         Object.assign(query, { limit: +request.limit })
+    //     }
+    //     if (request.limit && request.page) {
+    //         Object.assign(query, { skip: (+request.limit) * (+request.page - 1) })
+    //     }
+    //     return query;
+    // }
 }

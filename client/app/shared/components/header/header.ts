@@ -5,7 +5,7 @@ import { Store } from '@ngrx/store';
 
 @Component({
     selector: 'loc-header',
-    templateUrl: './header.html'    
+    templateUrl: './header.html'
 })
 export class HeaderComponent implements OnInit {
     isAuthenticated: boolean = false;

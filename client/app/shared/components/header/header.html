@@ -1,30 +1,27 @@
-<nav class="l-header__navbar" [class.splitted]="sidebar.state$ | async">   
-
+<nav class="l-header__navbar" [class.splitted]="sidebar?.state$ | async">
     <button class='l-header__toggle' (click)="sidebar.open($event)"><span class="icon-android-menu"></span></button>
     <a [routerLink]="['/']" class="l-header__brand">200Loc-Dashboard</a>
-
     <ul class="l-header__menu" *ngIf="!isAuthenticated">
-        <li class="nav-item">
-            <a [routerLink]="['/auth/signin']" class="nav-link">Sign in</a>
-        </li>
+        <li class="nav-item"><a [routerLink]="['/auth/signin']" class="nav-link">Sign in</a></li>
     </ul>
-
-    <div ngbDropdown class="l-header__menu" *ngIf="isAuthenticated" style='margin-left: auto;' #myDrop="ngbDropdown">
-<button class="l-header__menu-toggle" id="1dropdownMenu1" ngbDropdownToggle><i class="icon-user"></i></button>
-<div class="dropdown-menu dropdown-menu-right" aria-labelledby="1dropdownMenu1">
-    <span class="dropdown-item">
-                            <span>Signed in as <b>{{ username }}</b></span>
-    </span>
-    <div class="dropdown-divider"></div>
-    <a [routerLink]="['/auth/change']" class="dropdown-item">
-        <span>Change password</span>
-    </a>
-    <a href="" (click)="signOut()" class="dropdown-item">
-        <span>Sign out</span>
-    </a>
-</div>
-</div>
+    <div class="l-header__menu" *ngIf="isAuthenticated" style='margin-left: auto;'>
+        <button class="l-header__menu-toggle" (click)='menu.toggleActive($event)'><i class="icon-user"></i></button>
+    </div>
 </nav>
+
+<loc-header-menu #menu='locHeaderMenu'>
+    <div class="l-header__dropdown--actions">
+        <span class="l-header__dropdown--title">Signed in as <b>{{ username }}</b></span> 
+        <a [routerLink]="['/auth/change']" (click)="menu.toggleActive($event)" class="l-header__dropdown--actions-item">
+            <span class="icon-arrows-ccw l-header__dropdown--icon"></span>
+            <span class="l-header__dropdown--text">Change password</span>          
+        </a>
+        <a href='' (click)="signOut(); menu.toggleActive($event)" class="l-header__dropdown--actions-item">
+            <span class="icon-log-out l-header__dropdown--icon"></span>
+            <span class="l-header__dropdown--text">Sign out</span>            
+        </a>
+    </div>
+</loc-header-menu>
 
 <loc-side-bar [content]='sidebarContent' #sidebar='locSidebar' position='left'></loc-side-bar>
 <template #sidebarContent>

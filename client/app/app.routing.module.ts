@@ -1,9 +1,8 @@
-import { AuthenticationRoutes } from './authentication/routes';
-import { PluginsRoutes } from './plugin-manager/routes';
+import { AuthenticationRoutes } from './auth';
 
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes, PreloadAllModules, NoPreloading } from '@angular/router';
-import { NotFoundComponent } from './notFound/notFound.component';
+import { NotFoundComponent } from './notFound';
 
 export const routes: Routes = [
     { path: '', redirectTo: 'entries', pathMatch: 'full' },

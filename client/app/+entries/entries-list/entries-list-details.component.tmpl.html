@@ -1,0 +1,10 @@
+<div #panel class="panel" [class.expanded]="expand" [offClick]='close'> 
+    <div class="entry-header" [@headerCollapse]="state">
+        <ng-content select="[header-content]"></ng-content>
+    </div>
+    <div class="entry-details" [@detailsCollapse]="state">
+        <div class="details-content">
+            <ng-content select="[status-content]"></ng-content>
+        </div>
+    </div>
+</div>

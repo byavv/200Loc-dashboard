@@ -15,13 +15,21 @@ export class OffClickDirective implements OnInit, OnDestroy {
     @HostListener('click', ['$event']) public onClick($event: MouseEvent): void {
         $event.stopPropagation();
     }
+    constructor(private _elementRef: ElementRef) {
+
+    }
 
     public ngOnInit(): any {
         setTimeout(() => {
             document.addEventListener('click', (event: Event) => {
                 if (this.ignore && (event.target !== this.ignore && !this.ignore.contains(<HTMLElement>event.target))) {
                     this.offClickHandler()
-                }               
+                } else {
+                    if (!this._elementRef.nativeElement.contains(<HTMLElement>event.target)) {
+                        this.offClickHandler();
+                    }
+                    //  if (this.popoverDiv.nativeElement.contains(event.target) || this.popover.getElement().contains(event.target)) return;
+                }
             });
         }, 0);
     }

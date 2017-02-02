@@ -7,7 +7,9 @@ import { CommonModule } from '@angular/common';
 
 import { AppComponent } from './app.component';
 
-import { AUTHENTICATION_COMPONENTS } from './authentication/components';
+import { AUTHENTICATION_COMPONENTS } from './auth';
+import { NotFoundComponent } from './notFound';
+
 import { CoreModule } from './core';
 import { AppRoutingModule } from './app.routing.module';
 
@@ -31,7 +33,8 @@ import {
   bootstrap: [AppComponent],
   declarations: [
     AppComponent,
-    ...AUTHENTICATION_COMPONENTS
+    ...AUTHENTICATION_COMPONENTS,
+    NotFoundComponent
   ],
   imports: [
     BrowserModule,

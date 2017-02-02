@@ -23,7 +23,7 @@ export class JSONSearchParams {
         return this._usp;
     }
 
-    private _JSON2URL(obj: any, parent: any) {
+    private _JSON2URL(obj: any, parent: any) {        
         var parts: any = [];
         for (var key in obj)
         parts.push(this._parseParam(key, obj[key], parent));

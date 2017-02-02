@@ -231,10 +231,34 @@ export class ApiConfigApi extends BaseLoopBackApi {
     let urlParams: any = {};
     if (filter) urlParams.filter = filter;
     let result = this.request(method, url, routeParams, urlParams, postBody);
-    return result.map((instances: Array<ApiConfig>) =>
-      instances.map((instance: ApiConfig) => new ApiConfig(instance))
-    );
+    return result.map((instances: Array<ApiConfig>) => {
+      return instances.map((instance: ApiConfig) => new ApiConfig(instance))
+    });
   }
+
+
+  /**
+   *  Search ApiConfigs by filter from the data source.
+   *
+   * @param object filter Filter defining fields, where, include, order, offset, and limit
+   *
+   * @returns object[{result: Array<ApiConfig>}, count: number] Object with limited search 
+   * result and common count of models in database
+   *
+   */
+  // public search(filter: any = undefined) {
+  //   let method: string = "POST";
+  //   let url: string = CoreConfig.getPath() + "/" + CoreConfig.getApiVersion() +
+  //     "/ApiConfigs/search";
+  //   let routeParams: any = {};
+  //   let postBody: any = {};
+  //   let urlParams: any = {};
+  //   if (filter) urlParams.filter = filter;
+  //   let result = this.request(method, url, routeParams, urlParams, postBody);
+  //   return result.map((instances: Array<ApiConfig>) =>
+  //     instances.map((instance: ApiConfig) => new ApiConfig(instance))
+  //   );
+  // }
 
   /**
    * Find first instance of the model matched by filter from the data source.
@@ -302,6 +326,17 @@ export class ApiConfigApi extends BaseLoopBackApi {
    *
    *  - `count` – `{number}` - 
    */
+  // public count(filter: LoopBackFilter = undefined) {
+  //   let method: string = "GET";
+  //   let url: string = CoreConfig.getPath() + "/" + CoreConfig.getApiVersion() +
+  //     "/ApiConfigs/count";
+  //   let routeParams: any = {};
+  //   let postBody: any = {};
+  //   let urlParams: any = {};
+  //   if (filter) urlParams.filter = filter;
+  //   let result = this.request(method, url, routeParams, urlParams, postBody);
+  //   return result;
+  // }
   public count(where: any = undefined) {
     let method: string = "GET";
     let url: string = CoreConfig.getPath() + "/" + CoreConfig.getApiVersion() +
