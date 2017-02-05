@@ -3,17 +3,27 @@
 @import 'variables';
 @import 'global';
 
+@import 'mixins/_mx-effects';
+@import 'mixins/_mx-layout';
+@import 'mixins/_mx-modals';
+
+@import 'placeholders/_pl-basic-layout';
+
 @import 'modules/_m-table';
 @import 'modules/_m-buttons';
 @import 'modules/_m-forms';
 @import 'modules/_m-popover';
+@import 'modules/_m-pager';
 
 @import 'layout/_l-base';
+
+@import 'layout/_l-common';
 @import 'layout/_l-api';
-@import 'layout/_l-master';
+@import 'layout/_l-wizard';
 @import 'layout/_l-header';
 @import 'layout/_l-login';
 @import 'layout/_l-steps';
 @import 'layout/_l-services';
 @import 'layout/_l-sidebar';
 @import 'layout/_l-change';
+@import 'layout/_l-statistic';

@@ -41,7 +41,7 @@ html {
   line-height: 1.42857143;
   font-family: "Open Sans", sans-serif;
   height: 100%;
-  color: #555;
+  color: $text-grey;
   background-color: #eceff1; 
 }
 
@@ -86,3 +86,4 @@ html {
     padding: .1rem .6rem;
   }
 }
+

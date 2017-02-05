@@ -56,7 +56,8 @@
 }
 
 .login-modal {
-  @extend .loc-modal;
+  //@extend .loc-modal;
+  @include basic-modal();
   @media screen and (min-width: $grid-md) {
 
     display: flex;

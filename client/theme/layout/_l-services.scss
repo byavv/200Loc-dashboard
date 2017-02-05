@@ -1,5 +1,5 @@
 .l-services {
-  @extend .l-api;
+  @extend %lbasic;
 
   &__list {
     &-body {
@@ -66,16 +66,17 @@
     background: transparent!important;
   }*/
 
-  &__header {
-    @extend .l-api__header;
-  }
+  // &__header {
+  //   @extend .l-api__header;
+  // }
 
   &__modalcontainer {
-    padding: .625rem;
+    padding: $p;
   }
 
   .services-modal {
-    @extend .loc-modal;
+   // @extend .loc-modal;
+    @include basic-modal();
    
   }
 
@@ -102,11 +103,11 @@
   .l-services {
     &__list {
       &-body {
-        padding: 0 .625rem;
+        padding: 0 $p;
 
         > * {
           flex: 1 0 auto;
-          margin: 0 .625rem;
+          margin: 0 $p;
           height: 100px;
           padding-top: 15px;
         }

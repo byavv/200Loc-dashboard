@@ -2,9 +2,9 @@ import { Directive, ElementRef, Renderer, Input } from '@angular/core';
 import { getDOM, DomAdapter } from '@angular/platform-browser/src/dom/dom_adapter';
 
 @Directive({
-    selector: '[rest-height]',
+    selector: '[flexy]',
 })
-export class RestSize {
+export class FlexySize {
     private _doc: HTMLDocument;
     private _domAdapter: DomAdapter;
 

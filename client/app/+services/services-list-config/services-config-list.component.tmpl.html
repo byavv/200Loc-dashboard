@@ -1,8 +1,8 @@
 <div class="l-services">
-    <div class="l-services__header">
+    <div class="l__header">
         <span class="title"><a routerLink='/services'>Services</a> / {{ serviceName }}</span>
     </div>
-    <section class="l-services__configlist">
+    <div class='l__body'>
         <loader [active]='loading'></loader>
         <div class="l-services__configlist-body">
             <div class="l-services__table">
@@ -30,7 +30,7 @@
                 </div>
             </div>
         </div>
-    </section>
+    </div>
 
     <template #serviceModalContent let-c="close" let-d="dismiss">
         <div class="l-services__modalcontainer">

@@ -6,6 +6,8 @@ import { POPOVER_DIRECTIVES } from './popover';
 import { SwitchComponent } from './switch';
 import { DynamicForm } from './dynamic-form';
 import { SIDEBAR_COMPONENTS } from './sidebar';
+import { LocPagerComponent } from './pager';
+import { StatisticComponent } from './statistic';
 
 export * from './loader/loader';
 export * from './header';
@@ -13,6 +15,8 @@ export * from './footer/footer';
 export * from './ace-editor/aceEditorComponent';
 export * from './switch';
 export * from './dynamic-form';
+export * from './pager';
+export * from './statistic';
 
 export var SHARED_COMPONENTS = [
     LoaderComponent,
@@ -23,4 +27,6 @@ export var SHARED_COMPONENTS = [
     ...POPOVER_DIRECTIVES,
     ...SIDEBAR_COMPONENTS,
     ...HEADER_COMPONENTS,
+    LocPagerComponent,
+    StatisticComponent
 ]

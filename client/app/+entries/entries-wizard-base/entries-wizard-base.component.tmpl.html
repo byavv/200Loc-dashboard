@@ -1,9 +1,9 @@
-<div class="l-api">
-    <div class="l-api__header">
+<div class="l-wizard">
+    <div class="l-wizard__header">
         <span class="title"><a routerLink='/entries'>Entries</a> / wizard</span>
     </div>
-    <section class="l-api__master">
-        <ui-tabs #tab rest-height default='general'>
+    <section class="l-wizard__body">
+        <ui-tabs #tab flexy default='general'>
             <ui-pane id='general' title='config' [valid]='(stepGeneral.validation | async)'>
                 <step-general #stepGeneral (next)="tab.goTo($event)" [submitted]='submitted'> </step-general>
             </ui-pane>

@@ -1,10 +1,16 @@
 import {
     Component, Directive, Input, Output,
-    TemplateRef, ViewContainerRef, trigger, style, state, transition, ViewChild, keyframes,
+    TemplateRef, ViewContainerRef, trigger, style, state, transition, ViewChild, keyframes, AnimationTransitionEvent,
     ContentChild, animate
 } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
 import { EventEmitter, Renderer, ElementRef } from '@angular/core';
+import { AnimationBuilder } from 'angular2/src/animate/animation_builder';
 import { getDOM, DomAdapter } from '@angular/platform-browser/src/dom/dom_adapter';
+import { ApiConfig, ServiceApi } from '../../core';
+import { LoaderComponent } from '../../shared';
+import { Observable } from 'rxjs';
+import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
     selector: 'entries-details',
@@ -13,18 +19,18 @@ import { getDOM, DomAdapter } from '@angular/platform-browser/src/dom/dom_adapte
     animations: [
         trigger('detailsCollapse', [
             state('expanded', style({
-                height: '*'            
+                height: '*'
             })),
             state('collapsed', style({
-                height: '0px'               
-            })),  
-            transition('collapsed => expanded', [            
-                animate(200, style({ height: '*' }))
+                height: '0px'
+            })),
+            transition('collapsed => expanded', [
+                animate('0.2s ease-out', style({ height: '*' }))
             ]),
-            transition('expanded => collapsed', [               
-                animate(200, style({ height: '0px' }))
+            transition('expanded => collapsed', [
+                animate('0.2s ease-in', style({ height: '0px' }))
             ])
-        ]),       
+        ]),
         trigger('headerCollapse', [
             state('expanded', style({
                 background: '#fafafa'
@@ -34,18 +40,31 @@ import { getDOM, DomAdapter } from '@angular/platform-browser/src/dom/dom_adapte
             })),
             transition('* => *', animate('250ms linear'))
         ])
-    ]  
+    ]
 })
 export class EntriesDetailsComponent {
     @ViewChild('panel') container: ElementRef;
+    @ViewChild('detailsContainer') detailsContainer: ElementRef;
+    @ViewChild('content') content: TemplateRef<any>;
 
     private _expand: boolean = false;
     private _disabled: boolean = false;
     state: string = 'collapsed';
+    dialogOpened: boolean = false;
 
-    constructor(private _renderer: Renderer, private _elementRef: ElementRef) {    
-        this.close = this.close.bind(this); 
+    loading: boolean = false;
+    statuses: Array<any> = [];
+
+
+    constructor(private _renderer: Renderer,
+        private _elementRef: ElementRef,
+        private _router: Router,
+        private modalService: NgbModal,
+        private _route: ActivatedRoute,
+        private _serviceApi: ServiceApi) {
     }
+
+    @Input() configO: ApiConfig;
 
     /**
      * label?: string
@@ -64,8 +83,6 @@ export class EntriesDetailsComponent {
     set expand(value: boolean) {
         this._expand = value;
         this.state = value ? 'expanded' : 'collapsed';
-   // this.orderedState = `${this.state} ${this.orderedState}`
-        console.log(this.state)
     };
     get expand(): boolean {
         return this._expand;
@@ -110,8 +127,20 @@ export class EntriesDetailsComponent {
      * Toggle expand state of [TdExpansionPanelComponent]
      * retuns 'true' if successful, else 'false'.
      */
-    toggle(): boolean {       
-        return this._setExpand(!this.expand);
+    toggle() {
+        this._setExpand(!this.expand);
+        if (this.expand && this.configO && this.configO.errors.length > 0) {
+            return;
+        }
+        if (this.expand && this.configO) {
+            this.loading = true;
+            this._serviceApi
+                .check(this.configO.id)
+                .subscribe((statuses) => {
+                    this.statuses = statuses;
+                    this.loading = false;
+                });
+        }
     }
 
     /**
@@ -127,6 +156,8 @@ export class EntriesDetailsComponent {
      * retuns 'true' if successful, else 'false'.
      */
     close(): boolean {
+        console.log('REQUIRE CLOSE POPOVER')
+        if (this.dialogOpened) return;
         return this._setExpand(false);
     }
 
@@ -137,7 +168,7 @@ export class EntriesDetailsComponent {
     private _setExpand(newExpand: boolean): boolean {
         if (this._disabled) {
             this.expand = false;
-        }
+        }//
         if (this.expand !== newExpand) {
             this.expand = newExpand;
             if (newExpand) {
@@ -145,7 +176,6 @@ export class EntriesDetailsComponent {
             } else {
                 this._onCollapsed();
             }
-
             return true;
         }
         return false;
@@ -158,4 +188,22 @@ export class EntriesDetailsComponent {
     private _onCollapsed(): void {
         this.collapsed.emit(undefined);
     };
+
+
+    openModal() {
+        this.dialogOpened = true;
+        const modalRef = this.modalService
+            .open(this.content, { windowClass: 'statistic-modal' });
+
+        modalRef.result.then((result) => {
+            console.log('DIALOG CLOSING')
+            this.dialogOpened = false;
+        }, (reason) => {
+            console.log('DIALOG CLOSING2')
+            setTimeout(() => {
+                this.dialogOpened = false;
+            },100)
+
+        });
+    }
 }

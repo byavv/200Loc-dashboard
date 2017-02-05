@@ -11,14 +11,14 @@ import '../theme/styles.scss';
     template: `
     
     <div class="l-page__wrap">
-        <loader [trigger]='getLoaded()' [spinner]='false'></loader>
+        <loader [trigger]='getLoaded()'></loader>
         <header class="l-page__header">
             <loc-header class='authH'></loc-header>
         </header>        
         <div class='l-container'>
             <router-outlet>
             </router-outlet>
-        </div>       
+        </div>        
     </div>
     <footer class='l-page__footer'> 
         <loc-footer class='authH'></loc-footer>  

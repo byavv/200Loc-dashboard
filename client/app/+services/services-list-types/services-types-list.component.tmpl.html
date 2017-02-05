@@ -1,17 +1,8 @@
 <div class="l-services">
-    <div class="l-services__header">
+    <div class="l__header">
         <span class="title">Services</span>
-    </div>
-    <div class="l-services__search">
-        <div class="input__search">
-            <input #searchInput placeholder='Filter by name'>
-            <div class='hightlite-underline'>
-                <span class="hightlite-bar"></span>
-            </div>
-            <i class="icon-search"></i>
-        </div>
-    </div>
-    <section class="l-services__list">
+    </div>    
+    <section class="l__body">
         <loader [active]='loading'></loader>
         <div class="l-services__list-body">
             <a *ngFor='let service of services' [routerLink]="['/services/config']" [queryParams]='{ name: service.name }' title="{{ service.description }}">

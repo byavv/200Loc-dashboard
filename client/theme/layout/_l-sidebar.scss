@@ -23,20 +23,20 @@
   }*/
 
   &__brand {
-    padding: .625rem;
+    padding: $p;
     text-align: center;
     flex: 0 1 auto;
-    margin-top: .625rem;
+    margin-top: $p;
   }
 
   &__menu {
     @extend .list-group;
-    padding: .625rem;
+    padding: $p;
     flex: 0 1 auto;
 
     > * {
       list-style: none;
-      margin-bottom: .625rem;
+      margin-bottom: $p;
     }
 
     &--item {
@@ -56,7 +56,7 @@
   }
 
   &__content {
-    padding: .625rem;
+    padding: $p;
     overflow:auto;
   }
 

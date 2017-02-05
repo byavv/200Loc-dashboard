@@ -1,28 +1,53 @@
 import {
     Component, OnInit, Input,
-    Output, EventEmitter, OnDestroy
+    Output, EventEmitter, OnDestroy,
+    Renderer, ElementRef, ViewChild
 } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 
 @Component({
     selector: 'loader',
     template: `
-    <div class='loader-container' *ngIf='pActive' [class.overlay]='overlay'>
-        <div *ngIf='spinner' class='spinner'></div>
-         <div *ngIf='!spinner' class='ball-pulse'>
-         <div></div><div></div><div></div>
+
+    <div class='loader-container' *ngIf='pActive' [class.overlay]='overlay'>      
+         <div class='ball-pulse' [class.spinner]='spinner'>
+            <div></div>
+            <div></div>
+            <div></div>
          </div>
-    </div>`,
-    styleUrls: ['./component.scss']
+    </div>
+
+    `,
+    styleUrls: ['./loader.scss'],
+    host: {
+        '[style.height]': 'active ? "100%":"auto"'
+    }
 })
+
+/*
+
+ <div #container class='loader-container' [class.overlay]='overlay'>       
+         <div class='ball-pulse' [class.spinner]='spinner'>
+            <div></div>
+            <div></div>
+            <div></div>
+         </div>
+    </div>
+
+ 
+
+ */
 export class LoaderComponent implements OnInit, OnDestroy {
     private _subscription: Subscription
     private _active: boolean;
-    protected pActive: boolean;
+      protected pActive: boolean;
+
     @Input()
     async: Observable<any>;
     @Input()
     delay: number = 0;
+
+    @ViewChild('container') container: ElementRef;
 
     @Input()
     trigger: Observable<any>;
@@ -35,14 +60,17 @@ export class LoaderComponent implements OnInit, OnDestroy {
         return this._active;
     }
     public set active(value) {
+        // console.log('activate')
         this._active = value;
         if (!value) {
             setTimeout(() => {
-                this.pActive = value;
+                 this.pActive = value;
+               // this._renderer.setElementClass(this.container.nativeElement, 'active', false)
                 this.completed.next(this.active);
             }, this.delay);
         } else {
-            this.pActive = value;
+           // this._renderer.setElementClass(this.container.nativeElement, 'active', true)
+              this.pActive = value;
         }
     }
 
@@ -50,7 +78,7 @@ export class LoaderComponent implements OnInit, OnDestroy {
     spinner: boolean = true;
     @Output()
     completed: EventEmitter<any> = new EventEmitter();
-    constructor() { }
+    constructor(private _renderer: Renderer) { }
 
     ngOnInit() {
         if (this.trigger) {
@@ -67,6 +95,11 @@ export class LoaderComponent implements OnInit, OnDestroy {
                     this.active = false;
                 })
     }
+
+    toggle() {
+        this.active = !this.active
+    }
+
     ngOnDestroy() {
         if (this._subscription) {
             this._subscription.unsubscribe();

@@ -1,33 +1,36 @@
-.entry-details {
-  overflow: hidden;
-
-  .details-content {
-    max-height: 100px;
-    overflow: auto;
-  }
-}
-
-.entry-header {
-  background-color: white;
-}
-
-.entry-details {
-  background: white;
-}
-
 .panel {
-  //box-shadow: 0 2px 1px -1px rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 1px 3px 0 rgba(0,0,0,.12);
   margin-top: 0;
   margin-bottom: 0;
-
   transition: all .2s ease 200ms;
+
+  &.error {
+   
+  }
 
   &.expanded {
     @media screen and (min-width:767px) {
       margin-top: .625rem;
       margin-bottom: .625rem;
       transition: all .2s ease 200ms;
-      box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0.15), 0 0px 1px 0 rgba(0, 0, 0, 0.1), 0 1px 3px 0 rgba(0, 0, 0, 0.05);
+      box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0.15), 0 0 1px 0 rgba(0, 0, 0, 0.1), 0 1px 3px 0 rgba(0, 0, 0, 0.05);
     }
+  }
+
+  .entry-details {
+    overflow: hidden;
+    height: 100%;
+    background-color: white;
+
+    .details-content {
+      height: 100%;
+      overflow: hidden;
+      position: relative;
+      display: flex;
+      transition: all .2s ease 200ms;
+    }
+  }
+
+  .entry-header {
+    background-color: white;
   }
 }

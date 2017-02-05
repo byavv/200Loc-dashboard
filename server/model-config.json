@@ -69,7 +69,8 @@
           "*": false,
           "find": true,
           "template": true,
-          "check": true
+          "check": true,
+          "summary": true
         }
       }
     }

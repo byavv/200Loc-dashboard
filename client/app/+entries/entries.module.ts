@@ -27,8 +27,8 @@ import { SharedModule } from '../shared';
   ],
   imports: [
     SharedModule,
-    EntriesRoutingModule,
     EntriesSharedModule,
+    EntriesRoutingModule,
     PaginationModule.forRoot()
   ]
 })

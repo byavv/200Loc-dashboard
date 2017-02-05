@@ -9,7 +9,7 @@ export interface ApiConfigInterface {
   entry: string;
   methods: Array<string>;
   plugins?: Array<Plugin>;
-  id?: number;
+  id?: any;
   ok?: any;
   errors?: Array<any>; 
 }
@@ -21,7 +21,7 @@ export class ApiConfig implements ApiConfigInterface {
   entry: string;
   methods: Array<string> = ["GET", "POST"];
   plugins: Array<Plugin> = [];
-  id: number;
+  id: any;
   ok: any;
   errors: Array<any> = [];  
 

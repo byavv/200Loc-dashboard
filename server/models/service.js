@@ -67,4 +67,28 @@ module.exports = function (Service) {
         http: { path: '/check/:id', verb: 'get', errorStatus: 500 }
     });
 
+    Service.summary = function (id, callback) {
+        request({
+            url: `http://${process.env.GATEWAY}/_private/service/summary/${id}`,
+            method: 'GET'
+        }, function (err, responce, body) {
+            if (err) return callback(err);
+            if (responce) {
+                callback(null, JSON.parse(body));
+            } else {
+                callback(new Error('No respond from remote server'));
+            }
+        });
+    };
+    Service.remoteMethod('summary', {
+        accepts: {
+            arg: 'id',
+            type: 'string',
+            required: false,
+            default: "all"
+        },
+        returns: { type: 'object', root: true },
+        http: { path: '/summary/:id', verb: 'get', errorStatus: 500 }
+    });
+///_private/service/summary/id
 };

@@ -1,0 +1,37 @@
+.m-pager {
+  display: inline-block;
+
+  &__range {
+    color: $text-grey;
+    font-size: .9rem;
+    margin: auto .3rem;
+  }
+
+  &__navigation {
+
+    display: flex;
+    flex-direction: row;
+
+    button {
+      @extend .button--icon;
+
+      color: #a6b0b7;
+      width: 2rem;
+      height: 2rem;
+      border-radius: 50%;
+      font-size: 1.2rem;
+      padding-top: .35rem;
+      transition: all .15s linear;
+
+      &:not(:disabled):hover {
+        background-color: $blue;
+        color: $white;
+      }
+
+      &:disabled {        
+        color: #d0dce7;
+      }     
+    }
+  }
+
+}

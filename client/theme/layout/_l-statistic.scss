@@ -1,0 +1,34 @@
+.l-statistic {
+  &__container {
+    background: $white;
+    padding: 10px;
+    @media screen and (max-width: $grid-md) {
+      min-height: 100%!important;
+    }
+  }
+}
+
+.statistic-modal {  
+  @include basic-modal();  
+  @media screen and (min-width: $grid-md) {
+
+    display: flex;
+    flex-direction: row;
+    overflow: hidden!important;
+
+    .modal-dialog {
+      transform: translate(0, 60px) !important;
+      flex: 0 1 auto;
+      height: calc(100% - 120px);
+      display: flex;
+      flex-direction: column;     
+      max-width: 100%;
+      margin: 0 auto !important;
+
+      .modal-content {
+      //  @include folded-corner($white, 2em, 40deg);
+        flex: 1;
+      }
+    }
+  }
+}

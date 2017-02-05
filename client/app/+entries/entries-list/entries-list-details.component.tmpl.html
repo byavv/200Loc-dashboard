@@ -1,10 +1,33 @@
-<div #panel class="panel" [class.expanded]="expand" [offClick]='close'> 
+<div #panel class="panel" [class.expanded]="expand" [class.error]='configO?.errors.length > 0' (clickedOut)='close()' [ignoreSelector]="['ngb-modal-window']"> 
     <div class="entry-header" [@headerCollapse]="state">
         <ng-content select="[header-content]"></ng-content>
     </div>
-    <div class="entry-details" [@detailsCollapse]="state">
+    <div #detailsContainer class="entry-details" [@detailsCollapse]="state">              
         <div class="details-content">
-            <ng-content select="[status-content]"></ng-content>
+            <div style='width:1px;height:100px;'></div>  
+            <loader [active]='loading' [delay]='300'></loader>                   
+            <div *ngIf='expand' class='l-api__status'>  
+                <div *ngFor='let status of statuses' class='l-api__status--card' [class.red]='status.error'>      
+                    <span class='icon-record' [ngStyle]="{'color': status.error ? 'red' : 'green'}"></span> 
+                    <span >{{status.name}} v{{status.version}}</span>                   
+                    <!--<a [routerLink]="[ './statistic', status.id ]"><span class="icon-dot-3"></span></a>    dsfsdfs          .statistic-modal      -->
+                    <!--<a [routerLink]="[ '/entries', { sId: status.id } ]"><span class="icon-dot-3"></span></a>    -->
+                    <a (click)='openModal()'><span class="icon-dot-3"></span></a>    
+                </div>   
+                 <div *ngFor='let error of configO?.errors' class='l-api__status--card red'>      
+                    <span class='icon-record' style='color: red'></span> 
+                    <span >{{error.name}}</span>                   
+                    <a [routerLink]="['./error']"><span class="icon-dot-3"></span></a>                     
+                </div>          
+            </div>
         </div>
     </div>
 </div>
+<template #content let-c="close" let-d="dismiss">
+    <div class="l-statistic__container">
+        {{service?.name}}
+        <button class='button--icon'><span class="icon-close-circled"></span></button>
+    </div>
+</template>
+
+

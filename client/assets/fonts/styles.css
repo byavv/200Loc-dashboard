@@ -56,9 +56,6 @@
 .icon-ios-trash:before {
   content: "\67";
 }
-.icon-android-more-vertical:before {
-  content: "\68";
-}
 .icon-android-add:before {
   content: "\61";
 }
@@ -154,4 +151,28 @@
 }
 .icon-plus-1:before {
   content: "\4d";
+}
+.icon-ios-arrow-forward:before {
+  content: "\4e";
+}
+.icon-ios-arrow-back:before {
+  content: "\4f";
+}
+.icon-left-open:before {
+  content: "\50";
+}
+.icon-right-open:before {
+  content: "\51";
+}
+.icon-ellipsis-v:before {
+  content: "\52";
+}
+.icon-dot-3:before {
+  content: "\68";
+}
+.icon-caret-down-1:before {
+  content: "\55";
+}
+.icon-tag:before {
+  content: "\53";
 }

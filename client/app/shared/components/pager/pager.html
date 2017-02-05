@@ -1,0 +1,19 @@
+<div layout="row" layout-align="end center" class="m-pager">  
+  <div class="m-pager__navigation">
+    <button md-icon-button type="button" *ngIf="firstLast" [disabled]="isMinPage()" (click)="firstPage()">
+      <span></span>
+    </button>
+    <button md-icon-button type="button" [disabled]="isMinPage()" (click)="prevPage()">
+      <span class="icon-left-open"></span>
+    </button>
+     <span class="m-pager__range">
+        {{range}} <span>of</span> {{total}}
+    </span>
+    <button md-icon-button type="button" [disabled]="isMaxPage()" (click)="nextPage()">
+      <span class="icon-right-open"></span>
+    </button>
+    <button md-icon-button type="button" *ngIf="firstLast" [disabled]="isMaxPage()" (click)="lastPage()">
+      <span></span>
+    </button>
+  </div>
+</div>

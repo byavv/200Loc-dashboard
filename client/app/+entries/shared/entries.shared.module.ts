@@ -4,6 +4,7 @@ import { SharedModule } from '../../shared'
 import { ENTRIES_COMPONENTS } from './components';
 import { ENTRIES_DIRECTIVES } from "./directives";
 import { ENTRIES_PIPES } from "./pipes";
+import { ENTRIES_PROVIDERS } from './providers';
 
 let DECLARATIONS = [
     ...ENTRIES_COMPONENTS,
@@ -15,6 +16,9 @@ let DECLARATIONS = [
     declarations: DECLARATIONS,
     imports: [
         SharedModule
+    ],
+    providers: [
+        ...ENTRIES_PROVIDERS
     ],
     exports: DECLARATIONS
 })

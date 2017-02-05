@@ -18,7 +18,7 @@
 
     &.splitted {
       @media screen and (min-width: $grid-md) {
-        padding-left: calc(280px + .625rem);
+        padding-left: calc(280px + $p);
         transition: padding .25s cubic-bezier(0.4,0.0,0.2,1);
       }
     }
@@ -218,7 +218,7 @@
       &--title {
         position: absolute;
         top: -32px;
-        right: .625rem;
+        right: $p;
         color: white;
         margin: 0;
       }

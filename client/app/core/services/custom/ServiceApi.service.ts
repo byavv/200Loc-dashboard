@@ -133,4 +133,27 @@ export class ServiceApi extends BaseLoopBackApi {
             instances.map((instance: ServiceStatus) => new ServiceStatus(instance))
         );
     }
+
+    /**
+     * Get service status
+     *
+     * @param string name Service name
+     *
+     * @returns object And object reprents Service required configuration
+     * with populated settings field which consists of required options to br set for 
+     * Service's proper configuration
+     *    
+     */
+    public summary(id: string = 'all'): Observable<ServiceStatus> {
+        let method: string = "GET";
+        let url: string = CoreConfig.getPath() + "/" + CoreConfig.getApiVersion() +
+            "/Services/summary/:id";
+        let routeParams: any = {
+            id: id
+        };
+        let postBody: any = {};
+        let urlParams: any = {};
+        let result = this.request(method, url, routeParams, urlParams, postBody);
+        return result.map((res) => new ServiceStatus(res));
+    }
 }

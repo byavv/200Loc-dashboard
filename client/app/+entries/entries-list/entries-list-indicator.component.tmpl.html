@@ -1,32 +1,35 @@
-<div class='l-api__indicator'>
-    <!--<div #d *ngIf="errors?.length == 0 && messages?.length != 0" class='l-api__indicator-{{type}}' [offClick]='p.close.bind(p)' [ignore]='d'>
-        <i class='icon-record' [ngbPopover]='statusContent' #p="ngbPopover" placement="bottom" (click)='click.emit($event)'></i>
-        <template #statusContent>
-            <div *ngFor='let status of messages' class='l-api__indicator--popover'>
-                <span style='margin-bottom:10px;'>
-                    <i class='icon-record' [ngStyle]="{'color': status.error ? 'red' : 'green'}"></i>
-                    <span style='margin-left:10px;'>{{status.name}} v{{status.version}}</span>
-                </span>
-                <div>{{status.message}}</div>
-            </div>
-        </template>
+<div class='l-api__indicator' [class.up]='up'>
+    <div #d *ngIf="type=='message'" class='l-api__indicator-green'>
+         <button class="button--icon indicator-button" [@iconState]="state" id="menu-toggle" aria-expanded="false" (click)='onClick.emit($event)'> 
+              <svg height="20px" id="Layer_1" style="enable-background:new 0 0 512 512;" 
+                version="1.1" viewBox="0 0 512 512" 
+                width="20px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" 
+                xmlns:xlink="http://www.w3.org/1999/xlink">
+                <path d="M402 311c0-5-2-9-5-13l-128-128c-4-4-8-5-13-5-5 0-9 1-13 5l-128 128c-3 4-5 8-5 13 0 5 2 9 5 13 4 3 8 5 13 5l256 0c5 0 9-2 13-5 3-4 5-8 5-13z"/>
+              </svg>
+        </button>
     </div>
-    <div *ngIf="errors?.length > 0" class='l-api__indicator-red'>
-        <i class='icon-alert-circled'  title='Some error' [ngbPopover]='errorContent' triggers="mouseenter:mouseleave" placement="bottom"></i>
-        <template #errorContent>
-            <div *ngFor='let error of errors' class='l-api__indicator--popover'>
-                <span style='margin-bottom:10px;'>IN: <b>{{error.name}}</b> service</span>
-                <div>{{error.message}}</div>
-            </div>
-        </template>
-    </div>-->
-    <div #d *ngIf="errors?.length == 0 && messages?.length != 0" class='l-api__indicator-{{type}}' (click)='onClick.emit($event)'>
-        <i class='icon-record'></i>
+    <div *ngIf="type=='error'" class='l-api__indicator-red'>
+         <button class="button--icon indicator-button" [@iconState]="state" id="menu-toggle" aria-expanded="false" (click)='onClick.emit($event)'> 
+              <svg height="20px" id="Layer_1" style="enable-background:new 0 0 512 512;" 
+                version="1.1" viewBox="0 0 512 512" 
+                width="20px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" 
+                xmlns:xlink="http://www.w3.org/1999/xlink">
+                <path d="M402 311c0-5-2-9-5-13l-128-128c-4-4-8-5-13-5-5 0-9 1-13 5l-128 128c-3 4-5 8-5 13 0 5 2 9 5 13 4 3 8 5 13 5l256 0c5 0 9-2 13-5 3-4 5-8 5-13z"/>
+              </svg>
+        </button>
     </div>
-    <div *ngIf="errors?.length > 0" class='l-api__indicator-red' (click)='onClick.emit($event)'>
-        <i class='icon-alert-circled' title='Some error'></i>
+     <div *ngIf="type=='warning'" class='l-api__indicator-yellow'>
+         <button class="button--icon indicator-button" [@iconState]="state" id="menu-toggle" aria-expanded="false" (click)='onClick.emit($event)'> 
+              <svg height="20px" id="Layer_1" style="enable-background:new 0 0 512 512;" 
+                version="1.1" viewBox="0 0 512 512" 
+                width="20px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" 
+                xmlns:xlink="http://www.w3.org/1999/xlink">
+                <path d="M402 311c0-5-2-9-5-13l-128-128c-4-4-8-5-13-5-5 0-9 1-13 5l-128 128c-3 4-5 8-5 13 0 5 2 9 5 13 4 3 8 5 13 5l256 0c5 0 9-2 13-5 3-4 5-8 5-13z"/>
+              </svg>
+        </button>
     </div>
-    <div *ngIf="errors?.length == 0 && messages?.length == 0" class='l-api__indicator-blank'>
+    <div *ngIf="type=='blank'" class='l-api__indicator-blank'>
         <i class='icon-android-radio-button-off' title='No services used'></i>
     </div>
 </div>
