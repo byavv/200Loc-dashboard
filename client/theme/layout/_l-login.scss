@@ -56,10 +56,9 @@
 }
 
 .login-modal {
-  //@extend .loc-modal;
-  @include basic-modal();
+  @extend %l-modal;
+  
   @media screen and (min-width: $grid-md) {
-
     display: flex;
     flex-direction: row;
     overflow: hidden!important;

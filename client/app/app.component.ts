@@ -10,17 +10,17 @@ import '../theme/styles.scss';
     selector: 'app',
     template: `
     
-    <div class="l-page__wrap">
+    <div class="l__main-wrap">
         <loader [trigger]='getLoaded()'></loader>
-        <header class="l-page__header">
+        <header class="m__header">
             <loc-header class='authH'></loc-header>
         </header>        
-        <div class='l-container'>
+        <div class='l__main-container'>
             <router-outlet>
             </router-outlet>
         </div>        
     </div>
-    <footer class='l-page__footer'> 
+    <footer class='l__main-footer'> 
         <loc-footer class='authH'></loc-footer>  
     </footer>
    

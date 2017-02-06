@@ -100,13 +100,11 @@
 }
 
 .plugin-modal {
-//  @extend .loc-modal;
- @include basic-modal();
+  @extend %l-modal;
 }
 
 .test-results-modal {
-//  @extend .loc-modal;
- @include basic-modal();
+  @extend %l-modal;
 
   .modal-dialog {
     height: calc(100% - 90px);

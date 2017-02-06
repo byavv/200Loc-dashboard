@@ -136,6 +136,7 @@ export class SideBarComponent implements OnInit {
         this.setState(this.active)
         this.state$.next(this.active);
     }
+    
     close() {
         this.active = false;
         this.setState(this.active)

@@ -8,8 +8,8 @@
   }
 }
 
-.statistic-modal {  
-  @include basic-modal();  
+.statistic-modal {
+  @extend %l-modal;
   @media screen and (min-width: $grid-md) {
 
     display: flex;
@@ -21,12 +21,11 @@
       flex: 0 1 auto;
       height: calc(100% - 120px);
       display: flex;
-      flex-direction: column;     
+      flex-direction: column;
       max-width: 100%;
       margin: 0 auto !important;
 
       .modal-content {
-      //  @include folded-corner($white, 2em, 40deg);
         flex: 1;
       }
     }

@@ -1,14 +1,13 @@
 import {
     Component, OnInit, Input, ChangeDetectionStrategy,
-    Output, EventEmitter, Renderer, ElementRef,
+    Output, EventEmitter,
     trigger, state, style, transition, animate, keyframes
 } from '@angular/core';
 
 @Component({
     selector: 'entry-indicator',
     templateUrl: './entries-list-indicator.component.tmpl.html',
-    changeDetection: ChangeDetectionStrategy.OnPush,   
-    styleUrls: ['./indi.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,  
     animations: [
         trigger('iconState', [
             state('up', style({ transform: 'rotate(0deg)' })),
@@ -16,6 +15,22 @@ import {
             transition('up => down', animate('.4s ease-in')),
             transition('down => up', animate('.4s ease-out')),
         ])
+    ],
+    styles:[
+        `
+        :host {
+            width: 20px;
+            height: 20px;
+            display: inline-block;
+        }
+
+        .indicator-button {
+            transform-origin: 50% 50%;
+            height: 20px;
+            width: 20px;
+        }
+
+        `
     ]
 })
 export class EntriesIndicatorComponent {
@@ -34,5 +49,4 @@ export class EntriesIndicatorComponent {
         this.state = value ? 'up' : 'down';
         this._up = value;
     }
-    constructor(private _renderer: Renderer, elementRef: ElementRef) { }
 }

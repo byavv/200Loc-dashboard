@@ -1,37 +1,36 @@
-<nav class="l-header__navbar" [class.splitted]="sidebar?.state$ | async">
-    <button class='l-header__toggle' (click)="sidebar.open($event)"><span class="icon-android-menu"></span></button>
-    <a [routerLink]="['/']" class="l-header__brand">200Loc-Dashboard</a>
-    <ul class="l-header__menu" *ngIf="!isAuthenticated">
+<nav class="m-header__navbar" [class.splitted]="sidebar?.state$ | async">
+    <button class='m-header__toggle' (click)="sidebar.open($event)"><span class="icon-android-menu"></span></button>
+    <a [routerLink]="['/']" class="m-header__brand">200Loc-Dashboard</a>
+    <ul class="m-header__menu" *ngIf="!isAuthenticated">
         <li class="nav-item"><a [routerLink]="['/auth/signin']" class="nav-link">Sign in</a></li>
     </ul>
-    <div class="l-header__menu" *ngIf="isAuthenticated" style='margin-left: auto;'>
-        <button class="l-header__menu-toggle" (click)='menu.toggleActive($event)'><i class="icon-user"></i></button>
+    <div class="m-header__menu" *ngIf="isAuthenticated" style='margin-left: auto;'>
+        <button class="m-header__menu-toggle" (click)='menu.toggleActive($event)'><i class="icon-user"></i></button>
     </div>
 </nav>
 
 <loc-header-menu #menu='locHeaderMenu'>
-    <div class="l-header__dropdown--actions">
-        <span class="l-header__dropdown--title">Signed in as <b>{{ username }}</b></span> 
-        <a [routerLink]="['/auth/change']" (click)="menu.toggleActive($event)" class="l-header__dropdown--actions-item">
-            <span class="icon-arrows-ccw l-header__dropdown--icon"></span>
-            <span class="l-header__dropdown--text">Change password</span>          
+    <div class="m-header__dropdown-actions">
+        <span class="m-header__dropdown-title">Signed in as <b>{{ username }}</b></span> 
+        <a [routerLink]="['/auth/change']" (click)="menu.toggleActive($event)" class="m-header__dropdown-actions-item">
+            <span class="icon-arrows-ccw m-header__dropdown-icon"></span>
+            <span class="m-header__dropdown-text">Change password</span>          
         </a>
-        <a href='' (click)="signOut(); menu.toggleActive($event)" class="l-header__dropdown--actions-item">
-            <span class="icon-log-out l-header__dropdown--icon"></span>
-            <span class="l-header__dropdown--text">Sign out</span>            
+        <a href='' (click)="signOut(); menu.toggleActive($event)" class="m-header__dropdown-actions-item">
+            <span class="icon-log-out m-header__dropdown-icon"></span>
+            <span class="m-header__dropdown-text">Sign out</span>            
         </a>
     </div>
 </loc-header-menu>
 
 <loc-side-bar [content]='sidebarContent' #sidebar='locSidebar' position='left'></loc-side-bar>
 <template #sidebarContent>
-    <span class="l-sidebar__brand hidden-md-up">200Loc-Dashboard</span>
-    <ul class="l-sidebar__menu">
-        <li><a class="l-sidebar__menu--item" [routerLink]="['/entries', {outlets: {'list': [''], 'stats': ['none']}}]" (click)='sidebar.close()' routerLinkActive="active"><i class="icon-home icon-1x"></i>Entries</a></li>
-        <li><a class="l-sidebar__menu--item" [routerLink]="['/groups']"  (click)='sidebar.close()' routerLinkActive="active"><i class="icon-home icon-1x"></i>Groups</a></li>
-        <li><a class="l-sidebar__menu--item" [routerLink]="['/services']" (click)='sidebar.close()' routerLinkActive="active"><i class="icon-home icon-1x"></i>Services</a></li>
-        <li><a class="l-sidebar__menu--item" [routerLink]="['/cluster']" (click)='sidebar.close()' routerLinkActive="active"><i class="icon-home icon-1x"></i>Cluster</a></li>
-        <li><a class="l-sidebar__menu--item" [routerLink]="['/restore']" (click)='sidebar.close()' routerLinkActive="active"><i class="icon-home icon-1x"></i>Restore</a></li>
+    <span class="m-sidebar__brand hidden-md-up">200Loc-Dashboard</span>
+    <ul class="m-sidebar__menu">
+        <li><a class="m-sidebar__menu--item" [routerLink]="['/entries']" (click)='sidebar.close()' routerLinkActive="active"><i class="icon-home icon-1x"></i>Entries</a></li>
+        <li><a class="m-sidebar__menu--item" [routerLink]="['/groups']"  (click)='sidebar.close()' routerLinkActive="active"><i class="icon-home icon-1x"></i>Groups</a></li>
+        <li><a class="m-sidebar__menu--item" [routerLink]="['/services']" (click)='sidebar.close()' routerLinkActive="active"><i class="icon-home icon-1x"></i>Services</a></li>
+        <li><a class="m-sidebar__menu--item" [routerLink]="['/cluster']" (click)='sidebar.close()' routerLinkActive="active"><i class="icon-home icon-1x"></i>Cluster</a></li>
+        <li><a class="m-sidebar__menu--item" [routerLink]="['/restore']" (click)='sidebar.close()' routerLinkActive="active"><i class="icon-home icon-1x"></i>Restore</a></li>
     </ul>
 <template>
-<!--[routerLink]="['/entries']" ">-->

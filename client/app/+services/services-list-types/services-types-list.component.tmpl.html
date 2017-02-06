@@ -1,8 +1,8 @@
 <div class="l-services">
-    <div class="l__header">
+    <div class="l__page-header">
         <span class="title">Services</span>
     </div>    
-    <section class="l__body">
+    <section class="l__page-body">
         <loader [active]='loading'></loader>
         <div class="l-services__list-body">
             <a *ngFor='let service of services' [routerLink]="['/services/config']" [queryParams]='{ name: service.name }' title="{{ service.description }}">

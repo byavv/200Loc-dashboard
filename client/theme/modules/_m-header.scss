@@ -1,4 +1,4 @@
-.l-header {
+.m-header {
   &__navbar {
     @extend .navbar;
     @extend .navbar-light;
@@ -18,16 +18,15 @@
 
     &.splitted {
       @media screen and (min-width: $grid-md) {
-        padding-left: calc(280px + $p);
+        padding-left: calc(280px + .625rem);
         transition: padding .25s cubic-bezier(0.4,0.0,0.2,1);
       }
     }
 
     transition: padding .25s cubic-bezier(0.4,0.0,0.2,1);
   }
-
-  &__toggle {
-    @extend .button--icon;
+  @include element(toggle) {
+     @extend .button--icon;
     margin-right: 20px;
     color: $white;
 
@@ -36,16 +35,14 @@
       display: inline-block;
     }
   }
-
-  &__brand {
-    @extend .navbar-brand;
+  @include element(brand) {
+     @extend .navbar-brand;
     padding-top: .3em;
     color: $white!important;
     @media screen and (max-width: $grid-md) {}
   }
-
-  &__menu {
-    @extend .nav;
+  @include element(menu) {
+     @extend .nav;
     @extend .navbar-nav;
 
     cursor: pointer;
@@ -83,8 +80,7 @@
     }
 
   }
-  //l-header__dropdown--actions
-  &__dropdown {
+  @include element(dropdown) {
     text-align: left;
     z-index: 1;
     display: none;
@@ -93,8 +89,7 @@
       display: block;
     }
 
-    //  &-menu {
-    &--title {
+    &-title {
       margin-bottom: 20px;
       display: block;
       color: darken($light-grey, 20%);
@@ -102,11 +97,10 @@
 
     }
 
-    &--actions {
+    &-actions {
       padding: 15px;
 
       &-item {
-
         display: block;
         cursor: pointer;
         padding-left: 45px;
@@ -134,7 +128,7 @@
         }
 
         &:hover {
-          .l-header__dropdown {
+          .m-header__dropdown {
             &--icon {
               background: $blue;
             }
@@ -145,8 +139,8 @@
           }
         }
 
-        .l-header__dropdown {
-          &--icon {
+        .m-header__dropdown {
+          &-icon {
             width: 33px;
             height: 33px;
             background: #d0dce7;
@@ -166,7 +160,7 @@
             }
           }
 
-          &--text {
+          &-text {
             padding: 6px 0;
             display: block;
             font-weight: 600;
@@ -179,7 +173,7 @@
   }
 }
 @media screen and (min-width: $grid-md) {
-  .l-header {
+  .m-header {
     &__dropdown {
       background: #f5f8f9;
       border: 1px solid #dee1e4;
@@ -191,7 +185,7 @@
   }
 }
 @media screen and (max-width: $grid-md) {
-  .l-header {
+  .m-header {
     &__dropdown {
       background: #ffffff;
       transition: .2s ease-out;
@@ -215,7 +209,7 @@
         left: 0;
       }
 
-      &--title {
+      &-title {
         position: absolute;
         top: -32px;
         right: $p;

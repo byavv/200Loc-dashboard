@@ -1,19 +1,9 @@
 .l-wizard {
-  @extend %lbasic; 
+  @extend %l-page;
 
   .hidden {
     display: none;
   }
-
-  &__header {
-    @extend .l-common__header;
-  }
-
-  &__body {
-    @extend .l-common__body;
-  }
-
- 
 
   &__next {
     width: 100%;

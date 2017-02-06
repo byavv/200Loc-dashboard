@@ -1,11 +1,7 @@
-.panel {
+.__panel {
   margin-top: 0;
   margin-bottom: 0;
   transition: all .2s ease 200ms;
-
-  &.error {
-   
-  }
 
   &.expanded {
     @media screen and (min-width:767px) {
@@ -16,12 +12,12 @@
     }
   }
 
-  .entry-details {
+  .__details {
     overflow: hidden;
     height: 100%;
     background-color: white;
 
-    .details-content {
+    .__content {
       height: 100%;
       overflow: hidden;
       position: relative;
@@ -30,7 +26,7 @@
     }
   }
 
-  .entry-header {
+  .__header {
     background-color: white;
   }
 }

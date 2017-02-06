@@ -1,7 +1,6 @@
-@mixin basic-modal() {
+%l-modal {
   .modal-dialog {
     position: relative;
-    //  transform: translate(0, -100%);
     transition: transform .3s ease-out;
     margin-left: auto;
     margin-right: auto;

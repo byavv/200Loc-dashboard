@@ -7,6 +7,7 @@ import { getDOM, DomAdapter } from '@angular/platform-browser/src/dom/dom_adapte
 export class FlexySize {
     private _doc: HTMLDocument;
     private _domAdapter: DomAdapter;
+    @Input() bottom: number = 0;
 
     ignoreElementSize = false;
     constructor(public element: ElementRef, private renderer: Renderer) {
@@ -22,16 +23,17 @@ export class FlexySize {
     }
 
     _setMinHeight() {
-        var scrollTop = this._doc.documentElement.scrollTop || this._doc.body.scrollTop;
         var docHeight = this._doc.documentElement.clientHeight;
         var docWidth = this._doc.documentElement.clientWidth;
-        const footerHeight = docWidth > 769 ? 60 + 10/*padding*/ : 0;
-        var rect = this._domAdapter.getBoundingClientRect(this.element.nativeElement);
-        this._domAdapter.setStyle(this.element.nativeElement, 'min-height', `${docHeight - rect.top - footerHeight}px`);
+        let rect = this._domAdapter.getBoundingClientRect(this.element.nativeElement);
+        if (docWidth < 768) {
+            this.renderer.setElementStyle(this.element.nativeElement, 'min-height', `${docHeight - rect.top}px`);
+        } else {
+            this.renderer.setElementStyle(this.element.nativeElement, 'min-height', `${docHeight - rect.top - this.bottom}px`);
+        }
     }
-
     _reset() {
-        this._domAdapter.setStyle(this.element.nativeElement, 'min-height', `auto`);
-        this._domAdapter.setStyle(this.element.nativeElement, 'transition-duration', `${0}ms`);
+        this.renderer.setElementStyle(this.element.nativeElement, 'min-height', `auto`);
+        this.renderer.setElementStyle(this.element.nativeElement, 'transition-duration', `${0}ms`);
     }
 }
