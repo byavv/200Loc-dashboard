@@ -1,6 +1,6 @@
 <div class='entry__indicator' [class.up]='up'>
     <div #d *ngIf="type=='message'" class='entry__indicator-marker entry__indicator-marker--green'>
-         <button class="button--icon indicator-button" [@iconState]="state" (click)='onClick.emit($event)'> 
+        <button class="button--icon indicator-button" [@iconState]="state" (click)='onClick.emit($event)'> 
               <svg height="20px" id="Layer_1" style="enable-background:new 0 0 512 512;" 
                 version="1.1" viewBox="0 0 512 512" 
                 width="20px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" 
@@ -10,7 +10,7 @@
         </button>
     </div>
     <div *ngIf="type=='error'" class='entry__indicator-marker entry__indicator-marker--red'>
-         <button class="button--icon indicator-button" [@iconState]="state" (click)='onClick.emit($event)'> 
+        <button class="button--icon indicator-button" [@iconState]="state" (click)='onClick.emit($event)'> 
               <svg height="20px" id="Layer_1" style="enable-background:new 0 0 512 512;" 
                 version="1.1" viewBox="0 0 512 512" 
                 width="20px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" 
@@ -19,8 +19,8 @@
               </svg>
         </button>
     </div>
-     <div *ngIf="type=='warning'" class='entry__indicator-marker entry__indicator-marker--yellow'>
-         <button class="button--icon indicator-button" [@iconState]="state" (click)='onClick.emit($event)'> 
+    <div *ngIf="type=='warning'" class='entry__indicator-marker entry__indicator-marker--yellow'>
+        <button class="button--icon indicator-button" [@iconState]="state" (click)='onClick.emit($event)'> 
               <svg height="20px" id="Layer_1" style="enable-background:new 0 0 512 512;" 
                 version="1.1" viewBox="0 0 512 512" 
                 width="20px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" 

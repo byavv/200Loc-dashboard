@@ -1,22 +1,22 @@
-<div #panel class="__panel" [class.expanded]="expand" [class.error]='configO?.errors.length > 0' (clickedOut)='close()' [ignoreSelector]="['ngb-modal-window']"> 
+<div #panel class="__panel" [class.expanded]="expand" [class.error]='configO?.errors.length > 0' (clickedOut)='close()' [ignoreSelector]="['ngb-modal-window']">
     <div class="__header" [@headerCollapse]="state">
         <ng-content select="[header-content]"></ng-content>
     </div>
-    <div #detailsContainer class="__details" [@detailsCollapse]="state">              
+    <div #detailsContainer class="__details" [@detailsCollapse]="state">
         <div class="__content">
-            <div style='width:1px;height:100px;'></div>  
-            <loader [active]='loading' [delay]='300'></loader>                   
-            <div *ngIf='expand' class='entry__status'>  
-                <div *ngFor='let status of statuses' class='entry__status-card' [class.red]='status.error'>      
-                    <span class='icon-record' [ngStyle]="{'color': status.error ? 'red' : 'green'}"></span> 
-                    <span >{{status.name}} v{{status.version}}</span>
-                    <a (click)='openModal()'><span class="icon-dot-3"></span></a>    
-                </div>   
-                <div *ngFor='let error of configO?.errors' class='entry__status-card'>      
-                    <span class='icon-record' style='color: red'></span> 
-                    <span >{{error.name}}</span>                   
-                    <a [routerLink]="['./error']"><span class="icon-dot-3"></span></a>                     
-                </div>          
+            <div style='width:1px;height:100px;'></div>
+            <loader [active]='loading' [delay]='300'></loader>
+            <div *ngIf='expand' class='entry__status'>
+                <div *ngFor='let status of statuses' class='entry__status-card' [class.red]='status.error'>
+                    <span class='icon-record' [ngStyle]="{'color': status.error ? 'red' : 'green'}"></span>
+                    <span>{{status.name}} v{{status.version}}</span>
+                    <a (click)='openModal()'><span class="icon-dot-3"></span></a>
+                </div>
+                <div *ngFor='let error of configO?.errors' class='entry__status-card'>
+                    <span class='icon-record' style='color: red'></span>
+                    <span>{{error.name}}</span>
+                    <a [routerLink]="['./error']"><span class="icon-dot-3"></span></a>
+                </div>
             </div>
         </div>
     </div>
@@ -27,5 +27,3 @@
         <button class='button--icon'><span class="icon-close-circled"></span></button>
     </div>
 </template>
-
-

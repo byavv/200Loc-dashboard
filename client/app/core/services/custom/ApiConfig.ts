@@ -103,7 +103,7 @@ export class ApiConfigApi extends BaseLoopBackApi {
     * This usually means the response is a `Cart` object.)
     * </em>
     */
-  public patchOrCreate(data: any = {}) {
+  public updateOrCreate(data: any = {}) {
     let method: string = "PATCH";
     let url: string = CoreConfig.getPath() + "/" + CoreConfig.getApiVersion() +
       "/ApiConfigs";

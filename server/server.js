@@ -22,9 +22,15 @@ process.env.NODE_ENV = options.env;
 process.env.GATEWAY = _.isArray(options.link) ? [...options.link].pop() : options.link;
 process.env.HTTP_PORT = _.isArray(options.p) ? [...options.p].pop() : options.p;
 
-const redis_host = process.env.REDIS_HOST || '127.0.0.1';
-app.set("redis_host", redis_host);
+//const redis_host = process.env.REDIS_HOST || '127.0.0.1';
+//const redis_port = process.env.REDIS_PORT || '6379';
 
+const redis_host = process.env.REDIS_HOST || 'redis-11757.c10.us-east-1-2.ec2.cloud.redislabs.com';
+const redis_port = process.env.REDIS_PORT || '11757';
+
+app.set("redis_host", redis_host);
+app.set("redis_port", redis_port);
+      
 const http_port = process.env.HTTP_PORT;
 
 boot(app, __dirname, (err) => {

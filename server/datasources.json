@@ -1,10 +1,4 @@
-{
-  "db1": {
-    "host": "${redis_host}",
-    "port": "6379",
-    "name": "db",
-    "connector": "redis"
-  },
+{  
   "auth": {
     "name": "auth",
     "connector": "memory",

@@ -1,8 +1,7 @@
 {
     "env": {
         "NODE_ENV": "development",
-        "DEBUG": "gateway, plugins:*, drivers:*, explorer",
-        "REDIS_HOST": "127.0.0.1"
+        "DEBUG": "gateway, plugins:*, drivers:*, explorer"       
     },
     "ext": "js",
     "restartable": "rs",

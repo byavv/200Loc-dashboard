@@ -13,7 +13,7 @@ module.exports = function (ServiceConfig) {
         app = a;
         publisher = redis.createClient({
             host: app.get('redis_host'),
-            port: 6379
+            port: app.get('redis_port')
         });
     });
 

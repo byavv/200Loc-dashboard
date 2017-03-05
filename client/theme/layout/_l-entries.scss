@@ -1,5 +1,8 @@
 .l-entries {
   @extend %l-page;
+  
+  @include flexbox;
+  @include flex-direction(column);
 
   .entry {
     @include element ('status') {

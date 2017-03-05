@@ -181,7 +181,7 @@ export class EntriesListComponent implements OnInit, OnDestroy {
 
   toggleActive(config, value) {
     this.loading = true;
-    this._apiConfigApi.patchOrCreate(Object.assign({}, config, {
+    this._apiConfigApi.replaceOrCreate(Object.assign({}, config, {
       active: value,
       loaded: null,
       status: null

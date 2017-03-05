@@ -1,4 +1,4 @@
-<div class="l-entries" flexy [bottom]='50'>
+<div class="l-entries" flexy [bottom]='50' *locAuthOnly>
     <div class="l__page-header">
         <span class="title">Entries</span>
     </div>
@@ -6,8 +6,8 @@
         <div class="entries">
             <div class='entries__header' [@initial]="state">
                 <div class="entries__header-search">
-                    <div class="input__search">                
-                         <input #searchInput placeholder='Filter by name' [formControl]="searchControl" [ngModel]='searchParams.name'>
+                    <div class="input__search">
+                        <input #searchInput placeholder='Filter by name' [formControl]="searchControl" [ngModel]='searchParams.name'>
                         <div class='hightlite-underline'>
                             <span class="hightlite-bar"></span>
                         </div>
@@ -21,12 +21,12 @@
             </div>
             <div class="entries__table" [style.minHeight.px]='!initialComplete || configs?.length == 0 ? 150: 0'>
                 <!--Loading indicator-->
-                <loader [active]='loading' [delay]='300' [overlay]='configs?.length > 0'></loader>       
+                <loader [active]='loading' [delay]='300' [overlay]='configs?.length > 0'></loader>
                 <div class="entries__table-container">
-                    <entries-details #details *ngFor='let config of configs' [configO]='config'>
+                    <entries-details #details *ngFor='let config of configs; let c = count;' [configO]='config'>
                         <div header-content class='entry'>
                             <div class='m__table-row'>
-                                <div class="m__table-cell auto">                      
+                                <div class="m__table-cell auto">
                                     <entry-indicator [type]='config.type' [up]='details.expand' (onClick)='details.toggle();'></entry-indicator>
                                 </div>
                                 <!--Name cell-->
@@ -34,7 +34,7 @@
                                     <span class='entry__description'>{{ config.name }}</span>
                                 </div>
                                 <!--Etry path cell-->
-                                <div class="m__table-cell">                    
+                                <div class="m__table-cell">
                                     <a [routerLink]="['./master', {t:'test'}]" [queryParams]='{ id: config.id }' title='Test entry'>
                                         ~{{ config.entry }}
                                     </a>
@@ -50,9 +50,9 @@
                                 </div>
                                 <!-- Actions cell desktop-->
                                 <div class="m__table-cell auto hidden-sm-down">
-                                    <div class="entry__actions">                       
+                                    <div class="entry__actions">
                                         <a class="entry__actions-item" title='Edit entry' [routerLink]="['./master', {t:'general'}]" [queryParams]='{ id: config.id }'>
-                                            <span class="icon-android-create"></span>  
+                                            <span class="icon-android-create"></span>
                                         </a>
                                         <button class="entry__actions-item" (click)="onRemove(config)" title='Remove entry'>
                                             <span class="icon-trash-o"></span>
@@ -91,14 +91,16 @@
                                             <span class="icon-dot-3"></span>                                       
                                         </button>
                                     </div>
-                                </div><!--End actions cell-->
+                                </div>
+                                <!--End actions cell-->
                             </div>
-                        </div>               
-                    </entries-details>             
-                </div><!--End api table-->
+                        </div>
+                    </entries-details>
+                </div>
+                <!--End api table-->
                 <h3 *ngIf='configs.length == 0 && !loading'>No entry points</h3>
             </div>
-            <div class='entries__footer' [class.hidden]='count <= maxItems || !initialComplete'> 
+            <div class='entries__footer' [class.hidden]='count <= maxItems || !initialComplete'>
                 <loc-paging-bar [firstLast]="false" [pageSizeAll]="false" [pageSize]="maxItems" [total]="count"></loc-paging-bar>
             </div>
         </div>

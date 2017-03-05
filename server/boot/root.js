@@ -22,9 +22,9 @@ module.exports = function (app) {
         }, function (err, responce, body) {
             if (err) return next(err)
             if (responce) {
-                return res.status(responce.statusCode).send(body)
+                return res.status(responce.statusCode).send(body);
             } else {
-                return res.sendStatus(500)
+                return res.sendStatus(500);
             }
         });
     });

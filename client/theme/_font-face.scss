@@ -2,20 +2,23 @@
   font-family: 'Open Sans';
   font-style: normal;
   font-weight: 300;
-  src: local('Open Sans'), local('Open Sans Light'), url(/assets/fonts/OpenSans-Light.ttf)  format('truetype');  
+  src: local('Open Sans'), local('Open Sans Light'), url("/assets/fonts/OpenSans-Light.ttf") format('truetype');
 }
-
 @font-face {
   font-family: 'Open Sans';
   font-style: normal;
   font-weight: 400;
-  src: local('Open Sans'), local('Open Sans Regular'), url(/assets/fonts/OpenSans-Regular.ttf)  format('truetype');  
+  src: local('Open Sans'), local('Open Sans Regular'), url("/assets/fonts/OpenSans-Regular.ttf") format('truetype');
 }
-
 @font-face {
   font-family: 'Open Sans';
   font-style: normal;
   font-weight: 500;
-  src: local('Open Sans'), local('Open Sans Semibold'), url(/assets/fonts/OpenSans-Semibold.ttf)  format('truetype');  
+  src: local('Open Sans'), local('Open Sans Semibold'), url("/assets/fonts/OpenSans-Semibold.ttf") format('truetype');
 }
-
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 600;
+  src: local('Open Sans'), local('Open Sans Bold'), url("/assets/fonts/OpenSans-Bold.ttf") format('truetype');
+}
